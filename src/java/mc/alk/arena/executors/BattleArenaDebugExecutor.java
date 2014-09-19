@@ -485,6 +485,7 @@ public class BattleArenaDebugExecutor extends CustomCommandExecutor{
 
     @MCCommand(cmds={"timings"}, admin=true)
     public boolean showTimings(CommandSender sender, String[] args) {
+//        Profiler.printTimings();
         boolean useMs = !(args.length >1 && args[1].equalsIgnoreCase("ns"));
         List<TimingUtil> timers = TimingUtil.getTimers();
         if (timers == null){
