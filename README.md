@@ -26,5 +26,5 @@ If you need help with the API or writing a plugin for BattleArena I will help as
 
 Links
 ------------
-* [IRC](http://www.esper.net/publicirc.php) (#alkarin on irc.esper.net, join channel BattlePlugins)
+* [IRC](http://www.esper.net/publicirc.php) (#Zach443 on irc.esper.net, join channel BattlePlugins)
 * [Bukkit Page](http://dev.bukkit.org/server-mods/battlearena/) (BattleArena on Bukkit)
