@@ -13,8 +13,8 @@
     <!-- Locations for jar repositories -->
     <repositories>
         <repository>
-            <id>battleplugins-repo</id>
-            <url>http://server.battleplugins.com/maven/repository/</url>
+            <id>rainbowcraft-repo</id>
+            <url>http://rainbowcraft.sytes.net/maven/repository/</url>
         </repository>
         <repository>
             <id>bukkit-repo</id>
@@ -47,6 +47,12 @@
             <scope>compile</scope>
         </dependency>
 		-->
+        <dependency>
+            <groupId>mc.alk</groupId>
+            <artifactId>MCApi</artifactId>
+            <version>1.2.3</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattlePluginUpdater</artifactId>
@@ -98,13 +104,13 @@
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
-            <version>1.2.26-SNAPSHOT</version>
+            <version>1.2.30</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>VirtualPlayers</artifactId>
-            <version>1.5.7</version>
+            <version>1.6.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -115,73 +121,78 @@
         </dependency>
         <!-- unknown plugins that I had to add to the repo -->
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>com.trc202</groupId>
             <artifactId>CombatTag</artifactId>
             <version>6.0.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>pg.dev.team</groupId>
             <artifactId>DisguiseCraft</artifactId>
             <version>4.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>com.earth2me</groupId>
             <artifactId>Essentials</artifactId>
             <version>2.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>com.massivecraft</groupId>
             <artifactId>Factions</artifactId>
             <version>2.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>com.massivecraft</groupId>
             <artifactId>MCore</artifactId>
             <version>7.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>com.dthielke</groupId>
             <artifactId>Herochat</artifactId>
             <version>5.6.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>com.herocraftonline</groupId>
             <artifactId>Heroes</artifactId>
             <version>1.5.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>com.garbagemule</groupId>
             <artifactId>MobArena</artifactId>
             <version>0.94.4.95</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>ca.wacos</groupId>
             <artifactId>NametagEdit</artifactId>
             <version>2.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>de.pylamo</groupId>
             <artifactId>PylamoRestorationSystem</artifactId>
             <version>0.4</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
-            <groupId>unknown.plugins</groupId>
+            <groupId>org.kitteh</groupId>
             <artifactId>VanishNoPacket</artifactId>
             <version>3.18.10</version>
             <scope>provided</scope>
         </dependency>
         <!-- test dependencies -->
+        <dependency>
+            <groupId>mc.alk</groupId>
+            <artifactId>MCApi</artifactId>
+            <version>1.2.3</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <!-- How we will compile the plugin -->
     <build>
@@ -285,8 +296,8 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>battleplugins-repo</id>
-            <url>scp://server.battleplugins.com/var/www/server.battleplugins.com/htdocs/maven/repository</url>
+            <id>rainbowcraft-repo</id>
+            <url>scp://rainbowcraft.sytes.net/var/www/maven/repository</url>
         </repository>
     </distributionManagement>
 </project>
