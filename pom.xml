@@ -187,12 +187,6 @@
             <scope>provided</scope>
         </dependency>
         <!-- test dependencies -->
-        <dependency>
-            <groupId>mc.alk</groupId>
-            <artifactId>MCApi</artifactId>
-            <version>1.2.3</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
     <!-- How we will compile the plugin -->
     <build>
