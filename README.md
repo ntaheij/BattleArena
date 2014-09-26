@@ -6,6 +6,31 @@ A complete Event system for minecraft.
 * Huge amounts of customization through the configs and in game commands
 * Framework and API for easily creating custom matches/events.
 
+Reporting Issues:
+---------
+We have had problems with people opening new github tickets at
+* https://github.com/Zach443/BattleArena/issues
+* https://github.com/Zach443/BattleArena/issues/new
+
+
+The problem is that people aren't giving us enough information to 
+replicate bugs. If we cannot identify exactly under what conditions 
+a bug is present, then it becomes harder to fix.
+
+
+Henceforth, any bugs should be reported directly to me via Skype: 
+My username is Nicodemis79.
+
+
+The reason for this, is because in a Skype call, we can share screens, 
+where I can see your entire setup, and ask you to verify parts of your setup, 
+like your config files, etc. 
+
+
+This will allow me to quickly identify the problem. And also, you won't have 
+to waste time filling out detailed bug reports with information that may 
+or may not be relevant. It will save time for both of us. Thank you!
+
 Default Match Types:
 ---------
 * Arena : You fight with what is given to you in the config. You can't bring items in or out.
