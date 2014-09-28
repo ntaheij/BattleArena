@@ -8,20 +8,22 @@ A complete Event system for minecraft.
 
 Reporting Issues:
 ---------
-We have had problems with people opening new github tickets at
-* https://github.com/Zach443/BattleArena/issues
+We have had problems with bug reports that lack sufficient information.
 
 
 The problem is that people aren't giving us enough information to 
 replicate bugs. If we cannot identify exactly under what conditions 
 a bug is present, then it becomes harder to fix. 
 
+
 Please, if you report a bug, provide ample information about your situation. 
 
 
 If you need an answer in a timely manner, pleasr contact Zach or Europia via Skype: 
+
 Zach's Skype: zach_443
-Europia79's Skype: Nicodemus79
+
+Europia79's Skype: Nicodemis79
 
 
 The reason for this, is because in a Skype call, we can share screens, 
@@ -31,8 +33,12 @@ where we can see your entire setup, and ask you to verify parts of your setup
 
 We really appreciate when you report bugs, and we would like you to report them to us whenever you find them.
 However please be mindful of the information that you give us and/or how you contact us. If you really have no 
-idea where to stary, maybe a 1 on 1 conversation on Skype. If you know exactly how to replicate your problem, or 
-you have a good amount of information about it, creating a new issue might be a better solution.
+idea where to start, maybe a 1 on 1 conversation on Skype. If you know exactly how to replicate your problem, or 
+you have a good amount of information about it, creating a new issue might be a better solution:
+
+
+* https://github.com/BattlePluginsDev/BattleArena/issues
+
 
 Default Match Types:
 ---------
