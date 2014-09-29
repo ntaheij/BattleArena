@@ -201,6 +201,7 @@
         <defaultGoal>install</defaultGoal>
         <!-- Where our source directory is -->
         <sourceDirectory>${basedir}/src/java</sourceDirectory>
+        <testSourceDirectory>src/tests/test</testSourceDirectory>
         <!-- Include all the resources we need -->
         <resources>
             <resource>
