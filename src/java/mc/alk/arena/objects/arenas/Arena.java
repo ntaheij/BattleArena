@@ -412,7 +412,7 @@ public class Arena extends AreaContainer {
     /**
      * add a timed spawn to this arena
      */
-    private void addTimedSpawn(Long num, TimedSpawn s) {
+    public void addTimedSpawn(Long num, TimedSpawn s) {
         if (timedSpawns == null){
             timedSpawns = new HashMap<Long,TimedSpawn>();
         }
