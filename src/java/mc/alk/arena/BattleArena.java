@@ -102,7 +102,6 @@ public class BattleArena extends JavaPlugin {
     private static final EventScheduleSerializer eventSchedulerSerializer = new EventScheduleSerializer();
     private static final SignSerializer signSerializer = new SignSerializer();
     private static final int bukkitId = 43134; /// project bukkitId
-    private BattlePluginsAPI bpapi;
 
     /**
      * enable the BattleArena plugin
@@ -263,7 +262,6 @@ public class BattleArena extends JavaPlugin {
                     es.start();
             }
         });
-        bpapi = new BattlePluginsAPI();
         PluginUpdater.update(this, bukkitId, this.getFile(),
                 Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
         Log.info("&4[" + pluginname + "] &6v" + BattleArena.version + "&f enabled!");
@@ -302,14 +300,6 @@ public class BattleArena extends JavaPlugin {
     public static void update(final Plugin plugin, final int bukkitId, final File file,
                               final UpdateOption updateOption, final AnnounceUpdateOption announceOption) {
         new APIRegistrationController().update(plugin, bukkitId, file, updateOption, announceOption);
-    }
-
-    /**
-     * Return the BattlePluginsAPI used by BattleArena
-     * @return BattlePluginsAPI
-     */
-    public BattlePluginsAPI getBattlePluginsAPI() {
-        return bpapi;
     }
 
     /**
