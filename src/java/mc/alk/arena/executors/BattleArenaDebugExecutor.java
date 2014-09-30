@@ -539,14 +539,9 @@ public class BattleArenaDebugExecutor extends CustomCommandExecutor{
         }
         if (!f.exists()){
             return sendMessage(sender, "&cNo config file found for " + paramName);}
-        try {
-            String pasteID = BattleArena.getSelf().getBattlePluginsAPI().pasteFile(pasteTitle,f.getPath());
-            sendMessage(sender, "&2Paste successful, link is");
-            return sendMessage(sender, pasteID);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return sendMessage(sender, "&cCouldn't send paste Error was : " + e.getMessage());
-        }
+        // String pasteID = BattleArena.getSelf().getBattlePluginsAPI().pasteFile(pasteTitle,f.getPath());
+        return sendMessage(sender, "&2Paste command not yet implemented.");
+        // return sendMessage(sender, pasteID);
     }
 
     @MCCommand(cmds={"showScoreboard"}, admin=true)

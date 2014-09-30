@@ -229,10 +229,6 @@ public class APIRegistrationController {
         /// Set our config
         rc.setConfigSerializer(config);
 
-        /// schedule stats
-        if (!CompetitionController.hasPlugin(plugin)){
-            BattleArena.getSelf().getBattlePluginsAPI().scheduleSendStats(plugin);}
-
         /// Add the competition
         CompetitionController.addRegisteredCompetition(rc);
 
