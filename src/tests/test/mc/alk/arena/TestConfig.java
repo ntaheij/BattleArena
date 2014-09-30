@@ -14,7 +14,7 @@ import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.serializers.BaseConfig;
 import mc.alk.arena.serializers.ConfigSerializer;
 import test.mc.alk.arena.objects.TestPlugin;
-import test.mc.alk.testbukkit.TestBukkitServer;
+import mc.alk.tests.testbukkit.TestBukkitServer;
 
 import java.io.File;
 

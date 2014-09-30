@@ -22,9 +22,9 @@ import mc.alk.mc.MCServer;
 import org.bukkit.entity.Player;
 import test.mc.alk.arena.objects.TestPlugin;
 import test.mc.alk.arena.util.Helper;
-import test.mc.alk.testbukkit.TestBukkitPlayer;
-import test.mc.alk.testbukkit.TestBukkitServer;
-import test.mc.alk.testbukkit.TestMCBukkitServer;
+import mc.alk.tests.testbukkit.TestBukkitPlayer;
+import mc.alk.tests.testbukkit.TestBukkitServer;
+import mc.alk.tests.testbukkit.TestMCBukkitServer;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -94,28 +94,28 @@ public class TestJoining extends TestCase{
 
     public void testJoining() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
-        mp.setTeamSizezzz(1);
+        mp.setTeamSize(1);
         mp.setNTeams(new MinMax(2));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers= mp.getMaxPlayers();
         int minPlayers= mp.getMinPlayers();
 
-        msg(mp.getNTeamRange()  + " - " + mp.getTeamSizeRange() +" ,min:max "+ minPlayers +" : "+maxPlayers +" , " +
+        msg(mp.getNTeams().toString()  + " - " + mp.getTeamSize().toString() +" ,min:max "+ minPlayers +" : "+maxPlayers +" , " +
                 millisRemaining + " remaining ");
     }
 
 
     public void testFixed_stillTime2() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
-        mp.setTeamSizezzz(1);
+        mp.setTeamSize(1);
         mp.setNTeams(new MinMax(2));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers= mp.getMaxPlayers();
         int minPlayers= mp.getMinPlayers();
 
-        msg(mp.getNTeamRange()  + " - " + mp.getTeamSizeRange() +" ,min:max "+ minPlayers +" : "+maxPlayers +" , " +
+        msg(mp.getNTeams().toString()  + " - " + mp.getTeamSize().toString() +" ,min:max "+ minPlayers +" : "+maxPlayers +" , " +
                 millisRemaining + " remaining ");
         for (int inQ = maxPlayers; inQ < maxPlayers*2; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, null)).trim();

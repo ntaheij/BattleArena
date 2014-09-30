@@ -22,9 +22,9 @@ import mc.alk.arena.serializers.MessageSerializer;
 import mc.alk.mc.MCServer;
 import org.bukkit.entity.Player;
 import test.mc.alk.arena.objects.TestPlugin;
-import test.mc.alk.testbukkit.TestBukkitPlayer;
-import test.mc.alk.testbukkit.TestBukkitServer;
-import test.mc.alk.testbukkit.TestMCBukkitServer;
+import mc.alk.tests.testbukkit.TestBukkitPlayer;
+import mc.alk.tests.testbukkit.TestBukkitServer;
+import mc.alk.tests.testbukkit.TestMCBukkitServer;
 
 import java.io.File;
 

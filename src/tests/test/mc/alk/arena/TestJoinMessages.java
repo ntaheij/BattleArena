@@ -23,9 +23,9 @@ import mc.alk.mc.MCServer;
 import org.bukkit.entity.Player;
 import test.mc.alk.arena.objects.TestPlugin;
 import test.mc.alk.arena.util.Helper;
-import test.mc.alk.testbukkit.TestBukkitPlayer;
-import test.mc.alk.testbukkit.TestBukkitServer;
-import test.mc.alk.testbukkit.TestMCBukkitServer;
+import mc.alk.tests.testbukkit.TestBukkitPlayer;
+import mc.alk.tests.testbukkit.TestBukkitServer;
+import mc.alk.tests.testbukkit.TestMCBukkitServer;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -96,14 +96,15 @@ public class TestJoinMessages extends TestCase{
     public void testFixed_stillTime_inQltMin() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
 
-        mp.setTeamSizezzz(1);
+        mp.setTeamSize(1);
         mp.setNTeams(new MinMax(2));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers = mp.getMaxPlayers();
         int minPlayers = mp.getMinPlayers();
-
-        msg(mp.getNTeamRange() + " - " + mp.getTeamSizeRange() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
+        
+        // mp.getNTeams().toString() + " - " + mp.getTeamSize().toString() + " ,min:max "
+        msg(mp.getNTeams().toString() + " - " + mp.getTeamSize().toString()+ " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
                 millisRemaining + " remaining ");
         for (int inQ = 1; inQ < maxPlayers; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, null)).trim();
@@ -115,14 +116,14 @@ public class TestJoinMessages extends TestCase{
 
     public void testFixed_stillTime2() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
-        mp.setTeamSizezzz(1);
+        mp.setTeamSize(1);
         mp.setNTeams(new MinMax(2));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers = mp.getMaxPlayers();
         int minPlayers = mp.getMinPlayers();
 
-        msg(mp.getNTeamRange() + " - " + mp.getTeamSizeRange() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
+        msg(mp.getNTeams().toString() + " - " + mp.getTeamSize().toString() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
                 millisRemaining + " remaining ");
         for (int inQ = maxPlayers; inQ < maxPlayers * 2; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, null)).trim();
@@ -135,14 +136,14 @@ public class TestJoinMessages extends TestCase{
     public void testVar_stillTime_inQltMin() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
 
-        mp.setTeamSizezzz(1);
+        mp.setTeamSize(1);
         mp.setNTeams(new MinMax(2, 4));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers = mp.getMaxPlayers();
         int minPlayers = mp.getMinPlayers();
 
-        msg(mp.getNTeamRange() + " - " + mp.getTeamSizeRange() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
+        msg(mp.getNTeams().toString() + " - " + mp.getTeamSize().toString() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
                 millisRemaining + " remaining ");
         for (int inQ = 1; inQ < minPlayers; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, null)).trim();
@@ -155,14 +156,14 @@ public class TestJoinMessages extends TestCase{
     public void testVar_stillTime_inQltMax() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
 
-        mp.setTeamSizezzz(1);
+        mp.setTeamSize(1);
         mp.setNTeams(new MinMax(2, 4));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers = mp.getMaxPlayers();
         int minPlayers = mp.getMinPlayers();
 
-        msg(mp.getNTeamRange() + " - " + mp.getTeamSizeRange() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
+        msg(mp.getNTeams().toString() + " - " + mp.getTeamSize().toString() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
                 millisRemaining + " remaining ");
         for (int inQ = minPlayers; inQ < maxPlayers; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, null)).trim();
@@ -173,14 +174,14 @@ public class TestJoinMessages extends TestCase{
 
     public void testVar_stillTime_inQgeMax_NoPosition() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
-        mp.setTeamSizezzz(1);
+        mp.setTeamSize(1);
         mp.setNTeams(new MinMax(2, 4));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers = mp.getMaxPlayers();
         int minPlayers = mp.getMinPlayers();
 
-        msg(mp.getNTeamRange() + " - " + mp.getTeamSizeRange() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
+        msg(mp.getNTeams().toString() + " - " + mp.getTeamSize().toString() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
                 millisRemaining + " remaining ");
         for (int inQ = maxPlayers; inQ < maxPlayers * 2; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, null)).trim();
@@ -191,14 +192,14 @@ public class TestJoinMessages extends TestCase{
 
     public void testVar_stillTime_inQgeMax_Position() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
-        mp.setTeamSizezzz(1);
+        mp.setTeamSize(1);
         mp.setNTeams(new MinMax(2, 4));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers = mp.getMaxPlayers();
         int minPlayers = mp.getMinPlayers();
 
-        msg(mp.getNTeamRange() + " - " + mp.getTeamSizeRange() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
+        msg(mp.getNTeams().toString() + " - " + mp.getTeamSize().toString() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
                 millisRemaining + " remaining ");
         for (int inQ = maxPlayers; inQ < maxPlayers * 2; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, inQ)).trim();
@@ -210,14 +211,14 @@ public class TestJoinMessages extends TestCase{
 
     public void testMax_stillTime_inQltMin() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
-        mp.setTeamSizezzz(2);
+        mp.setTeamSize(2);
         mp.setNTeams(new MinMax(3, CompetitionSize.MAX));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers = mp.getMaxPlayers();
         int minPlayers = mp.getMinPlayers();
 
-        msg(mp.getNTeamRange() + " - " + mp.getTeamSizeRange() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
+        msg(mp.getNTeams().toString() + " - " + mp.getTeamSize().toString() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
                 millisRemaining + " remaining ");
         for (int inQ = 1; inQ < minPlayers; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, null)).trim();
@@ -228,14 +229,14 @@ public class TestJoinMessages extends TestCase{
 
     public void testMax_stillTime_inQltMax() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
-        mp.setTeamSizezzz(2);
+        mp.setTeamSize(2);
         mp.setNTeams(new MinMax(3, CompetitionSize.MAX));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers = mp.getMaxPlayers();
         int minPlayers = mp.getMinPlayers();
 
-        msg(mp.getNTeamRange() + " - " + mp.getTeamSizeRange() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
+        msg(mp.getNTeams().toString() + " - " + mp.getTeamSize().toString() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
                 millisRemaining + " remaining ");
         for (int inQ = minPlayers; inQ < minPlayers * 2; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, null)).trim();
@@ -246,14 +247,14 @@ public class TestJoinMessages extends TestCase{
 
     public void testMax_stillTime_inQgeMax_NoPosition() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
-        mp.setTeamSizezzz(2);
+        mp.setTeamSize(2);
         mp.setNTeams(new MinMax(3, CompetitionSize.MAX));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers = mp.getMaxPlayers();
         int minPlayers = mp.getMinPlayers();
 
-        msg(mp.getNTeamRange() + " - " + mp.getTeamSizeRange() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
+        msg(mp.getNTeams().toString() + " - " + mp.getTeamSize().toString() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
                 millisRemaining + " remaining ");
         for (int inQ = maxPlayers; inQ < maxPlayers * 2; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, null)).trim();
@@ -264,14 +265,14 @@ public class TestJoinMessages extends TestCase{
 
     public void testMax_stillTime_inQgeMax_Position() throws Exception {
         MatchParams mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
-        mp.setTeamSizezzz(2);
+        mp.setTeamSize(2);
         mp.setNTeams(new MinMax(3, CompetitionSize.MAX));
         long millisRemaining = 1000;
         int seconds = (int) (millisRemaining / 1000);
         int maxPlayers = mp.getMaxPlayers();
         int minPlayers = mp.getMinPlayers();
 
-        msg(mp.getNTeamRange() + " - " + mp.getTeamSizeRange() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
+        msg(mp.getNTeams().toString() + " - " + mp.getTeamSize().toString() + " ,min:max " + minPlayers + " : " + maxPlayers + " , " +
                 millisRemaining + " remaining ");
         for (int inQ = maxPlayers; inQ < maxPlayers * 2; inQ++) {
             String m = MessageUtil.decolorChat(BAExecutor.constructMessage(mp, millisRemaining, inQ, inQ)).trim();
