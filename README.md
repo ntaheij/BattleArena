@@ -60,5 +60,5 @@ If you need help with the API or writing a plugin for BattleArena I will help as
 
 Links
 ------------
-* [IRC](http://irc.battleplugins.org/git) (#BattleDev on irc.esper.net)
+* [IRC](http://irc.battleplugins.org/Git) (#BattleDev on irc.esper.net)
 * [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battlearena2/) (BattleArena on Bukkit, page coming soon!)
