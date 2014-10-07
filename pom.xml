@@ -8,6 +8,8 @@
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
     <url>http://maven.apache.org</url>
     <!-- Locations for jar repositories -->
@@ -113,6 +115,11 @@
             <version>5.8.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.sk89q</groupId>
+            <artifactId>worldedit</artifactId>
+            <version>5.5.8</version>
+        </dependency>
         <!-- unknown plugins that I had to add to the repo -->
         <dependency>
             <groupId>com.trc202</groupId>
@@ -181,6 +188,12 @@
             <scope>provided</scope>
         </dependency>
         <!-- test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <!-- How we will compile the plugin -->
     <build>
@@ -226,9 +239,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
                 <configuration>
                     <!-- whole bunch of errors that need to be fixed -->
                     <testFailureIgnore>true</testFailureIgnore>
+                    <failIfNoTests>false</failIfNoTests>
                 </configuration>
             </plugin>
             <plugin>
