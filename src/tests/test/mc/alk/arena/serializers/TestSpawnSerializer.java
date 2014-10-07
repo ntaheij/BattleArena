@@ -1,25 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package test.mc.alk.arena.serializers;
 
-package mc.alk.arena.serializers;
-
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
 /**
  *
  * @author Nikolai
  */
-public class TestSpawnSerializer {
+public class TestSpawnSerializer extends TestCase {
     
     public TestSpawnSerializer() {
     }
     
-    @Before
+    @Override
     public void setUp() {
     }
     

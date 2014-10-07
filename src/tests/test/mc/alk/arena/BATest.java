@@ -1,5 +1,7 @@
 package test.mc.alk.arena;
 
+import java.io.File;
+import java.lang.reflect.Field;
 import junit.framework.TestCase;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
@@ -17,15 +19,12 @@ import mc.alk.arena.serializers.BAConfigSerializer;
 import mc.alk.arena.serializers.MessageSerializer;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.mc.MCServer;
-import org.bukkit.entity.Player;
-import test.mc.alk.arena.objects.TestPlugin;
-import test.mc.alk.arena.util.Helper;
 import mc.alk.tests.testbukkit.TestBukkitPlayer;
 import mc.alk.tests.testbukkit.TestBukkitServer;
 import mc.alk.tests.testbukkit.TestMCBukkitServer;
-
-import java.io.File;
-import java.lang.reflect.Field;
+import org.bukkit.entity.Player;
+import test.mc.alk.arena.objects.TestPlugin;
+import test.mc.alk.arena.util.Helper;
 
 public class BATest extends TestCase {
     TestPlugin plugin = null;
@@ -96,6 +95,10 @@ public class BATest extends TestCase {
     }
     protected MatchParams loadParams(String type, String configName) throws Exception {
         return Helper.loadParams(cdir+"/"+configName, plugin, type);
+    }
+    
+    public void testPerformed() {
+        assertTrue(true);
     }
 
 }
