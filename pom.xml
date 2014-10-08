@@ -214,9 +214,16 @@
             <resource>
                 <targetPath>.</targetPath>
                 <filtering>true</filtering>
-                <directory>${basedir}</directory>
+                <directory>${basedir}/src/java</directory>
                 <includes>
                     <include>plugin.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${basedir}</directory>
+                <includes>
                     <include>default_files/*</include>
                     <include>default_files/competitions</include>
                     <include>default_files/competitions/*</include>
