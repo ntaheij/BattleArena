@@ -1,5 +1,9 @@
 package mc.alk.arena;
 
+import java.io.File;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import mc.alk.arena.controllers.APIRegistrationController;
 import mc.alk.arena.controllers.ArenaEditor;
 import mc.alk.arena.controllers.BAEventController;
@@ -22,6 +26,7 @@ import mc.alk.arena.executors.BASchedulerExecutor;
 import mc.alk.arena.executors.BattleArenaDebugExecutor;
 import mc.alk.arena.executors.BattleArenaExecutor;
 import mc.alk.arena.executors.CustomCommandExecutor;
+import mc.alk.arena.executors.ScoreboardExecutor;
 import mc.alk.arena.executors.TeamExecutor;
 import mc.alk.arena.listeners.BAPlayerListener;
 import mc.alk.arena.listeners.BAPluginListener;
@@ -63,18 +68,12 @@ import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.plugin.updater.FileUpdater;
 import mc.alk.plugin.updater.PluginUpdater;
-import mc.battleplugins.api.BattlePluginsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 public class BattleArena extends JavaPlugin {
 
@@ -222,6 +221,7 @@ public class BattleArena extends JavaPlugin {
         getCommand("battleArenaDebug").setExecutor(new BattleArenaDebugExecutor());
         final EventScheduler es = new EventScheduler();
         getCommand("battleArenaScheduler").setExecutor(new BASchedulerExecutor(es));
+        getCommand("arenaScoreboard").setExecutor(new ScoreboardExecutor(this, arenaController));
 
         /// Reload our scheduled events
         eventSchedulerSerializer.setConfig(dir.getPath() + "/saves/scheduledEvents.yml");
