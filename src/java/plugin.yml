@@ -1,14 +1,15 @@
 name: ${project.name}
-version: ${project.version}
-description: Arena system for BattleCraft
-
 main: mc.alk.arena.BattleArena
-
-authors: [alkarin]
-
+version: ${project.version}
+website: http://dev.bukkit.org/bukkit-plugins/battlearena2/
+description: Arena system for BattleCraft
+authors: [alkarin, Europia79]
 softdepend: [BattleTracker, Essentials, Herochat, Heroes, IcePvPControl, Factions, GroupManager, mcMMO, MultiInv, Multiworld, Multiverse-Core, Multiverse-Inventories, PvPToggle, PvPTime, PvPTimer, SimpleClans, TagAPI, Towny, WorldEdit, WorldGuard, VanishNoPackes, Vault]
-
 commands:
+    arenaScoreboard:
+        aliases: [sb]
+        description: Scoreboard commands
+        usage: /sb create | setmax | add
     arenateam:
         aliases: [team,at]
         description: Team commands
