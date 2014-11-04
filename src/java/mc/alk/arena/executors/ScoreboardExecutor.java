@@ -3,16 +3,14 @@ package mc.alk.arena.executors;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import mc.alk.arena.competition.match.Match;
 import mc.alk.arena.controllers.BattleArenaController;
 import mc.alk.arena.objects.ArenaPlayer;
-import mc.alk.arena.objects.CommandLineString;
 import mc.alk.arena.objects.arenas.Arena;
 import mc.alk.arena.objects.scoreboard.ArenaObjective;
 import mc.alk.arena.objects.scoreboard.ArenaScoreboard;
 import mc.alk.arena.objects.teams.ArenaTeam;
-import mc.alk.scoreboardapi.api.SObjective;
+import mc.alk.arena.util.MessageUtil;
 import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -41,7 +39,7 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
 
     Plugin plugin;
     protected final BattleArenaController bac;
-    // DebugInterface debug;
+    boolean MESSAGES = false;
     /**
      * key = matchID, amap stands for Arena Map.
      */
@@ -56,9 +54,10 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
     LinkedList<String> stack = new LinkedList<String>();
     String lastOperation = "";
 
-    public ScoreboardExecutor(Plugin reference, BattleArenaController controller) {
+    public ScoreboardExecutor(Plugin reference, BattleArenaController controller, boolean messages) {
         this.plugin = reference;
         this.bac = controller;
+        this.MESSAGES = messages;
     }
 
     /**
@@ -74,10 +73,10 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
         Match match = this.bac.getMatch(arena);
         int matchID = match.getID();
         if (objectives.containsKey(matchID)) {
-            sender.sendMessage("You may only have one custom objective per match.");
+            printMessage(sender, "You may only have one custom objective per match.");
             String name = objectives.get(matchID).getID();
             String msg = "Objective " + name + " will be over written";
-            sender.sendMessage(msg);
+            printMessage(sender, msg);
         }
         ArenaObjective objective = new ArenaObjective(label, label, label, SAPIDisplaySlot.SIDEBAR, 60);
         ArenaScoreboard scoreboard = match.getScoreboard();
@@ -86,8 +85,8 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
 
         objectives.put(matchID, objective);
         amount2win.put(matchID, amountToWin);
-        sender.sendMessage("Objective " + label + " created!");
-        sender.sendMessage("Teams must reach " + amountToWin + " points to win");
+        printMessage(sender, "Objective " + label + " created!");
+        printMessage(sender, "Teams must reach " + amountToWin + " points to win");
         
         String inverseCmd = "sb unregister " + arena.getName();
         saveInverseCommand(inverseCmd);
@@ -106,14 +105,14 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
         int matchID = match.getID();
         ArenaObjective objective = objectives.get(matchID);
         if (objective == null) {
-            sender.sendMessage("This command will only unregister a custom Objective created by the /arenaScoreboard cmd");
-            sender.sendMessage("You have to create an objective before you can remove it");
+            printMessage(sender, "This command will only unregister a custom Objective created by the /arenaScoreboard cmd");
+            printMessage(sender, "You have to create an objective before you can remove it");
             return true;
         }
         // objective.unregister();
         objectives.remove(matchID);
         amount2win.remove(matchID);
-        sender.sendMessage("The amount needed to win has been removed from this arena");
+        printMessage(sender, "The amount needed to win has been removed from this arena");
         return true;
     }
 
@@ -131,10 +130,10 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
         int max = amount2win.get(matchID);
         int points = objective.getPoints(team);
 
-        sender.sendMessage("" + x + " points added to " + team.getDisplayName());
-        sender.sendMessage("" + team.getDisplayName() + " has " + points + " points");
+        printMessage(sender, "" + x + " points added to " + team.getDisplayName());
+        printMessage(sender, "" + team.getDisplayName() + " has " + points + " points");
         if (points >= max) {
-            sender.sendMessage("" + team.getDisplayName() + " was declared the winner!");
+            printMessage(sender, "" + team.getDisplayName() + " was declared the winner!");
             match.setVictor(team);
             stack.clear();
             return true;
@@ -168,6 +167,49 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
         int neg = x * -1;
         return add(sender, ap, neg);
     }
+    
+    /**
+     * Cmd to toggle between verbose and quiet modes. <br/>
+     */
+    @MCCommand(cmds={"toggle"}, op=true)
+    public boolean toggle(CommandSender sender) {
+        if (MESSAGES) {
+            MESSAGES = false;
+        } else {
+            MESSAGES = true;
+        }
+        return true;
+    }
+    /**
+     * In verbose mode, messages from this executor will be displayed. <br/>
+     */
+    @MCCommand(cmds={"verbose", "v"}, op=true)
+    public boolean verbose(CommandSender sender) {
+        MESSAGES = true;
+        printMessage(sender, "The ArenaScoreboard command is now in verbose mode.");
+        printMessage(sender, "All messages from this command will now be displayed.");
+        return true;
+    }
+    
+    /**
+     * In quiet mode, messages from this executor will NOT be displayed. <br/>
+     * 
+     * This was a requested feature because apparently, this cmd was spamming the console.
+     */
+    @MCCommand(cmds={"quiet", "q"}, op=true)
+    public boolean quiet(CommandSender sender) {
+        MESSAGES = false;
+        sender.sendMessage("The ArenaScoreboard command is now in quiet mode.");
+        sender.sendMessage("All messages from this command will now be hidden");
+        return true;
+    }
+    
+    private boolean printMessage(CommandSender sender, String msg) {
+        if (MESSAGES) {
+            MessageUtil.sendMessage(sender, msg);
+        }
+        return true;
+    }
 
     /**
      * Undo the last '/sb' command by the sender. <br/><br/>
@@ -179,10 +221,10 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
     public boolean undo(CommandSender sender) {
         String cmd = getLastCommand();
         if (cmd.equals("")) {
-            sender.sendMessage("There is nothing to undo");
+            printMessage(sender, "There is nothing to undo");
         } else {
             Bukkit.dispatchCommand(sender, cmd);
-            sender.sendMessage("Undo successful: You may undo " + stack.size() + " more times.");
+            printMessage(sender, "Undo successful: You may undo " + stack.size() + " more times.");
         }
         return true;
     }
