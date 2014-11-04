@@ -1,4 +1,4 @@
-configVersion: 2.3.3
+configVersion: 2.4.0
 
 # For help the wiki is a good source of information
 # Wiki: # http://wiki.battleplugins.org/BattleArena
@@ -139,3 +139,13 @@ defaultOptions:
         onStart: [ announce, server ]  ## event is starting
         onVictory:  [ announce, server ] ## event has been won
         onCancel:  [ announce, server ] ## event has been cancelled
+# Options for command executors
+executors:
+    # true = messages will be displayed for this command.
+    # false = messages will be hidden for this command.
+    # This can also be changed via the following commands:
+    # /sb verbose
+    # /sb quiet
+    # /sb toggle
+    arenaScoreboard:
+        messages: true
