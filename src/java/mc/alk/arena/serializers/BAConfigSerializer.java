@@ -76,6 +76,7 @@ public class BAConfigSerializer extends BaseConfig{
         Defaults.ENABLE_TELEPORT_FIX = config.getBoolean("enableInvisibleTeleportFix", Defaults.ENABLE_TELEPORT_FIX);
         Defaults.ANNOUNCE_GIVEN_ITEMS = config.getBoolean("announceGivenItemsOrClass", Defaults.ANNOUNCE_GIVEN_ITEMS);
         Defaults.NEED_SAME_ITEMS_TO_CHANGE_CLASS = config.getBoolean("needSameItemsToChangeClass", Defaults.NEED_SAME_ITEMS_TO_CHANGE_CLASS);
+        Defaults.SB_MESSAGES = config.getBoolean("executors.arenaScoreboard.messages", true);
         parseOptionSets(config.getConfigurationSection("optionSets"));
         ArenaMatch.setDisabledCommands(config.getStringList("disabledCommands"));
         ArenaMatch.setEnabledCommands(config.getStringList("enabledCommands"));
