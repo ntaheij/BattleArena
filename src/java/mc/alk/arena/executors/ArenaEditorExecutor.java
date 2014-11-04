@@ -1,6 +1,11 @@
 package mc.alk.arena.executors;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.controllers.ArenaAlterController;
 import mc.alk.arena.controllers.ArenaAlterController.ArenaOptionPair;
@@ -12,6 +17,11 @@ import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.objects.options.SpawnOptions;
 import mc.alk.arena.objects.pairs.ParamAlterOptionPair;
 import mc.alk.arena.objects.pairs.TransitionOptionTuple;
+import mc.alk.arena.objects.spawns.BlockSpawn;
+import mc.alk.arena.objects.spawns.ChestSpawn;
+import mc.alk.arena.objects.spawns.EntitySpawn;
+import mc.alk.arena.objects.spawns.ItemSpawn;
+import mc.alk.arena.objects.spawns.SpawnInstance;
 import mc.alk.arena.objects.spawns.TimedSpawn;
 import mc.alk.arena.serializers.ArenaSerializer;
 import mc.alk.arena.serializers.SpawnSerializer;
@@ -21,14 +31,8 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 public class ArenaEditorExecutor extends CustomCommandExecutor {
-    public static String idPrefix = "ar_";
+    public static String idPrefix = "git ";
 
     WorldEditPlugin wep;
     public ArenaEditorExecutor(){
@@ -58,9 +62,48 @@ public class ArenaEditorExecutor extends CustomCommandExecutor {
         }
     }
 
+    /**
+     * This command syntax needs to be changed.
+     * 
+     * The last index parameter needs to be optional.
+     * 
+     * The reason why it can't just be deleted, is because if it's optional,
+     * then it will be backwards compatible for people creating mini-games with 
+     * the BattleArena API.
+     * 
+     */
     @MCCommand(cmds={"as","addspawn"}, admin=true, min=2,
-            usage="/aa addspawn <mob/item/spawnGroup> [buffs or effects] [number] [fs=first spawn time] [rt=respawn time] [trigger=<trigger type>] [index|i=<index>]")
+            usage="/aa addspawn <mob/item/spawnGroup> [buffs or effects] [number] [fs=first spawn time] [rs=respawn time] [ds=despawn time] [index|i=<index>]")
     public boolean arenaAddSpawn(Player sender, CurrentSelection cs, String[] args) {
+        Long index = parseIndex(sender, cs.getArena(), args);
+        if (index != -1)
+            return true;
+        Arena a = cs.getArena();
+
+        TimedSpawn spawn = SpawnSerializer.parseSpawn(Arrays.copyOfRange(args, 0, args.length));
+        /*
+        new TimedSpawn(fs, rs, ds, itemSpawn);
+        new ItemSpawn();
+        new BlockSpawn();
+        new ChestSpawn();
+        new EntitySpawn();
+                */
+        if (spawn == null){
+            return MessageUtil.sendMessage(sender,"Couldnt recognize spawn " + args[1]);
+        }
+        Location l = sender.getLocation();
+        spawn.getSpawn().setLocation(l);
+
+
+        a.addTimedSpawn(spawn); // a.addTimedSpawn(index,spawn);
+        ac.updateArena(a);
+        ArenaSerializer.saveArenas(a.getArenaType().getPlugin());
+        return MessageUtil.sendMessage(sender, "&6"+a.getName()+ "&e now has spawn &6" + spawn +"&2  index=&5" + index);
+    }
+    
+    @MCCommand(cmds={"ss","setspawn"}, admin=true, min=2,
+            usage="/aa setspawn <mob/item/spawnGroup> [buffs or effects] [number] [fs=first spawn time] [rs=respawn time] [ds=despawn time] [index|i=<index>]")
+    public boolean arenaSetSpawn(Player sender, CurrentSelection cs, String[] args) {
         Long index = parseIndex(sender, cs.getArena(), args);
         if (index == -1)
             return true;
