@@ -57,7 +57,7 @@ public class Persistable {
                 if (!(a instanceof Persist || !cs.contains(name))){
                     continue;
                 }
-//				System.out.println("Type = " + type +"  " + name +"   " + annotations + "   " + cs.getString(name));
+                // System.out.println("Type = " + type +"  " + name +"   " + annotations + "   " + cs.getString(name));
                 field.setAccessible(true);
                 try {
                     Object obj = null;
