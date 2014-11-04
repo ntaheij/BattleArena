@@ -221,7 +221,7 @@ public class BattleArena extends JavaPlugin {
         getCommand("battleArenaDebug").setExecutor(new BattleArenaDebugExecutor());
         final EventScheduler es = new EventScheduler();
         getCommand("battleArenaScheduler").setExecutor(new BASchedulerExecutor(es));
-        getCommand("arenaScoreboard").setExecutor(new ScoreboardExecutor(this, arenaController));
+        getCommand("arenaScoreboard").setExecutor(new ScoreboardExecutor(this, arenaController, Defaults.SB_MESSAGES));
 
         /// Reload our scheduled events
         eventSchedulerSerializer.setConfig(dir.getPath() + "/saves/scheduledEvents.yml");
