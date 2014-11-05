@@ -282,7 +282,7 @@ public class ArenaSerializer extends BaseConfig{
                 }
                 if (s == null)
                     continue;
-                arena.addTimedSpawn(Long.parseLong(spawnStr), s);
+                arena.putTimedSpawn(Long.parseLong(spawnStr), s);
             }
         }
         cs = cs.getConfigurationSection("persistable");
