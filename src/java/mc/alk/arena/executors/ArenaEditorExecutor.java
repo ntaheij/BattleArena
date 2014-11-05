@@ -17,11 +17,6 @@ import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.objects.options.SpawnOptions;
 import mc.alk.arena.objects.pairs.ParamAlterOptionPair;
 import mc.alk.arena.objects.pairs.TransitionOptionTuple;
-import mc.alk.arena.objects.spawns.BlockSpawn;
-import mc.alk.arena.objects.spawns.ChestSpawn;
-import mc.alk.arena.objects.spawns.EntitySpawn;
-import mc.alk.arena.objects.spawns.ItemSpawn;
-import mc.alk.arena.objects.spawns.SpawnInstance;
 import mc.alk.arena.objects.spawns.TimedSpawn;
 import mc.alk.arena.serializers.ArenaSerializer;
 import mc.alk.arena.serializers.SpawnSerializer;
@@ -32,7 +27,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ArenaEditorExecutor extends CustomCommandExecutor {
-    public static String idPrefix = "git ";
+    public static String idPrefix = "ar_";
 
     WorldEditPlugin wep;
     public ArenaEditorExecutor(){
@@ -76,26 +71,20 @@ public class ArenaEditorExecutor extends CustomCommandExecutor {
             usage="/aa addspawn <mob/item/spawnGroup> [buffs or effects] [number] [fs=first spawn time] [rs=respawn time] [ds=despawn time] [index|i=<index>]")
     public boolean arenaAddSpawn(Player sender, CurrentSelection cs, String[] args) {
         Long index = parseIndex(sender, cs.getArena(), args);
-        if (index != -1)
-            return true;
         Arena a = cs.getArena();
 
         TimedSpawn spawn = SpawnSerializer.parseSpawn(Arrays.copyOfRange(args, 0, args.length));
-        /*
-        new TimedSpawn(fs, rs, ds, itemSpawn);
-        new ItemSpawn();
-        new BlockSpawn();
-        new ChestSpawn();
-        new EntitySpawn();
-                */
         if (spawn == null){
             return MessageUtil.sendMessage(sender,"Couldnt recognize spawn " + args[1]);
         }
         Location l = sender.getLocation();
         spawn.getSpawn().setLocation(l);
-
-
-        a.addTimedSpawn(spawn); // a.addTimedSpawn(index,spawn);
+        
+        if (index == -1) {
+            index = a.addTimedSpawn(spawn);
+        } else {
+            a.putTimedSpawn(index, spawn);
+        }
         ac.updateArena(a);
         ArenaSerializer.saveArenas(a.getArenaType().getPlugin());
         return MessageUtil.sendMessage(sender, "&6"+a.getName()+ "&e now has spawn &6" + spawn +"&2  index=&5" + index);
@@ -104,23 +93,7 @@ public class ArenaEditorExecutor extends CustomCommandExecutor {
     @MCCommand(cmds={"ss","setspawn"}, admin=true, min=2,
             usage="/aa setspawn <mob/item/spawnGroup> [buffs or effects] [number] [fs=first spawn time] [rs=respawn time] [ds=despawn time] [index|i=<index>]")
     public boolean arenaSetSpawn(Player sender, CurrentSelection cs, String[] args) {
-        Long index = parseIndex(sender, cs.getArena(), args);
-        if (index == -1)
-            return true;
-        Arena a = cs.getArena();
-
-        TimedSpawn spawn = SpawnSerializer.parseSpawn(Arrays.copyOfRange(args, 0, args.length - 1));
-        if (spawn == null){
-            return MessageUtil.sendMessage(sender,"Couldnt recognize spawn " + args[1]);
-        }
-        Location l = sender.getLocation();
-        spawn.getSpawn().setLocation(l);
-
-
-        a.addTimedSpawn(index,spawn);
-        ac.updateArena(a);
-        ArenaSerializer.saveArenas(a.getArenaType().getPlugin());
-        return MessageUtil.sendMessage(sender, "&6"+a.getName()+ "&e now has spawn &6" + spawn +"&2  index=&5" + index);
+        return arenaAddSpawn(sender, cs, args);
     }
 
     @MCCommand(cmds={"ab","addBlock"}, admin=true,
