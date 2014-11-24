@@ -4,19 +4,17 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.7.13</version>
+    <version>3.9.7.9</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
     <url>http://maven.apache.org</url>
     <!-- Locations for jar repositories -->
     <repositories>
         <repository>
-            <id>rainbowcraft-repo</id>
-            <url>http://rainbowcraft.sytes.net/maven/repository/</url>
+            <id>battleplugins-repo</id>
+            <url>http://server.battleplugins.com/maven/repository/</url>
         </repository>
         <repository>
             <id>bukkit-repo</id>
@@ -42,18 +40,11 @@
     <!-- Dependencies -->
     <dependencies>
         <!-- Dependencies that have maven repos -->
-<!--        <dependency>
+        <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleProfiler</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
-        </dependency>
-		-->
-        <dependency>
-            <groupId>mc.alk</groupId>
-            <artifactId>MCApi</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
@@ -62,9 +53,15 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>mc.battleplugins</groupId>
+            <artifactId>BattlePluginsAPI</artifactId>
+            <version>1.0.6</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleScoreboardAPI</artifactId>
-            <version>1.1.8.5</version>
+            <version>1.1.8.4.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -100,13 +97,13 @@
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
-            <version>1.2.31</version>
+            <version>1.2.26-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>VirtualPlayers</artifactId>
-            <version>1.6.0-SNAPSHOT</version>
+            <version>1.5.7</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -115,85 +112,75 @@
             <version>5.8.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldedit</artifactId>
-            <version>5.5.8</version>
-        </dependency>
         <!-- unknown plugins that I had to add to the repo -->
         <dependency>
-            <groupId>com.trc202</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>CombatTag</artifactId>
             <version>6.0.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>pg.dev.team</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>DisguiseCraft</artifactId>
             <version>4.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.earth2me</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>Essentials</artifactId>
             <version>2.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.massivecraft</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>Factions</artifactId>
             <version>2.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.massivecraft</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>MCore</artifactId>
             <version>7.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.dthielke</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>Herochat</artifactId>
             <version>5.6.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.herocraftonline</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>Heroes</artifactId>
             <version>1.5.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.garbagemule</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>MobArena</artifactId>
             <version>0.94.4.95</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>ca.wacos</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>NametagEdit</artifactId>
             <version>2.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.pylamo</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>PylamoRestorationSystem</artifactId>
             <version>0.4</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
-            <groupId>org.kitteh</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>VanishNoPacket</artifactId>
             <version>3.18.10</version>
             <scope>provided</scope>
         </dependency>
         <!-- test dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
     <!-- How we will compile the plugin -->
     <build>
@@ -208,22 +195,14 @@
         <defaultGoal>install</defaultGoal>
         <!-- Where our source directory is -->
         <sourceDirectory>${basedir}/src/java</sourceDirectory>
-        <testSourceDirectory>${basedir}/src/test</testSourceDirectory>
         <!-- Include all the resources we need -->
         <resources>
             <resource>
                 <targetPath>.</targetPath>
                 <filtering>true</filtering>
-                <directory>${basedir}/src/java</directory>
-                <includes>
-                    <include>plugin.yml</include>
-                </includes>
-            </resource>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>true</filtering>
                 <directory>${basedir}</directory>
                 <includes>
+                    <include>plugin.yml</include>
                     <include>default_files/*</include>
                     <include>default_files/competitions</include>
                     <include>default_files/competitions/*</include>
@@ -245,16 +224,6 @@
             <!-- Specify how we build the plugin.jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.17</version>
-                <configuration>
-                    <!-- whole bunch of errors that need to be fixed -->
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <failIfNoTests>false</failIfNoTests>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>1.6</version>
                 <executions>
@@ -267,6 +236,10 @@
                         <configuration>
                             <relocations>
                                 <relocation>
+                                    <pattern>mc.battleplugins.api</pattern>
+                                    <shadedPattern>mc.alk.mc.battleplugins.api</shadedPattern>
+                                </relocation>
+                                <relocation>
                                     <pattern>mc.alk.plugin.updater</pattern>
                                     <shadedPattern>mc.alk.mc.updater</shadedPattern>
                                 </relocation>
@@ -276,6 +249,7 @@
                                 <includes>
                                     <include>mc.alk:BattleScoreboardAPI</include>
                                     <include>mc.alk:BattlePluginUpdater</include>
+                                    <include>mc.battleplugins:BattlePluginsAPI</include>
                                 </includes>
                             </artifactSet>
                             <!-- Specify to remove all unneeded classes -->
@@ -285,7 +259,7 @@
                                     <artifact>mc.alk:BattleScoreboardAPI</artifact>
                                     <includes>
                                         <include>mc/alk/scoreboardapi/**</include>
-<!--                                        <include>mc/alk/profiling/**</include>-->
+                                        <include>mc/alk/profiling/**</include>
                                     </includes>
 
                                 </filter>
@@ -305,28 +279,13 @@
                     </links>
                 </configuration>
             </plugin>
-            <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <configuration>
-                <tasks>
-                    <copy file="target/BattleArena.jar" tofile="../server/plugins/BattleArena.jar"/>
-                </tasks>
-            </configuration>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>run</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+
         </plugins>
     </build>
     <distributionManagement>
         <repository>
-            <id>rainbowcraft-repo</id>
-            <url>scp://rainbowcraft.sytes.net/var/www/maven/repository</url>
+            <id>battleplugins-repo</id>
+            <url>scp://server.battleplugins.com/var/www/server.battleplugins.com/htdocs/maven/repository</url>
         </repository>
     </distributionManagement>
 </project>
