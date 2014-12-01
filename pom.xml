@@ -15,6 +15,10 @@
     <!-- Locations for jar repositories -->
     <repositories>
         <repository>
+            <id>battleplugins-repo</id>
+            <url>http://server.battleplugins.com/maven/repository/</url>
+        </repository>
+        <repository>
             <id>rainbowcraft-repo</id>
             <url>http://rainbowcraft.sytes.net/maven/repository/</url>
         </repository>
@@ -42,13 +46,14 @@
     <!-- Dependencies -->
     <dependencies>
         <!-- Dependencies that have maven repos -->
-<!--        <dependency>
+        <!--    
+        <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleProfiler</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
-		-->
+        -->
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>MCApi</artifactId>
@@ -120,7 +125,7 @@
             <artifactId>worldedit</artifactId>
             <version>5.5.8</version>
         </dependency>
-        <!-- unknown plugins that I had to add to the repo -->
+        <!-- groupId = unknown.plugins -->
         <dependency>
             <groupId>com.trc202</groupId>
             <artifactId>CombatTag</artifactId>
@@ -285,12 +290,10 @@
                                     <artifact>mc.alk:BattleScoreboardAPI</artifact>
                                     <includes>
                                         <include>mc/alk/scoreboardapi/**</include>
-<!--                                        <include>mc/alk/profiling/**</include>-->
+                                        <!--<include>mc/alk/profiling/**</include>-->
                                     </includes>
-
                                 </filter>
                             </filters>
-
                         </configuration>
                     </execution>
                 </executions>
