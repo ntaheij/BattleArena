@@ -1,5 +1,10 @@
 package mc.alk.arena.serializers;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.competition.match.ArenaMatch;
@@ -18,6 +23,7 @@ import mc.alk.arena.objects.EventParams;
 import mc.alk.arena.objects.MatchParams;
 import mc.alk.arena.objects.MatchState;
 import mc.alk.arena.objects.arenas.Arena;
+import mc.alk.arena.objects.arenas.ArenaFactory;
 import mc.alk.arena.objects.arenas.ArenaType;
 import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.objects.joining.ArenaMatchQueue;
@@ -40,12 +46,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class BAConfigSerializer extends BaseConfig{
 
@@ -116,7 +116,7 @@ public class BAConfigSerializer extends BaseConfig{
                     "/default_files/competitions/"+comp+"Config.yml");
             String capComp = StringUtils.capitalize(comp);
             CustomCommandExecutor executor = comp.equalsIgnoreCase("duel") ? new DuelExecutor() : null;
-            api.registerCompetition(plugin, capComp, capComp, Arena.class, executor,
+            api.registerCompetition(plugin, capComp, capComp, ArenaFactory.DEFAULT, executor,
                     new File(compDir+"/"+capComp+"Config.yml"),
                     new File(compDir+"/"+capComp+"Messages.yml"),
                     new File("/default_files/competitions/"+capComp+"Config.yml"),

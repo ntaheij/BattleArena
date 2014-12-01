@@ -1,6 +1,9 @@
 package mc.alk.arena;
 
+import mc.alk.arena.objects.arenas.ArenaFactory;
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -630,6 +633,42 @@ public class BattleArena extends JavaPlugin {
     public static Arena getArena(String arenaName) {
         return BattleArena.getBAController().getArena(arenaName);
     }
+    
+    public static ArenaFactory createArenaFactory(final Class<? extends Arena> arenaClass) {
+        if (arenaClass == null) return null;
+        return new ArenaFactory() {
+
+            @Override
+            public Arena newArena() {
+                Class<?>[] args = {};
+                try {
+                    Constructor<?> constructor = arenaClass.getConstructor(args);
+                    Arena arena = (Arena) constructor.newInstance((Object[]) args);
+
+                    return arena;
+                } catch (NoSuchMethodException ex) {
+                    Log.err("If you have custom constructors for your class you must also have a public default constructor");
+                    Log.err("Add the following line to your Arena Class '" + arenaClass.getSimpleName() + ".java'");
+                    Log.err("public " + arenaClass.getSimpleName() + "(){}");
+                    Log.err("Or you can create your own ArenaFactory to support custom constructors");
+                    Log.printStackTrace(ex);
+                } catch (IllegalAccessException ex) {
+                    Log.printStackTrace(ex);
+                } catch (IllegalArgumentException ex) {
+                    Log.printStackTrace(ex);
+                } catch (InstantiationException ex) {
+                    Log.printStackTrace(ex);
+                } catch (SecurityException ex) {
+                    Log.printStackTrace(ex);
+                } catch (InvocationTargetException ex) {
+                    Log.printStackTrace(ex);
+                } catch (NullPointerException ex) {
+                    Log.printStackTrace(ex);
+                }
+                return null;
+            }
+        };
+    }
 
     /**
      * Register a competiton with BattleArena
@@ -640,7 +679,20 @@ public class BattleArena extends JavaPlugin {
      * @param arenaClass: The Arena Class for your competition
      */
     public static void registerCompetition(JavaPlugin plugin, String name, String cmd, Class<? extends Arena> arenaClass) {
-        new APIRegistrationController().registerCompetition(plugin, name, cmd, arenaClass);
+        ArenaFactory factory = createArenaFactory(arenaClass);
+        registerCompetition(plugin, name, cmd, factory); 
+    }
+    
+    /**
+     * Register a competiton with BattleArena
+     *
+     * @param plugin:     The plugin that is registering the Arena
+     * @param name:       Name of the competition
+     * @param cmd:        The cmd you would like to use (can be an alias)
+     * @param factory:    The ArenaFactory for your competition
+     */
+    public static void registerCompetition(JavaPlugin plugin, String name, String cmd, ArenaFactory factory) {
+        new APIRegistrationController().registerCompetition(plugin, name, cmd, factory);
     }
 
     /**
@@ -653,9 +705,23 @@ public class BattleArena extends JavaPlugin {
      * @param executor:   The executor you would like to receive commands
      */
     public static void registerCompetition(JavaPlugin plugin, String name, String cmd, Class<? extends Arena> arenaClass, CustomCommandExecutor executor) {
-        new APIRegistrationController().registerCompetition(plugin, name, cmd, arenaClass, executor);
+        ArenaFactory factory = createArenaFactory(arenaClass);
+        registerCompetition(plugin, name, cmd, factory, executor);
     }
-
+    
+    /**
+     * Register a competiton with BattleArena
+     *
+     * @param plugin:     The plugin that is registering the Arena
+     * @param name:       Name of the competition
+     * @param cmd:        The cmd you would like to use (can be an alias)
+     * @param factory:    The ArenaFactory for your competition
+     * @param executor:   The executor you would like to receive commands
+     */
+    public static void registerCompetition(JavaPlugin plugin, String name, String cmd, ArenaFactory factory, CustomCommandExecutor executor) {
+        new APIRegistrationController().registerCompetition(plugin, name, cmd, factory, executor);
+    }
+    
     /**
      * Get the module directory
      * @return File: Module Directory
