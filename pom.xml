@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.8</version>
+    <version>3.9.9.3</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -103,6 +103,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.kitteh</groupId>
+            <artifactId>VanishNoPacket</artifactId>
+            <version>3.18.10</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
             <version>1.2.31</version>
@@ -115,10 +121,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldguard</artifactId>
-            <version>5.8.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>mc.alk</groupId>
+            <artifactId>worldeditutil</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
@@ -127,69 +132,63 @@
         </dependency>
         <!-- groupId = unknown.plugins -->
         <dependency>
-            <groupId>com.trc202</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>CombatTag</artifactId>
             <version>6.0.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>pg.dev.team</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>DisguiseCraft</artifactId>
             <version>4.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.earth2me</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>Essentials</artifactId>
             <version>2.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.massivecraft</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>Factions</artifactId>
             <version>2.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.massivecraft</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>MCore</artifactId>
             <version>7.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.dthielke</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>Herochat</artifactId>
             <version>5.6.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.herocraftonline</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>Heroes</artifactId>
             <version>1.5.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.garbagemule</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>MobArena</artifactId>
             <version>0.94.4.95</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>ca.wacos</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>NametagEdit</artifactId>
             <version>2.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.pylamo</groupId>
+            <groupId>unknown.plugins</groupId>
             <artifactId>PylamoRestorationSystem</artifactId>
             <version>0.4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.kitteh</groupId>
-            <artifactId>VanishNoPacket</artifactId>
-            <version>3.18.10</version>
             <scope>provided</scope>
         </dependency>
         <!-- test dependencies -->
@@ -275,16 +274,22 @@
                                     <pattern>mc.alk.plugin.updater</pattern>
                                     <shadedPattern>mc.alk.mc.updater</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>mc.euro.version</pattern>
+                                    <shadedPattern>mc.alk.arena.version</shadedPattern>
+                                </relocation>
                             </relocations>
 
                             <artifactSet>
                                 <includes>
                                     <include>mc.alk:BattleScoreboardAPI</include>
                                     <include>mc.alk:BattlePluginUpdater</include>
+                                    <include>mc.alk:worldeditutil</include>
+                                    <include>mc.euro:Version</include>
                                 </includes>
                             </artifactSet>
                             <!-- Specify to remove all unneeded classes -->
-                            <minimizeJar>true</minimizeJar>
+                            <minimizeJar>false</minimizeJar>
                             <filters>
                                 <filter>
                                     <artifact>mc.alk:BattleScoreboardAPI</artifact>
@@ -309,21 +314,21 @@
                 </configuration>
             </plugin>
             <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <configuration>
-                <tasks>
-                    <copy file="target/BattleArena.jar" tofile="../server/plugins/BattleArena.jar"/>
-                </tasks>
-            </configuration>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>run</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <configuration>
+                    <tasks>
+                        <copy file="target/BattleArena.jar" tofile="../server/plugins/BattleArena.jar"/>
+                    </tasks>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <distributionManagement>
