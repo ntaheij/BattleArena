@@ -1,6 +1,5 @@
 package mc.alk.arena.executors;
 
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,8 +27,7 @@ import org.bukkit.entity.Player;
 
 public class ArenaEditorExecutor extends CustomCommandExecutor {
     public static String idPrefix = "ar_";
-
-    WorldEditPlugin wep;
+    
     public ArenaEditorExecutor(){
         super();
     }
