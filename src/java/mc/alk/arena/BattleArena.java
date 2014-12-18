@@ -134,8 +134,10 @@ public class BattleArena extends JavaPlugin {
 
         for (String c : new String[]{"HeroesConfig", "McMMOConfig", "WorldGuardConfig"}){
             try{
-                new BaseConfig(FileUtil.load(clazz, dir.getPath() + "/otherPluginConfigs/"+c+".yml",
-                        "/default_files/otherPluginConfigs/"+c+".yml"));
+                String source = "/default_files/otherPluginConfigs/"+c+".yml";
+                String dest = dir.getPath() + "/otherPluginConfigs/"+c+".yml";
+                File file = FileUtil.load(clazz, dest, source);
+                new BaseConfig(file);
             } catch( Exception e ){
                 Log.err("Couldn't load File " + dir.getPath() + "/otherPluginConfigs/"+c+".yml");
                 Log.printStackTrace(e);
