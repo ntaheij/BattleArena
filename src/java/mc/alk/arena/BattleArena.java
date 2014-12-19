@@ -197,7 +197,7 @@ public class BattleArena extends JavaPlugin {
         VictoryType.register(HighestKills.class, this);
 
         /// Load our configs, then arenas
-        baConfigSerializer.setConfig(FileUtil.load(clazz, dir.getPath() + "/config.yml", "/default_files/config.yml"));
+        baConfigSerializer.setConfig(FileUtil.load(clazz, dir.getPath() + "/config.yml", "/config.yml"));
         try {
             YamlFileUpdater.updateBaseConfig(this, baConfigSerializer); /// Update our config if necessary
         } catch (Exception e) {
