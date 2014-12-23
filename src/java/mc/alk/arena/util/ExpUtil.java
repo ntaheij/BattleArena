@@ -20,53 +20,33 @@ import org.bukkit.entity.Player;
  */
 public class ExpUtil {
 
-	/**
-	 * Get the total amount of experience that a player has
-	 * @param p
-	 * @return
-	 */
-	public static int getTotalExperience(Player p){
-		return getTotalExperience(p.getLevel(),p.getExp());
+    //This method is required because the bukkit player.getTotalExperience() method, shows exp that has been 'spent'.
+    //Without this people would be able to use exp and then still sell it.
+    public static int getTotalExperience(final Player player) {
+	int exp = (int)Math.round(getExpAtLevel(player.getLevel()) * player.getExp());
+	int currentLevel = player.getLevel();
+  
+	while (currentLevel > 0) {
+	    currentLevel--;
+	    exp += getExpAtLevel(currentLevel);
 	}
+	if (exp < 0) {
+	    exp = Integer.MAX_VALUE;
+	}
+	return exp;
+    }
 
-	/**
-	 * Get the total amount of experience to a level with a fractional exp bar
-	 * @param level
-	 * @param bar
-	 * @return
-	 */
-	public static int getTotalExperience(int level, double bar){
-		return getTotalExpToLevel(level) + (int) (getExpToLevel(level+1)*bar);
-	}
-
-	/**
-	 * Get the total amount of experience needed to get to level
-	 * @param level
-	 * @return
-	 */
-	public static int getTotalExpToLevel(int level){
-		if (level < 16){
-			return 17*level;
-		} else if (level < 31){
-			return (int) (1.5*level*level -29.5*level+360 );
-		} else {
-			return (int) (3.5*level*level-151.5*level+2220);
-		}
-	}
-	/**
-	 * Get the amount of experience needed to go from level -1 to level
-	 * @param level
-	 * @return
-	 */
-	public static int getExpToLevel(int level) {
-		if (level < 16){
-			return 17;
-		} else if (level < 31){
-			return 3*level - 31;
-		} else {
-			return 7*level - 155;
-		}
-	}
+    //new Exp Math from 1.8
+    // Credits go to andrewkm for this code
+    public static int getExpAtLevel(final int level) {
+        if (level <= 15) {
+          return (2*level) + 7;
+        }
+        if ((level >= 16) && (level <=30)) {
+          return (5 * level) -38;
+        }
+        return (9*level)-158;
+    }
 
 	/**
 	 * Set the total amount of experience for a player
