@@ -26,9 +26,7 @@ public class ExpUtil {
 	 * @return
 	 */
 	public static int getTotalExperience(Player p){
-	  	// This method is kept as a legacy thing, this used the calculations below.
-	  	// but was inaccurate, thus it was changed to use bukkit's method.
-		return p.getTotalExperience();
+		return getTotalExperience(p.getLevel(),p.getExp());
 	}
 
 	/**
