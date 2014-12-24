@@ -68,6 +68,7 @@ permissions:
         children:
             arena.leave: true
             arena.join.arena: true
+            arena.join.team.all: true
             arena.join.battleground: true
             arena.join.colosseum: true
             arena.join.deathmatch: true
