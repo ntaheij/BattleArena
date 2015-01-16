@@ -1,14 +1,25 @@
 package mc.alk.arena.serializers;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.ArenaClassController;
-import mc.alk.arena.controllers.ModuleController;
+import mc.alk.arena.controllers.Modules;
 import mc.alk.arena.controllers.OptionSetController;
 import mc.alk.arena.controllers.ParamController;
-import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.controllers.StateController;
 import mc.alk.arena.controllers.plugins.DisguiseInterface;
+import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.objects.ArenaClass;
 import mc.alk.arena.objects.ArenaParams;
 import mc.alk.arena.objects.ArenaSize;
@@ -42,18 +53,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeMap;
 
 /**
  *
@@ -317,11 +316,12 @@ public class ConfigSerializer extends BaseConfig{
             List<?> keys = cs.getList("modules");
             if (keys != null){
                 for (Object key: keys){
-                    ArenaModule am = ModuleController.getModule(key.toString());
+                    ArenaModule am = Modules.getModule(key.toString());
                     if (am == null){
-                        Log.err("Module " + key +" not found!");
+                        Log.err("[" + cs.getString("name") + "] Module " + key +" not found!");
                         mp.addModule(new BrokenArenaModule(key.toString()));
                     } else {
+                        Log.info("[" + cs.getString("name") + "] Module " + key + " successfully loaded.");
                         mp.addModule(am);
                         modules.add(am.getName());
                     }
