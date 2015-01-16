@@ -1,6 +1,5 @@
 package mc.alk.arena;
 
-import mc.alk.arena.objects.arenas.ArenaFactory;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -16,6 +15,7 @@ import mc.alk.arena.controllers.CompetitionController;
 import mc.alk.arena.controllers.DuelController;
 import mc.alk.arena.controllers.EventController;
 import mc.alk.arena.controllers.EventScheduler;
+import mc.alk.arena.controllers.Modules;
 import mc.alk.arena.controllers.ParamController;
 import mc.alk.arena.controllers.PlayerController;
 import mc.alk.arena.controllers.RoomController;
@@ -39,6 +39,8 @@ import mc.alk.arena.listeners.competition.InArenaListener;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.MatchParams;
 import mc.alk.arena.objects.arenas.Arena;
+import mc.alk.arena.objects.arenas.ArenaFactory;
+import mc.alk.arena.objects.modules.ArenaModule;
 import mc.alk.arena.objects.victoryconditions.AllKills;
 import mc.alk.arena.objects.victoryconditions.Custom;
 import mc.alk.arena.objects.victoryconditions.HighestKills;
@@ -153,7 +155,7 @@ public class BattleArena extends JavaPlugin {
                 Log.printStackTrace(e);
             }
         }
-
+        
         /// For potential updates to default yml files
         YamlFileUpdater yfu = new YamlFileUpdater(this);
 
@@ -730,6 +732,10 @@ public class BattleArena extends JavaPlugin {
      */
     public File getModuleDirectory() {
         return new File(this.getDataFolder() + "/modules");
+    }
+    
+    public static void addModule(ArenaModule mod) {
+        Modules.addModule(mod);
     }
 
     /**
