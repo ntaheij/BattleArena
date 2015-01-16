@@ -41,11 +41,11 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
     protected final BattleArenaController bac;
     boolean MESSAGES = false;
     /**
-     * key = matchID, amap stands for Arena Map.
+     * key = matchID
      */
     Map<Integer, ArenaObjective> objectives = new HashMap<Integer, ArenaObjective>(); // key = matchID
     /**
-     * key = matchID, limit is the amount of points needed to win the arena.
+     * key = matchID, value is the amount of points needed to win the arena.
      */
     Map<Integer, Integer> amount2win = new HashMap<Integer, Integer>(); // key = matchID
     /**
