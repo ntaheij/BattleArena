@@ -105,7 +105,8 @@ defaultOptions:
     #### Duel Options ####
     allowRatedDuels: false # By default dueling can not be rated
     # default duel options to pass in. Example [rated,money=100]
-    defaultDuelOptions: []
+    # rake is a money sink: It's the percentage that the house keeps in poker.
+    defaultDuelOptions: [rake=0.0]
 
     # after a player rejects a duel, how long before they can be challenged again
     challengeInterval: 1800 # (seconds) 1800 = 30minutes
