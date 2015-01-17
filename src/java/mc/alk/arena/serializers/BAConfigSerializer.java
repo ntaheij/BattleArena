@@ -47,10 +47,14 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class BAConfigSerializer extends BaseConfig{
+public class BAConfigSerializer extends BaseConfig {
 
-    public void loadDefaults(){
-        try {config.load(file);} catch (Exception e){Log.printStackTrace(e);}
+    public void loadDefaults() {
+        try {
+            config.load(file);
+        } catch (Exception e) {
+            Log.printStackTrace(e);
+        }
         EventParams defaults = new EventParams(ArenaType.register(Defaults.DEFAULT_CONFIG_NAME, Arena.class, BattleArena.getSelf()));
         VictoryType.register(Custom.class, BattleArena.getSelf());
         defaults.setVictoryType(VictoryType.getType(Custom.class));
@@ -59,13 +63,14 @@ public class BAConfigSerializer extends BaseConfig{
 
         ParamController.addMatchParams(defaults);
 
-        parseDefaultOptions(config.getConfigurationSection("defaultOptions"),defaults);
-        if (!Defaults.MONEY_SET)
-            Defaults.MONEY_STR = config.getString("moneyName",Defaults.MONEY_STR);
+        parseDefaultOptions(config.getConfigurationSection("defaultOptions"), defaults);
+        if (!Defaults.MONEY_SET) {
+            Defaults.MONEY_STR = config.getString("moneyName", Defaults.MONEY_STR);
+        }
         UpdateOption o = UpdateOption.fromString(config.getString("autoUpdate", "none"));
-        Defaults.AUTO_UPDATE =  o != null ? o : UpdateOption.NONE;
+        Defaults.AUTO_UPDATE = o != null ? o : UpdateOption.NONE;
         AnnounceUpdateOption ao = AnnounceUpdateOption.fromString(config.getString("announceUpdate", "none"));
-        Defaults.ANNOUNCE_UPDATE =  ao != null ? ao : AnnounceUpdateOption.NONE;
+        Defaults.ANNOUNCE_UPDATE = ao != null ? ao : AnnounceUpdateOption.NONE;
         Defaults.TELEPORT_Y_OFFSET = config.getDouble("teleportYOffset", Defaults.TELEPORT_Y_OFFSET);
         Defaults.TELEPORT_Y_VELOCITY = config.getDouble("teleportYVelocity", Defaults.TELEPORT_Y_VELOCITY);
         Defaults.NUM_INV_SAVES = config.getInt("numberSavedInventories", Defaults.NUM_INV_SAVES);
@@ -84,18 +89,23 @@ public class BAConfigSerializer extends BaseConfig{
         ArenaMatchQueue.setEnabledCommands(config.getStringList("enabledQueueCommands"));
         loadOtherFiles();
 
-        if (Defaults.TESTSERVER)
+        if (Defaults.TESTSERVER) {
             return;
+        }
         ModuleLoader ml = new ModuleLoader();
         ml.loadModules(BattleArena.getSelf().getModuleDirectory());
     }
 
-    public void loadCompetitions(){
-        try {config.load(file);} catch (Exception e){Log.printStackTrace(e);}
+    public void loadCompetitions() {
+        try {
+            config.load(file);
+        } catch (Exception e) {
+            Log.printStackTrace(e);
+        }
         Set<String> defaultMatchTypes = new HashSet<String>(Arrays.asList(
-                new String[] {"Arena","Skirmish","Colosseum","Battleground", "Duel"}));
-        Set<String> defaultEventTypes = new HashSet<String>(Arrays.asList(new String[] {"FreeForAll","DeathMatch"}));
-        Set<String> exclude = new HashSet<String>(Arrays.asList(new String[] {}));
+                new String[]{"Arena", "Skirmish", "Colosseum", "Battleground", "Duel"}));
+        Set<String> defaultEventTypes = new HashSet<String>(Arrays.asList(new String[]{"FreeForAll", "DeathMatch"}));
+        Set<String> exclude = new HashSet<String>(Arrays.asList(new String[]{}));
 
         Set<String> allTypes = new HashSet<String>(defaultMatchTypes);
         allTypes.addAll(defaultEventTypes);
@@ -105,50 +115,50 @@ public class BAConfigSerializer extends BaseConfig{
         ArenaType.register("Tourney", Arena.class, plugin);
 
         File dir = plugin.getDataFolder();
-        File compDir = new File(dir+"/competitions");
+        File compDir = new File(dir + "/competitions");
 
         /// Load all default types
-        for (String comp : allTypes){
+        for (String comp : allTypes) {
             /// For some reason this next line is almost directly in APIRegistration and works
             /// for extensions but not for BattleArena defaults.
             /// ONLY doesnt work in Windows... odd...
-            FileUtil.load(BattleArena.getSelf().getClass(),dir.getPath()+"/competitions/"+comp+"Config.yml",
-                    "/default_files/competitions/"+comp+"Config.yml");
+            FileUtil.load(BattleArena.getSelf().getClass(), dir.getPath() + "/competitions/" + comp + "Config.yml",
+                    "/default_files/competitions/" + comp + "Config.yml");
             String capComp = StringUtils.capitalize(comp);
             CustomCommandExecutor executor = comp.equalsIgnoreCase("duel") ? new DuelExecutor() : null;
             api.registerCompetition(plugin, capComp, capComp, ArenaFactory.DEFAULT, executor,
-                    new File(compDir+"/"+capComp+"Config.yml"),
-                    new File(compDir+"/"+capComp+"Messages.yml"),
-                    new File("/default_files/competitions/"+capComp+"Config.yml"),
-                    new File(dir.getPath()+"/saves/arenas.yml"));
-            exclude.add(capComp+"Config.yml");
+                    new File(compDir + "/" + capComp + "Config.yml"),
+                    new File(compDir + "/" + capComp + "Messages.yml"),
+                    new File("/default_files/competitions/" + capComp + "Config.yml"),
+                    new File(dir.getPath() + "/saves/arenas.yml"));
+            exclude.add(capComp + "Config.yml");
         }
 
         /// These commands arent specified in the config, so manually add.
-        ArenaType.addAliasForType("FreeForAll","ffa");
-        ArenaType.addAliasForType("DeathMatch","dm");
-        ArenaType.addAliasForType("Colosseum","col");
+        ArenaType.addAliasForType("FreeForAll", "ffa");
+        ArenaType.addAliasForType("DeathMatch", "dm");
+        ArenaType.addAliasForType("Colosseum", "col");
 
         /// And lastly.. add our tournament which is different than the rest
         createTournament(plugin, dir);
     }
 
     private void createTournament(JavaPlugin plugin, File dir) {
-        File cf = FileUtil.load(BattleArena.getSelf().getClass(),dir.getPath()+"/competitions/TourneyConfig.yml",
+        File cf = FileUtil.load(BattleArena.getSelf().getClass(), dir.getPath() + "/competitions/TourneyConfig.yml",
                 "/default_files/competitions/TourneyConfig.yml");
-        ConfigSerializer cs = new ConfigSerializer(plugin,cf, "Tourney");
+        ConfigSerializer cs = new ConfigSerializer(plugin, cf, "Tourney");
         MatchParams mp;
         try {
             mp = cs.loadMatchParams();
             EventParams ep = new EventParams(mp);
             ep.setParent(ParamController.getMatchParams(Defaults.DEFAULT_CONFIG_NAME));
             EventOpenOptions.parseOptions(new String[]{}, null, ep);
-            try{
+            try {
                 EventExecutor executor = new TournamentExecutor();
                 BattleArena.getSelf().getCommand("tourney").setExecutor(executor);
                 EventController.addEventExecutor("tourney", "tourney", executor);
                 ParamController.addMatchParams(ep);
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.err("Tourney could not be added");
             }
         } catch (Exception e) {
@@ -157,12 +167,12 @@ public class BAConfigSerializer extends BaseConfig{
     }
 
     protected static void parseDefaultOptions(ConfigurationSection cs, EventParams defaults) {
-        if (cs == null){
-            Log.err("[BA Error] defaultConfig section not found!!! Using default settings" );
+        if (cs == null) {
+            Log.err("[BA Error] defaultConfig section not found!!! Using default settings");
             return;
         }
 
-        defaults.setTimeBetweenRounds(cs.getInt("timeBetweenRounds",Defaults.TIME_BETWEEN_ROUNDS));
+        defaults.setTimeBetweenRounds(cs.getInt("timeBetweenRounds", Defaults.TIME_BETWEEN_ROUNDS));
 
         Defaults.USE_SCOREBOARD = cs.getBoolean("useScoreboard", Defaults.USE_SCOREBOARD);
         Defaults.USE_COLORNAMES = cs.getBoolean("useColoredNames", Defaults.USE_COLORNAMES);
@@ -179,18 +189,19 @@ public class BAConfigSerializer extends BaseConfig{
         Defaults.MATCH_UPDATE_INTERVAL = cs.getInt("matchUpdateInterval", Defaults.MATCH_UPDATE_INTERVAL);
         defaults.setIntervalTime(Defaults.MATCH_UPDATE_INTERVAL);
 
-        Defaults.AUTO_EVENT_COUNTDOWN_TIME = cs.getInt("eventCountdownTime",Defaults.AUTO_EVENT_COUNTDOWN_TIME);
+        Defaults.AUTO_EVENT_COUNTDOWN_TIME = cs.getInt("eventCountdownTime", Defaults.AUTO_EVENT_COUNTDOWN_TIME);
         defaults.setSecondsTillStart(Defaults.AUTO_EVENT_COUNTDOWN_TIME);
 
         Defaults.ANNOUNCE_EVENT_INTERVAL = cs.getInt("eventCountdownInterval", Defaults.ANNOUNCE_EVENT_INTERVAL);
         defaults.setAnnouncementInterval(Defaults.ANNOUNCE_EVENT_INTERVAL);
-        if (cs.contains("playerOpenOptions")){
-            defaults.setPlayerOpenOptions(cs.getStringList("playerOpenOptions"));}
+        if (cs.contains("playerOpenOptions")) {
+            defaults.setPlayerOpenOptions(cs.getStringList("playerOpenOptions"));
+        }
 
         parseOnServerStartOptions(cs);
         AnnouncementOptions an = new AnnouncementOptions();
-        parseAnnouncementOptions(an,true,cs.getConfigurationSection("announcements"), true);
-        parseAnnouncementOptions(an,false,cs.getConfigurationSection("eventAnnouncements"),true);
+        parseAnnouncementOptions(an, true, cs.getConfigurationSection("announcements"), true);
+        parseAnnouncementOptions(an, false, cs.getConfigurationSection("eventAnnouncements"), true);
         AnnouncementOptions.setDefaultOptions(an);
         defaults.setAnnouncementOptions(an);
 
@@ -211,9 +222,12 @@ public class BAConfigSerializer extends BaseConfig{
         Defaults.ENABLE_PLAYER_READY_BLOCK = cs.getBoolean("enablePlayerReadyBlock", Defaults.ENABLE_PLAYER_READY_BLOCK);
         try {
             Material value = Material.matchMaterial(cs.getString("readyBlockType", Defaults.READY_BLOCK.name()).toUpperCase());
-            if (value != null){
-                Defaults.READY_BLOCK = value;}
-        } catch (Exception e) { /* do nothing*/}
+            if (value != null) {
+                Defaults.READY_BLOCK = value;
+            }
+        } catch (Exception e) { /* do nothing*/
+
+        }
 
         defaults.setWaitroomClosedWhileRunning(true);
         defaults.setCancelIfNotEnoughPlayers(false);
@@ -223,14 +237,14 @@ public class BAConfigSerializer extends BaseConfig{
         defaults.setUseTrackerMessages(true);
         defaults.setNLives(1);
         defaults.setTeamSize(new MinMax(1, ArenaSize.MAX));
-        defaults.setNTeams(new MinMax(2,ArenaSize.MAX));
-        defaults.setArenaCooldown(cs.getInt("arenaCooldown",1));
-        defaults.setAllowedTeamSizeDifference(cs.getInt("allowedTeamSizeDifference",1));
+        defaults.setNTeams(new MinMax(2, ArenaSize.MAX));
+        defaults.setArenaCooldown(cs.getInt("arenaCooldown", 1));
+        defaults.setAllowedTeamSizeDifference(cs.getInt("allowedTeamSizeDifference", 1));
 
-        defaults.setNConcurrentCompetitions(ArenaSize.toInt(cs.getString("nConcurrentCompetitions","infinite")));
+        defaults.setNConcurrentCompetitions(ArenaSize.toInt(cs.getString("nConcurrentCompetitions", "infinite")));
 
         List<String> list = cs.getStringList("defaultDuelOptions");
-        if (list != null && !list.isEmpty()){
+        if (list != null && !list.isEmpty()) {
             try {
                 DuelOptions dop = DuelOptions.parseOptions(list.toArray(new String[list.size()]));
                 DuelOptions.setDefaults(dop);
@@ -240,32 +254,36 @@ public class BAConfigSerializer extends BaseConfig{
         }
     }
 
-    private static void parseOnServerStartOptions( ConfigurationSection cs) {
-        if (cs ==null || !cs.contains("onServerStart")){
-            Log.warn(BattleArena.getPluginName() +" No onServerStart options found");
+    private static void parseOnServerStartOptions(ConfigurationSection cs) {
+        if (cs == null || !cs.contains("onServerStart")) {
+            Log.warn(BattleArena.getPluginName() + " No onServerStart options found");
             return;
         }
         List<String> options = cs.getStringList("onServerStart");
-        for (String op : options){
-            if (op.equalsIgnoreCase("startContinuous")) Defaults.START_CONTINUOUS = true;
-            else if (op.equalsIgnoreCase("startNext")) Defaults.START_NEXT = true;
+        for (String op : options) {
+            if (op.equalsIgnoreCase("startContinuous")) {
+                Defaults.START_CONTINUOUS = true;
+            } else if (op.equalsIgnoreCase("startNext")) {
+                Defaults.START_NEXT = true;
+            }
         }
     }
 
     private void parseOptionSets(ConfigurationSection cs) {
-        if (cs != null){
+        if (cs != null) {
             Set<String> keys = cs.getKeys(false);
-            if (keys != null){
-                for (String key : keys){
+            if (keys != null) {
+                for (String key : keys) {
                     /// dont let people override defaults
-                    if (key.equalsIgnoreCase("storeAll") || key.equalsIgnoreCase("restoreAll")){
+                    if (key.equalsIgnoreCase("storeAll") || key.equalsIgnoreCase("restoreAll")) {
                         Log.err("You can't override the default 'storeAll' and 'restoreAll'");
                         continue;
                     }
                     try {
                         StateOptions to = ConfigSerializer.getTransitionOptions(cs.getConfigurationSection(key));
-                        if (to != null){
-                            OptionSetController.addOptionSet(key, to);}
+                        if (to != null) {
+                            OptionSetController.addOptionSet(key, to);
+                        }
                     } catch (Exception e) {
                         Log.err("Couldn't parse optionSet=" + key);
                         Log.printStackTrace(e);
@@ -274,7 +292,7 @@ public class BAConfigSerializer extends BaseConfig{
             }
         }
 
-        try{
+        try {
             StateOptions tops = new StateOptions();
             tops.addOption(TransitionOption.STOREEXPERIENCE);
             tops.addOption(TransitionOption.STOREGAMEMODE);
@@ -286,7 +304,7 @@ public class BAConfigSerializer extends BaseConfig{
             tops.addOption(TransitionOption.CLEAREXPERIENCE);
             tops.addOption(TransitionOption.STOREITEMS);
             tops.addOption(TransitionOption.DEENCHANT);
-            tops.addOption(TransitionOption.GAMEMODE,GameMode.SURVIVAL);
+            tops.addOption(TransitionOption.GAMEMODE, GameMode.SURVIVAL);
             tops.addOption(TransitionOption.FLIGHTOFF);
             OptionSetController.addOptionSet("storeAll", tops);
 
@@ -301,33 +319,35 @@ public class BAConfigSerializer extends BaseConfig{
             tops.addOption(TransitionOption.CLEARINVENTORY);
             tops.addOption(TransitionOption.DEENCHANT);
             OptionSetController.addOptionSet("restoreAll", tops);
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.err("Couldn't set default setOptions");
         }
     }
-    public static AnnouncementOptions parseAnnouncementOptions(AnnouncementOptions an , boolean match, ConfigurationSection cs, boolean warn) {
-        if (cs == null){
-            if (warn)
-                Log.err((match? "match" : "event" ) + " announcements are null. cs= ");
+
+    public static AnnouncementOptions parseAnnouncementOptions(AnnouncementOptions an, boolean match, ConfigurationSection cs, boolean warn) {
+        if (cs == null) {
+            if (warn) {
+                Log.err((match ? "match" : "event") + " announcements are null. cs= ");
+            }
             return null;
         }
         Set<String> keys = cs.getKeys(false);
-        if (keys != null){
-            for (String key: keys){
+        if (keys != null) {
+            for (String key : keys) {
                 MatchState ms = MatchState.fromString(key);
-                if (ms == null){
-                    Log.err("Couldnt recognize matchstate " + key +" in the announcement options");
+                if (ms == null) {
+                    Log.err("Couldnt recognize matchstate " + key + " in the announcement options");
                     continue;
                 }
                 List<String> list = cs.getStringList(key);
-                for (String s: list){
-                    KeyValue<String,String> kv = KeyValue.split(s,"=");
+                for (String s : list) {
+                    KeyValue<String, String> kv = KeyValue.split(s, "=");
                     AnnouncementOption bo = AnnouncementOption.fromName(kv.key);
-                    if (bo == null){
+                    if (bo == null) {
                         Log.err("Couldnt recognize AnnouncementOption " + s);
                         continue;
                     }
-                    an.setBroadcastOption(match, ms, bo,kv.value);
+                    an.setBroadcastOption(match, ms, bo, kv.value);
                 }
             }
         }
@@ -339,24 +359,27 @@ public class BAConfigSerializer extends BaseConfig{
         loadMcMMO();
     }
 
-
     public void loadVictoryConditions() {
         for (VictoryType vt : VictoryType.values()) {
             String name = vt.getName();
             if (name.equalsIgnoreCase("HighestKills")) { /// Old name for PlayerKills
-                name = "PlayerKills";}
-            BaseConfig c = loadOtherConfig(BattleArena.getSelf().getDataFolder() +
-                    "/victoryConditions/" + name + ".yml");
-            if (c == null)
+                name = "PlayerKills";
+            }
+            BaseConfig c = loadOtherConfig(BattleArena.getSelf().getDataFolder()
+                    + "/victoryConditions/" + name + ".yml");
+            if (c == null) {
                 continue;
+            }
             VictoryType.addConfig(vt, c);
         }
     }
 
-    private BaseConfig loadOtherConfig(String file){
+    private BaseConfig loadOtherConfig(String file) {
         File f = new File(file);
         if (!f.exists()) /// File not found, get outta here
+        {
             return null;
+        }
         return new BaseConfig(f);
     }
 
@@ -365,27 +388,28 @@ public class BAConfigSerializer extends BaseConfig{
         return c == null ? null : c.getConfig();
     }
 
-    public ConfigurationSection getWorldGuardConfig(){
+    public ConfigurationSection getWorldGuardConfig() {
         /// Look for it in the old location first, config.yml
         if (config.contains("defaultWGFlags")) {
             return config;
         } else {
-            return loadOtherConfigSection(BattleArena.getSelf().getDataFolder() +
-                    "/otherPluginConfigs/WorldGuardConfig.yml");
+            return loadOtherConfigSection(BattleArena.getSelf().getDataFolder()
+                    + "/otherPluginConfigs/WorldGuardConfig.yml");
         }
     }
 
-    private void loadHeroes(){
-        if (HeroesController.enabled()){
+    private void loadHeroes() {
+        if (HeroesController.enabled()) {
             /// Look for it in the old location first, config.yml
             List<String> disabled = config.getStringList("disabledHeroesSkills");
-            if (disabled != null && !disabled.isEmpty()){
+            if (disabled != null && !disabled.isEmpty()) {
                 HeroesController.addDisabledCommands(disabled);
             } else { /// look for options in the new config
-                ConfigurationSection cs = loadOtherConfigSection(BattleArena.getSelf().getDataFolder() +
-                        "/otherPluginConfigs/HeroesConfig.yml");
-                if (cs == null)
+                ConfigurationSection cs = loadOtherConfigSection(BattleArena.getSelf().getDataFolder()
+                        + "/otherPluginConfigs/HeroesConfig.yml");
+                if (cs == null) {
                     return;
+                }
                 disabled = cs.getStringList("disabledSkills");
                 if (disabled != null && !disabled.isEmpty()) {
                     HeroesController.addDisabledCommands(disabled);
@@ -394,13 +418,14 @@ public class BAConfigSerializer extends BaseConfig{
         }
     }
 
-    private void loadMcMMO(){
-        if (McMMOController.enabled()){
+    private void loadMcMMO() {
+        if (McMMOController.enabled()) {
             /// Look for it in the old location first, config.yml
-            ConfigurationSection cs = loadOtherConfigSection(BattleArena.getSelf().getDataFolder() +
-                    "/otherPluginConfigs/McMMOConfig.yml");
-            if (cs == null)
+            ConfigurationSection cs = loadOtherConfigSection(BattleArena.getSelf().getDataFolder()
+                    + "/otherPluginConfigs/McMMOConfig.yml");
+            if (cs == null) {
                 return;
+            }
             List<String> disabled = cs.getStringList("disabledSkills");
             if (disabled != null && !disabled.isEmpty()) {
                 McMMOController.setDisabledSkills(disabled);
