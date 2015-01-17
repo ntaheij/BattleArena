@@ -105,7 +105,7 @@ public class BattleArena extends JavaPlugin {
     private static final BAClassesSerializer classesSerializer = new BAClassesSerializer();
     private static final EventScheduleSerializer eventSchedulerSerializer = new EventScheduleSerializer();
     private static final SignSerializer signSerializer = new SignSerializer();
-    private static final int bukkitId = 43134; /// project bukkitId
+    private static final int bukkitId = 85347; // https://api.curseforge.com/servermods/projects?search=battlearena
 
     /**
      * enable the BattleArena plugin
