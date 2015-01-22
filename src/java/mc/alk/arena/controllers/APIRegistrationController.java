@@ -100,6 +100,7 @@ public class APIRegistrationController {
 
     private void setCommandToExecutor(JavaPlugin plugin, String wantedCommand, CommandExecutor executor) {
         if (!setCommandToExecutor(plugin, wantedCommand, executor, false)) {
+            Log.info("[BattleArena] Now registering command " + wantedCommand + " dynamically with Bukkit commandMap.");
             List<String> aliases = new ArrayList<String>();
             ArenaBukkitCommand arenaCommand = new ArenaBukkitCommand(wantedCommand, "", "", aliases, BattleArena.getSelf(), executor);
             CommandController.registerCommand(arenaCommand);
@@ -112,7 +113,7 @@ public class APIRegistrationController {
             return true;
         } catch (Exception e) {
             if (displayError) {
-                Log.err(plugin.getName() + " command " + command + " was not found. Did you register it in your plugin.yml?");
+                Log.err(plugin.getName() + " command " + command + " was not found in plugin.yml.");
             }
             return false;
         }
