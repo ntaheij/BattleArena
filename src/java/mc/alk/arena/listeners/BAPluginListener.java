@@ -55,7 +55,7 @@ public class BAPluginListener implements Listener {
 			loadHeroes();
         else if (event.getPlugin().getName().equalsIgnoreCase("LibsDisguises"))
             loadLibsDisguise();
-        else if (event.getPlugin().getName().equalsIgnoreCase("MobArena"))
+        else if (event.getPlugin().getName().equalsIgnoreCase("mcMMO"))
             loadMcMMO();
 		else if (event.getPlugin().getName().equalsIgnoreCase("MobArena"))
 			loadMobArena();
