@@ -54,7 +54,7 @@ unsafeItemEnchants: true
 # Bukkit or Minecraft had a bug that sometimes caused players to be invisible after teleporting
 # If this is happening on your server set this to true.
 # This option will be taken away once I have confirmed bukkit has fixed the problem
-enableInvisibleTeleportFix: true
+enableInvisibleTeleportFix: false
 
 # Check to make sure players have not used or dropped any items before letting them change classes
 needSameItemsToChangeClass: true
