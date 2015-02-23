@@ -24,7 +24,6 @@ import mc.alk.arena.controllers.containers.LobbyContainer;
 import mc.alk.arena.controllers.containers.RoomContainer;
 import mc.alk.arena.controllers.joining.AbstractJoinHandler;
 import mc.alk.arena.controllers.messaging.MessageHandler;
-import mc.alk.arena.controllers.plugins.CombatTagInterface;
 import mc.alk.arena.controllers.plugins.EssentialsController;
 import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.controllers.plugins.MobArenaInterface;
@@ -95,6 +94,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import mc.alk.arena.util.plugins.CombatTagUtil;
 
 /**
  *
@@ -1502,7 +1502,7 @@ public class BAExecutor extends CustomCommandExecutor {
         }
 
         /// Check for player in combat
-        if (CombatTagInterface.isTagged(player.getPlayer())
+        if (CombatTagUtil.isTagged(player.getPlayer())
                 || (HeroesController.enabled() && HeroesController.isInCombat(player.getPlayer()))) {
             if (showMessages) {
                 sendMessage(player, "&cYou are in combat!");
