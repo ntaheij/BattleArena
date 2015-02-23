@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.9.17</version>
+    <version>3.9.9.18</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,10 +14,6 @@
     <url>http://maven.apache.org</url>
     <!-- Locations for jar repositories -->
     <repositories>
-        <repository>
-            <id>battleplugins-repo</id>
-            <url>http://server.battleplugins.com/maven/repository/</url>
-        </repository>
         <repository>
             <id>rainbowcraft-repo</id>
             <url>http://rainbowcraft.sytes.net/maven/repository/</url>
@@ -123,7 +119,7 @@
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>worldeditutil</artifactId>
-            <version>1.1.4</version>
+            <version>1.1.5</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
@@ -134,7 +130,7 @@
         <dependency>
             <groupId>unknown.plugins</groupId>
             <artifactId>CombatTag</artifactId>
-            <version>6.0.2</version>
+            <version>6.3.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
