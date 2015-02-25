@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.BattleArenaController;
-import mc.alk.arena.controllers.BukkitInterface;
+import mc.alk.arena.controllers.BukkitServer;
 import mc.alk.arena.controllers.ParamController;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.MatchParams;
@@ -42,7 +42,7 @@ public class BATest extends TestCase {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
         plugin = new TestPlugin();
         ArenaType.register("arena", Arena.class, plugin);
-        BukkitInterface.setServer(new TestBukkitServer());
+        BukkitServer.setServer(new TestBukkitServer());
         plugin.onEnable();
 
         /// Set test server

@@ -3,7 +3,7 @@ package test.mc.alk.arena;
 import junit.framework.TestCase;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.BattleArenaController;
-import mc.alk.arena.controllers.BukkitInterface;
+import mc.alk.arena.controllers.BukkitServer;
 import mc.alk.arena.controllers.CompetitionController;
 import mc.alk.arena.objects.MatchParams;
 import mc.alk.arena.objects.RegisteredCompetition;
@@ -28,7 +28,7 @@ public class TestConfig extends TestCase{
 
         plugin = new TestPlugin();
 		ArenaType.register("arena", Arena.class, plugin);
-		BukkitInterface.setServer(new TestBukkitServer());
+		BukkitServer.setServer(new TestBukkitServer());
 		plugin.onEnable();
 	}
 

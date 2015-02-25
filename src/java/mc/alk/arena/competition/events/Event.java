@@ -1,5 +1,14 @@
 package mc.alk.arena.competition.events;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.competition.Competition;
@@ -37,21 +46,13 @@ import mc.alk.arena.util.Countdown.CountdownCallback;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PermissionsUtil;
-import mc.alk.arena.util.ServerUtil;
 import mc.alk.arena.util.TimeUtil;
+import mc.euro.bukkit.BukkitInterface;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 public abstract class Event extends Competition implements CountdownCallback, ArenaListener {
@@ -105,9 +106,8 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
     }
 
     public void addAllOnline() {
-        Player[] online = ServerUtil.getOnlinePlayers();
 
-        for (Player p: online){
+        for (Player p: BukkitInterface.getOnlinePlayers()){
             if (PermissionsUtil.isAdmin(p)) { /// skip admins (they are doin' importantz thingz)
                 continue;}
             ArenaTeam t = TeamController.createTeam(eventParams, BattleArena.toArenaPlayer(p));

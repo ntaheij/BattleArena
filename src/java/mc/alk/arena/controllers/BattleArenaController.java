@@ -54,6 +54,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import mc.euro.bukkit.BukkitInterface;
+
 public class BattleArenaController implements ArenaListener, Listener{
 
     private boolean stop = false;
@@ -137,9 +139,8 @@ public class BattleArenaController implements ArenaListener, Listener{
     }
 
     private void addAllOnline(MatchParams mp, Arena arena) {
-        Player[] online = ServerUtil.getOnlinePlayers();
         String cmd = mp.getCommand() +" add "+arena.getName();
-        for (Player p: online){
+        for (Player p: BukkitInterface.getOnlinePlayers()){
             PlayerUtil.doCommand(p, cmd);
         }
     }

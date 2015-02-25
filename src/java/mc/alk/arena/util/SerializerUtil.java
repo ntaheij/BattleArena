@@ -1,15 +1,5 @@
 package mc.alk.arena.util;
 
-import mc.alk.arena.Defaults;
-import mc.alk.arena.controllers.BukkitInterface;
-import mc.alk.arena.controllers.containers.AreaContainer;
-import mc.alk.arena.objects.spawns.FixedLocation;
-import mc.alk.arena.objects.spawns.SpawnLocation;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.configuration.ConfigurationSection;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +7,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+
+import mc.alk.arena.Defaults;
+import mc.alk.arena.controllers.containers.AreaContainer;
+import mc.alk.arena.objects.spawns.FixedLocation;
+import mc.alk.arena.objects.spawns.SpawnLocation;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 
 public class SerializerUtil {
 
@@ -97,7 +98,7 @@ public class SerializerUtil {
         if (split.length > 5){pitch = Float.valueOf(split[5]);}
         World world = null;
         if (w != null){
-            world = BukkitInterface.getWorld(w);}
+            world = Bukkit.getServer().getWorld(w);}
         if (world ==null){
             throw new IllegalArgumentException("Error parsing location, World '"+locstr+"' does not exist");}
         return new Location(world,x,y,z,yaw,pitch);

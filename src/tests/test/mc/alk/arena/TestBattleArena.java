@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.BattleArenaController;
-import mc.alk.arena.controllers.BukkitInterface;
+import mc.alk.arena.controllers.BukkitServer;
 import mc.alk.arena.controllers.ParamController;
 import mc.alk.arena.executors.BAExecutor;
 import mc.alk.arena.objects.ArenaPlayer;
@@ -40,7 +40,7 @@ public class TestBattleArena extends TestCase{
         Defaults.TESTSERVER = true;
 
         ArenaType.register("arena", Arena.class, plugin);
-		BukkitInterface.setServer(new TestBukkitServer());
+		BukkitServer.setServer(new TestBukkitServer());
 		plugin.onEnable();
 
 

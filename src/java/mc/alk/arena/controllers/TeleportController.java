@@ -18,8 +18,8 @@ import mc.alk.arena.util.InventoryUtil;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.PlayerUtil;
-import mc.alk.arena.util.ServerUtil;
 import mc.alk.arena.util.plugins.CombatTagUtil;
+import mc.euro.bukkit.BukkitInterface;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -198,7 +198,7 @@ public class TeleportController implements Listener {
         List<Player> res = new ArrayList<Player>();
         final int d2 = distance * distance;
         final UUID uid = player.getWorld().getUID();
-        for (Player p : ServerUtil.getOnlinePlayers()) {
+        for (Player p : BukkitInterface.getOnlinePlayers()) {
             try {
                 if (p.getWorld().getUID() == uid
                         && p != player && p.getLocation().distanceSquared(player.getLocation()) <= d2) {

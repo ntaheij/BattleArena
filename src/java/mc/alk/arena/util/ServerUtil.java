@@ -1,16 +1,19 @@
 package mc.alk.arena.util;
 
+import java.io.File;
+import java.util.Collection;
+import java.util.Set;
+import java.util.UUID;
+
 import mc.alk.arena.Defaults;
 import mc.alk.plugin.updater.Version;
 import mc.alk.virtualPlayer.VirtualPlayers;
+import mc.euro.bukkit.BukkitInterface;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.util.Set;
-import java.util.UUID;
 
 
 public class ServerUtil {
@@ -63,8 +66,8 @@ public class ServerUtil {
         if (Defaults.DEBUG_VIRTUAL){foundPlayer = VirtualPlayers.getPlayer(name);}
         if (foundPlayer != null) {
             return foundPlayer;}
-        Player[] online = Bukkit.getOnlinePlayers();
-		if (Defaults.DEBUG_VIRTUAL){online = VirtualPlayers.getOnlinePlayers();}
+        Collection<? extends Player> online = BukkitInterface.getOnlinePlayers();
+		// if (Defaults.DEBUG_VIRTUAL){online = VirtualPlayers.getOnlinePlayers();}
 
 		for (Player player : online) {
 			String playerName = player.getName();
@@ -105,7 +108,7 @@ public class ServerUtil {
 		if (Defaults.DEBUG_VIRTUAL){
 			return VirtualPlayers.getOnlinePlayers();
 		} else {
-			return Bukkit.getOnlinePlayers();
+			return BukkitInterface.getOnlinePlayers().toArray(new Player[BukkitInterface.getOnlinePlayers().size()]);
 		}
 	}
 
