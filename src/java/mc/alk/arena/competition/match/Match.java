@@ -789,7 +789,7 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
      * @param arenaListener ArenaListener
      */
     @Override
-    public void addArenaListener(ArenaListener arenaListener){
+    public final void addArenaListener(ArenaListener arenaListener){
         methodController.addListener(arenaListener);
         /// update listener to ONCREATE if we are already opened
         if (state.ordinal() >= MatchState.ONCREATE.ordinal()) {
