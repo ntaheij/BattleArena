@@ -10,7 +10,7 @@ import mc.alk.arena.controllers.APIRegistrationController;
 import mc.alk.arena.controllers.ArenaEditor;
 import mc.alk.arena.controllers.BAEventController;
 import mc.alk.arena.controllers.BattleArenaController;
-import mc.alk.arena.controllers.BukkitInterface;
+import mc.alk.arena.controllers.BukkitServer;
 import mc.alk.arena.controllers.CompetitionController;
 import mc.alk.arena.controllers.DuelController;
 import mc.alk.arena.controllers.EventController;
@@ -73,6 +73,7 @@ import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.plugin.updater.FileUpdater;
 import mc.alk.plugin.updater.PluginUpdater;
+import mc.euro.bukkit.BukkitInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -121,7 +122,7 @@ public class BattleArena extends JavaPlugin {
         ConsoleCommandSender sender = Bukkit.getConsoleSender();
         MessageUtil.sendMessage(sender, "&4[" + pluginname + "] &6v" + version + "&f enabling!");
 
-        BukkitInterface.setServer(Bukkit.getServer()); /// Set the server
+        BukkitServer.setServer(Bukkit.getServer()); /// Set the server
         arenaController = new BattleArenaController(signUpdateListener);
 
         /// Create our plugin folder if its not there
@@ -744,5 +745,9 @@ public class BattleArena extends JavaPlugin {
      */
     public ArenaEditorExecutor getArenaEditorExecutor() {
         return arenaEditorExecutor;
+    }
+    
+    public static Collection<? extends Player> getOnlinePlayers() {
+        return BukkitInterface.getOnlinePlayers();
     }
 }
