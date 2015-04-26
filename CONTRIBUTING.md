@@ -47,6 +47,6 @@ Please post this Bug Report [HERE](https://github.com/BattlePluginsDev/BattleAre
 
 ##Links
 ------------
-* [IRC](http://irc.battleplugins.org/Git) (#BattleDev on irc.esper.net)
+* [IRC](http://irc.battleplugins.org/Git) (#BattleDev or #BattlePlugins on irc.esper.net)
 * [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battlearena2/) (BattleArena on Bukkit!)
 * [Spigot Page](http://spigotmc.org/resources/battle-arena.2164/) (BattleArena on Spigot!)
