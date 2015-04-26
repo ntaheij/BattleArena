@@ -1,0 +1,54 @@
+# ![BattleArena](http://dev.bukkit.org/media/images/44/472/BattleArena_Large.png)
+==========
+
+## Need to Report Something?
+
+### Bug Reports
+------------
+Have you found a bug or something you belive shouldn't be?
+
+Make sure your Bug hasn't already been mentioned in a report [HERE](https://github.com/BattlePluginsDev/BattleArena/issues/).
+
+#### It is already Mentioned:
+
+Please add whatever **additional details** you may know about that you belive *may* help us fix it.
+
+! (http://i.imgur.com/4UGlfAV.png "Subscribe")
+
+
+#### It hasn't been Mentioned yet:
+
+Please start your report following **this** format *only*:
+
+```
+Platform: (Spigot,  Bukkit, CraftBukkit, etc)
+Battle Arena Version: (#.#.#.#)
+World Guard Version:
+World Edit Version:
+Permission Plugin:
+Other Plugins: (anything you think might be interfering with BA)
+Description:
+Info needed for Replication: (anything you think we may need when attempting to replicate this bug)
+```
+
+Please post this Bug Report [HERE](https://github.com/BattlePluginsDev/BattleArena/issues/new), **always make sure your issue hasn't been mentioned already in another Bug Report**.
+
+**Note: Only reports written following this format will be followed through!**
+**Note 2: We are always idle on Esper IRC and you may come and chat with us at anytime using [this link](http://irc.battleplugins.org/Git). (we may not answer right away as we are probably busy)
+------------
+
+###Feature Requests
+------------
+
+*WIP*
+
+###Need any other Help?
+------------
+
+*WIP*
+
+##Links
+------------
+* [IRC](http://irc.battleplugins.org/Git) (#BattleDev on irc.esper.net)
+* [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battlearena2/) (BattleArena on Bukkit!)
+* [Spigot Page](http://spigotmc.org/resources/battle-arena.2164/) (BattleArena on Spigot!)
