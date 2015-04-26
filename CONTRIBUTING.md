@@ -43,6 +43,8 @@ Please post this Bug Report [HERE](https://github.com/BattlePluginsDev/BattleAre
 ###Need any other Help?
 ------------
 
+Go on IRC! :)
+
 *WIP*
 
 ##Links
