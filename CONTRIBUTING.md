@@ -11,7 +11,8 @@ Make sure your Bug hasn't already been mentioned in a report [HERE](https://gith
 Please add whatever **additional details** you may know about that you belive *may* help us fix it.
 
 If you wish to be updated about development, you can always:
-! [Subscribing](http://i.imgur.com/4UGlfAV.png "Subscribe")
+![SubscribingJPG](http://i.imgur.com/4UGlfAV.png "Subscribing to Report")
+
 
 
 #### It hasn't been Mentioned yet:
