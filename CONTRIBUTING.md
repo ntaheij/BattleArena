@@ -6,7 +6,7 @@ Have you found a bug or something you belive shouldn't be?
 
 Make sure your Bug hasn't already been mentioned in a report [HERE](https://github.com/BattlePluginsDev/BattleArena/issues/).
 
-#### It is already Mentioned:
+#### If it has already been Mentioned:
 
 Please add whatever **additional details** you may know about that you belive *may* help us fix it.
 
@@ -14,7 +14,7 @@ If you wish to be updated about development, you can always:
 
 ![SubscribingJPG](http://i.imgur.com/4UGlfAV.png "Subscribing to Report")
 
-#### It hasn't been Mentioned yet:
+#### If it hasn't been Mentioned yet:
 
 Please start your report following **this** format *only*:
 
