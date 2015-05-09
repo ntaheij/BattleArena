@@ -159,7 +159,7 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
     int neededTeams; /// How many teams do we need to properly start this match
     int nLivesPerPlayer = 1; /// This will change as victory conditions are added
     final ArenaScoreboard scoreboard;
-    final MatchMessager mc; /// Our message instance
+    MatchMessager mc; /// Our message instance
     AbstractJoinHandler joinHandler;
     final ArenaObjective defaultObjective;
     ArenaPreviousState oldArenaState;
