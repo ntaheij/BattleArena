@@ -485,10 +485,11 @@ public class ArenaSerializer extends BaseConfig{
             si = new ChestSpawn(loc.getBlock(), false);
             Material mat = Material.valueOf(cs.getString("spawn"));
             ((BlockSpawn)si).setMaterial(mat);
-            List<ItemStack> items = InventoryUtil.getItemList(cs,"giveItems");
-            if (items == null)
-                items = new ArrayList<ItemStack>();
-            ((ChestSpawn)si).setItems(items);
+            List<ItemStack> giveItems = InventoryUtil.getItemList(cs,"giveItems"); // new section
+            List<ItemStack> items = InventoryUtil.getItemList(cs, "items"); // old section
+            items = (items != null) ? items : new ArrayList<ItemStack>();
+            giveItems = (giveItems == null) ? items : giveItems;
+            ((ChestSpawn)si).setItems(giveItems);
         } else {
             List<SpawnInstance> spawns = SpawnSerializer.parseSpawnable(strings);
             if (spawns == null || spawns.isEmpty())
@@ -531,7 +532,7 @@ public class ArenaSerializer extends BaseConfig{
             ItemStack[] items = bs.getItems();
             spawnMap.put("type", "chest");
             if (items != null) {
-                spawnMap.put("items", ConfigSerializer.getItems(Arrays.asList(items)));
+                spawnMap.put("giveItems", ConfigSerializer.getItems(Arrays.asList(items)));
             }
         } else if (si instanceof BlockSpawn){
             BlockSpawn bs = (BlockSpawn) si;
