@@ -63,7 +63,12 @@ Links
 IRC Help:
 * [#BattleDev](http://battleplugins.org/Developer/Git): For all developer (API and Coding) help and support, go here!
 * [#BattlePlugins](http://battleplugins.org/Support/Git): For all Plugin related help and support questions, go here!
-* [#BattleBotDev](http://battleplugins.org/Bot/): For all Plugin related help and support questions, go here!
+* [#BattleBotDev](http://battleplugins.org/Bot/): For all BattleBot Development, go here!
+
 Battle Arena Links:
 * [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battlearena2/) (BattleArena on Bukkit!)
 * [Spigot Page](http://spigotmc.org/resources/battle-arena.2164/) (BattleArena on Spigot!)
+
+Battle Tracker Links:
+* [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battletracker2/) (BattleTracker on Bukkit!)
+* [Spigot Page](www.spigotmc.org/resources/battletracker.2165/) (BattleTracker on Spigot!)
