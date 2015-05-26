@@ -25,7 +25,7 @@ public enum MatchState implements CompetitionTransition {
     ONSTART("onStart"), INGAME("inGame"),
     ONVICTORY("onVictory"), INVICTORY("inVictory"),
     ONCOMPLETE("onComplete"), ONCANCEL("onCancel"), ONFINISH("onFinish"),
-    ONSPAWN("onSpawn"), ONDEATH("onDeath"),
+    ONSPAWN("onSpawn"), ONDEATH("onDeath"), ONKILL("onKill"),
     WINNERS("winners"), DRAWERS("drawers"), LOSERS("losers"),
     ONMATCHINTERVAL("onMatchInterval"), ONMATCHTIMEEXPIRED("onMatchTimeExpired"),
     ONCOUNTDOWNTOEVENT("onCountdownToEvent"),
