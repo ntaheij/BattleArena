@@ -183,7 +183,7 @@ public class BAConfigSerializer extends BaseConfig {
         Defaults.SECONDS_TO_LOOT = cs.getInt("secondsToLoot", Defaults.SECONDS_TO_LOOT);
         defaults.setSecondsToLoot(Defaults.SECONDS_TO_LOOT);
 
-        Defaults.MATCH_TIME = cs.getInt("matchTime", Defaults.MATCH_TIME);
+        Defaults.MATCH_TIME = ConfigSerializer.toPositiveSize(cs.getString("matchTime", "infinite"));
         defaults.setMatchTime(Defaults.MATCH_TIME);
 
         Defaults.MATCH_UPDATE_INTERVAL = cs.getInt("matchUpdateInterval", Defaults.MATCH_UPDATE_INTERVAL);
