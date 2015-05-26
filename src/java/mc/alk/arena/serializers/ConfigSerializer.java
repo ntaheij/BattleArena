@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.ArenaClassController;
@@ -24,6 +25,7 @@ import mc.alk.arena.objects.ArenaClass;
 import mc.alk.arena.objects.ArenaParams;
 import mc.alk.arena.objects.ArenaSize;
 import mc.alk.arena.objects.CommandLineString;
+import mc.alk.arena.objects.CompetitionSize;
 import mc.alk.arena.objects.CompetitionState;
 import mc.alk.arena.objects.JoinType;
 import mc.alk.arena.objects.MatchParams;
@@ -48,6 +50,7 @@ import mc.alk.arena.util.InventoryUtil;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MinMax;
 import mc.alk.arena.util.SerializerUtil;
+
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -393,11 +396,16 @@ public class ConfigSerializer extends BaseConfig{
             mp.setSecondsTillMatch( cs.getInt("secondsTillMatch",Defaults.SECONDS_TILL_MATCH));
 
         if (cs.contains("matchTime"))
-            mp.setMatchTime(toPositiveSize(cs.getString("matchTime"), Defaults.MATCH_TIME));
+            mp.setMatchTime(toPositiveSize(cs.getString("matchTime")));
         if (cs.contains("matchUpdateInterval"))
             mp.setIntervalTime(cs.getInt("matchUpdateInterval",Defaults.MATCH_UPDATE_INTERVAL));
     }
-
+    
+    /** Zero & Negative should be interpreted as infinite: Integer.MAX_VALUE */
+    public static int toPositiveSize(String value) {
+        return toPositiveSize(value, CompetitionSize.MAX);
+    }
+    
     public static int toPositiveSize(String value, int defValue) {
         int s = ArenaSize.toInt(value, defValue);
         return s <= 0 ? defValue : s;
@@ -748,7 +756,7 @@ public class ConfigSerializer extends BaseConfig{
                 params.getTimeBetweenRounds() != null || params.getIntervalTime() != null){
             ConfigurationSection cs = maincs.createSection("times");
             if (params.getSecondsTillMatch() != null) cs.set("secondsTillMatch", params.getSecondsTillMatch());
-            if (params.getMatchTime() != null) cs.set("matchTime", params.getMatchTime());
+            if (params.getMatchTime() != null) cs.set("matchTime", ArenaSize.toString(params.getMatchTime()));
             if (params.getSecondsToLoot() != null) cs.set("secondsToLoot", params.getSecondsToLoot());
 
             if (params.getTimeBetweenRounds() != null) cs.set("timeBetweenRounds", params.getTimeBetweenRounds());
