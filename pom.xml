@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.10</version>
+    <version>3.9.10.1</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -317,7 +317,7 @@
                 <version>2.9.1</version>
                 <configuration>
                     <links>
-                        <link>http://jd.bukkit.org/dev/apidocs/</link>
+                        <link>https://hub.spigotmc.org/javadocs/bukkit/</link>
                     </links>
                 </configuration>
             </plugin>
