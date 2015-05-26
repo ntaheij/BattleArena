@@ -5,6 +5,7 @@ import mc.alk.arena.competition.match.Match;
 import mc.alk.arena.controllers.plugins.McMMOController;
 import mc.alk.arena.controllers.plugins.TagAPIController;
 import mc.alk.arena.listeners.PlayerHolder;
+import mc.alk.arena.listeners.competition.ArenaPlayerKillListener;
 import mc.alk.arena.listeners.competition.BlockBreakListener;
 import mc.alk.arena.listeners.competition.BlockPlaceListener;
 import mc.alk.arena.listeners.competition.DamageListener;
@@ -49,6 +50,9 @@ public class ListenerAdder {
             holder.addArenaListener(new PotionListener(holder));}
         if (McMMOController.enabled() && McMMOController.hasDisabledSkills()){
             holder.addArenaListener(McMMOController.createNewListener());}
+        if (tops.getAllOptions().containsKey(MatchState.ONKILL)) {
+            holder.addArenaListener(new ArenaPlayerKillListener(holder.getParams()));
+        }
         if (tops.hasAnyOption(TransitionOption.WGNOLEAVE)) {
             ArenaRegion region = null;
             if (holder instanceof Match) {
