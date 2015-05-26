@@ -1,10 +1,12 @@
 package mc.alk.arena;
 
+import java.io.File;
+
+import mc.alk.arena.objects.CompetitionSize;
 import mc.alk.plugin.updater.PluginUpdater.AnnounceUpdateOption;
 import mc.alk.plugin.updater.PluginUpdater.UpdateOption;
-import org.bukkit.Material;
 
-import java.io.File;
+import org.bukkit.Material;
 
 public class Defaults {
 
@@ -30,7 +32,7 @@ public class Defaults {
     public static int SECONDS_TILL_MATCH = 15;
     public static int SECONDS_TO_LOOT = 15;
 
-    public static int MATCH_TIME = 2 * 60; /// matchEndTime
+    public static int MATCH_TIME = CompetitionSize.MAX; /// matchEndTime
     public static int MATCH_UPDATE_INTERVAL = 30;
     public static int JOIN_CUTOFF_TIME = 15;
 
