@@ -71,7 +71,7 @@ Battle Arena Links:
 
 Battle Tracker Links:
 * [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battletracker2/) (BattleTracker on Bukkit!)
-* [Spigot Page](www.spigotmc.org/resources/battletracker.2165/) (BattleTracker on Spigot!)
+* [Spigot Page](http://spigotmc.org/resources/battletracker.2165/) (BattleTracker on Spigot!)
 
 Other Links:
 * [BattleWiki](http://wiki.battleplugins.org) (Support Wiki)
