@@ -5,21 +5,9 @@ import mc.alk.arena.Defaults;
 import mc.alk.arena.competition.Competition;
 import mc.alk.arena.competition.events.Event;
 import mc.alk.arena.competition.match.Match;
-import mc.alk.arena.controllers.ArenaAlterController;
+import mc.alk.arena.controllers.*;
 import mc.alk.arena.controllers.ArenaAlterController.ArenaOptionPair;
 import mc.alk.arena.controllers.ArenaAlterController.ChangeType;
-import mc.alk.arena.controllers.ArenaClassController;
-import mc.alk.arena.controllers.BAEventController;
-import mc.alk.arena.controllers.CompetitionController;
-import mc.alk.arena.controllers.DuelController;
-import mc.alk.arena.controllers.EventController;
-import mc.alk.arena.controllers.MoneyController;
-import mc.alk.arena.controllers.ParamAlterController;
-import mc.alk.arena.controllers.ParamController;
-import mc.alk.arena.controllers.PlayerController;
-import mc.alk.arena.controllers.RoomController;
-import mc.alk.arena.controllers.TeamController;
-import mc.alk.arena.controllers.WatchController;
 import mc.alk.arena.controllers.containers.LobbyContainer;
 import mc.alk.arena.controllers.containers.RoomContainer;
 import mc.alk.arena.controllers.joining.AbstractJoinHandler;
@@ -34,19 +22,7 @@ import mc.alk.arena.events.players.ArenaPlayerJoinEvent;
 import mc.alk.arena.events.players.ArenaPlayerLeaveEvent;
 import mc.alk.arena.listeners.PlayerHolder;
 import mc.alk.arena.listeners.competition.InArenaListener;
-import mc.alk.arena.objects.ArenaClass;
-import mc.alk.arena.objects.ArenaLocation;
-import mc.alk.arena.objects.ArenaPlayer;
-import mc.alk.arena.objects.ArenaSize;
-import mc.alk.arena.objects.CompetitionSize;
-import mc.alk.arena.objects.CompetitionState;
-import mc.alk.arena.objects.ContainerState;
-import mc.alk.arena.objects.Duel;
-import mc.alk.arena.objects.LocationType;
-import mc.alk.arena.objects.MatchParams;
-import mc.alk.arena.objects.MatchState;
-import mc.alk.arena.objects.PlayerSave;
-import mc.alk.arena.objects.StateGraph;
+import mc.alk.arena.objects.*;
 import mc.alk.arena.objects.arenas.Arena;
 import mc.alk.arena.objects.arenas.ArenaControllerInterface;
 import mc.alk.arena.objects.arenas.ArenaType;
@@ -54,13 +30,8 @@ import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.objects.joining.TeamJoinObject;
 import mc.alk.arena.objects.messaging.AnnouncementOptions;
 import mc.alk.arena.objects.messaging.Channel;
-import mc.alk.arena.objects.options.AlterParamOption;
-import mc.alk.arena.objects.options.DuelOptions;
+import mc.alk.arena.objects.options.*;
 import mc.alk.arena.objects.options.DuelOptions.DuelOption;
-import mc.alk.arena.objects.options.EventOpenOptions;
-import mc.alk.arena.objects.options.JoinOptions;
-import mc.alk.arena.objects.options.StateOptions;
-import mc.alk.arena.objects.options.TransitionOption;
 import mc.alk.arena.objects.pairs.JoinResult;
 import mc.alk.arena.objects.pairs.ParamAlterOptionPair;
 import mc.alk.arena.objects.pairs.TransitionOptionTuple;
@@ -69,15 +40,9 @@ import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.objects.teams.FormingTeam;
 import mc.alk.arena.objects.teams.TeamFactory;
 import mc.alk.arena.objects.teams.TeamIndex;
-import mc.alk.arena.util.InventoryUtil;
+import mc.alk.arena.util.*;
 import mc.alk.arena.util.InventoryUtil.PInv;
-import mc.alk.arena.util.Log;
-import mc.alk.arena.util.MessageUtil;
-import mc.alk.arena.util.MinMax;
-import mc.alk.arena.util.PermissionsUtil;
-import mc.alk.arena.util.ServerUtil;
-import mc.alk.arena.util.TeamUtil;
-import mc.alk.arena.util.TimeUtil;
+import mc.alk.arena.util.plugins.CombatTagUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -86,15 +51,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import mc.alk.arena.util.plugins.CombatTagUtil;
+import java.util.*;
 
 /**
  *
@@ -1219,9 +1176,14 @@ public class BAExecutor extends CustomCommandExecutor {
         }
         Double wager = (Double) duelOptions.getOptionValue(DuelOption.MONEY);
         if (wager != null) {
-            if (MoneyController.balance(player.getName()) < wager) {
+            if (wager >= 0) {
+                if (MoneyController.balance(player.getName()) < wager) {
+                    return sendMessage(player,
+                            "&4[Duel] You can't afford that wager!");
+                }
+            } else {
                 return sendMessage(player,
-                        "&4[Duel] You can't afford that wager!");
+                        "&4[Duel] The wager must be positive");
             }
         }
         if (!duelOptions.matches(player, mp)) {
