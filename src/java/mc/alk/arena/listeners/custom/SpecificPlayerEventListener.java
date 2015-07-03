@@ -101,7 +101,7 @@ class SpecificPlayerEventListener extends BaseEventListener {
         if (Defaults.DEBUG_EVENTS) System.out.println("    removing all listeners  listener="+rl);
         synchronized(listeners){
             for (UUID name : listeners.keySet()){
-                listeners.remove(name, rl);
+                listeners.removeValue(name, rl);
             }
         }
     }
@@ -124,7 +124,7 @@ class SpecificPlayerEventListener extends BaseEventListener {
      * @return player was removed from collection
      */
     public boolean removeSPListener(UUID p, RListener spl) {
-        final boolean removed = listeners.remove(p,spl);
+        final boolean removed = listeners.removeValue(p,spl);
         if (removed && !hasListeners() && isListening()){
             stopListening();}
         return removed;
