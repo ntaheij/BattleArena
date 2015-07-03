@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.10.2</version>
+    <version>3.9.10.3</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -47,6 +47,18 @@
         </dependency>
         -->
         <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>mc.euro</groupId>
+            <artifactId>BukkitInterface</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>MCApi</artifactId>
             <version>2.0</version>
@@ -68,12 +80,6 @@
             <groupId>mc.alk</groupId>
             <artifactId>BattleTracker</artifactId>
             <version>2.5.8.9</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -111,12 +117,6 @@
             <artifactId>VirtualPlayers</artifactId>
             <version>1.6.3</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>mc.euro</groupId>
-            <artifactId>BukkitInterface</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
