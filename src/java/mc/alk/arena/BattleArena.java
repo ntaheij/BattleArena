@@ -73,6 +73,7 @@ import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.plugin.updater.FileUpdater;
 import mc.alk.plugin.updater.PluginUpdater;
+import mc.battleplugins.api.BattlePluginsAPI;
 import mc.euro.bukkit.BukkitInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -107,6 +108,7 @@ public class BattleArena extends JavaPlugin {
     private static final EventScheduleSerializer eventSchedulerSerializer = new EventScheduleSerializer();
     private static final SignSerializer signSerializer = new SignSerializer();
     private static final int bukkitId = 85347; // https://api.curseforge.com/servermods/projects?search=battlearena
+    public BattlePluginsAPI bpapi;
 
     /**
      * enable the BattleArena plugin
@@ -270,6 +272,7 @@ public class BattleArena extends JavaPlugin {
                     es.start();
             }
         });
+        bpapi = new BattlePluginsAPI();
         PluginUpdater.update(this, bukkitId, this.getFile(),
                 Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
         Log.info("&4[" + pluginname + "] &6v" + BattleArena.version + "&f enabled!");
@@ -308,6 +311,14 @@ public class BattleArena extends JavaPlugin {
     public static void update(final Plugin plugin, final int bukkitId, final File file,
                               final UpdateOption updateOption, final AnnounceUpdateOption announceOption) {
         new APIRegistrationController().update(plugin, bukkitId, file, updateOption, announceOption);
+    }
+
+    /**
+     * Return the BattlePluginsAPI that is used by BattleArena
+     *@return BattlePluginsAPI
+     */
+    public BattlePluginsAPI getBattlePluginsAPI() {
+        return bpapi;
     }
 
     /**
