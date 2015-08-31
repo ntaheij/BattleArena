@@ -220,13 +220,17 @@ public class BAConfigSerializer extends BaseConfig {
         Defaults.ALLOW_PLAYER_EVENT_CREATION = cs.getBoolean("allowPlayerCreation", Defaults.ALLOW_PLAYER_EVENT_CREATION);
 
         Defaults.ENABLE_PLAYER_READY_BLOCK = cs.getBoolean("enablePlayerReadyBlock", Defaults.ENABLE_PLAYER_READY_BLOCK);
+        
+        String readyBlock = cs.getString("readyBlockType", Defaults.READY_BLOCK.name()).toUpperCase();
+        Material value = null;
         try {
-            Material value = Material.matchMaterial(cs.getString("readyBlockType", Defaults.READY_BLOCK.name()).toUpperCase());
-            if (value != null) {
-                Defaults.READY_BLOCK = value;
-            }
-        } catch (Exception e) { /* do nothing*/
-
+            int x = Integer.valueOf(readyBlock);
+            value = Material.getMaterial(x);
+        } catch (NumberFormatException ex) {
+            value = Material.matchMaterial(readyBlock);
+        }
+        if (value != null) {
+            Defaults.READY_BLOCK = value;
         }
 
         defaults.setWaitroomClosedWhileRunning(true);
