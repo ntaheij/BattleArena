@@ -47,17 +47,12 @@
         </dependency>
         -->
         <dependency>
-            <groupId>mc.battleplugins</groupId>
-            <artifactId>BattlePluginsAPI</artifactId>
-            <version>1.0.8</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Libraries that are shaded in -->
         <dependency>
             <groupId>mc.euro</groupId>
             <artifactId>BukkitInterface</artifactId>
@@ -66,9 +61,21 @@
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
-            <artifactId>MCApi</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
+            <artifactId>worldeditutil</artifactId>
+            <version>1.1.5</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>mc.alk</groupId>
+            <artifactId>BattleScoreboardAPI</artifactId>
+            <version>1.1.8.5</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>mc.battleplugins</groupId>
+            <artifactId>BattlePluginsAPI</artifactId>
+            <version>1.0.8</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
@@ -78,10 +85,11 @@
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
-            <artifactId>BattleScoreboardAPI</artifactId>
-            <version>1.1.8.5</version>
+            <artifactId>MCApi</artifactId>
+            <version>2.0</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Runtime dependencies -->
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleTracker</artifactId>
@@ -123,11 +131,6 @@
             <artifactId>VirtualPlayers</artifactId>
             <version>1.6.3</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>mc.alk</groupId>
-            <artifactId>worldeditutil</artifactId>
-            <version>1.1.5</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
