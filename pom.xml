@@ -19,6 +19,10 @@
             <url>http://repo.bukkit.org/content/groups/public</url>
         </repository>
         <repository>
+            <id>rainbowcraft-repo</id>
+            <url>http://rainbowcraft.sytes.net/maven/repository/</url>
+        </repository>
+        <repository>
             <id>md_5-snapshots</id>
             <url>http://repo.md-5.net/content/repositories/snapshots/</url>
         </repository>
@@ -345,4 +349,10 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>rainbowcraft-repo</id>
+            <url>scp://rainbowcraft.sytes.net/var/www/maven/repository</url>
+        </repository>
+    </distributionManagement>
 </project>
