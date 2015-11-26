@@ -4,7 +4,7 @@ import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.teams.ArenaTeam;
 
 /**
- * Signifies that the player has typed the command to leave the competition
+ * Signifies that the player has typed the command to join the competition
  */
 public class ArenaPlayerEnterMatchEvent extends ArenaPlayerEvent{
 	final ArenaTeam team;
