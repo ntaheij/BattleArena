@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.10.5</version>
+    <version>3.9.10.6</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,6 +57,12 @@
             <scope>provided</scope>
         </dependency>
         <!-- Libraries that are shaded in -->
+        <dependency>
+            <groupId>mc.alk</groupId>
+            <artifactId>BattleBukkitLib</artifactId>
+            <version>2.3.1</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>mc.euro</groupId>
             <artifactId>BukkitInterface</artifactId>
@@ -283,6 +289,14 @@
                         <configuration>
                             <relocations>
                                 <relocation>
+                                    <pattern>mc.alk.util</pattern>
+                                    <shadedPattern>mc.alk.arena.battlelib</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>mc.euro.bukkit</pattern>
+                                    <shadedPattern>mc.alk.arena.bukkit</shadedPattern>
+                                </relocation>
+                                <relocation>
                                     <pattern>mc.alk.plugin.updater</pattern>
                                     <shadedPattern>mc.alk.mc.updater</shadedPattern>
                                 </relocation>
@@ -290,18 +304,15 @@
                                     <pattern>mc.euro.version</pattern>
                                     <shadedPattern>mc.alk.arena.version</shadedPattern>
                                 </relocation>
-                                <relocation>
-                                    <pattern>mc.euro.bukkit</pattern>
-                                    <shadedPattern>mc.alk.arena.bukkit</shadedPattern>
-                                </relocation>
                             </relocations>
 
                             <artifactSet>
                                 <includes>
-                                    <include>mc.battleplugins:BattlePluginsAPI</include>
-                                    <include>mc.alk:BattleScoreboardAPI</include>
+                                    <include>mc.alk:BattleBukkitLib</include>
                                     <include>mc.alk:BattlePluginUpdater</include>
+                                    <include>mc.alk:BattleScoreboardAPI</include>
                                     <include>mc.alk:worldeditutil</include>
+                                    <include>mc.battleplugins:BattlePluginsAPI</include>
                                     <include>mc.euro:BukkitInterface</include>
                                     <include>mc.euro:Version</include>
                                 </includes>
