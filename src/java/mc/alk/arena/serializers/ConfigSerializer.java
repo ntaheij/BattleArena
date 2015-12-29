@@ -944,7 +944,7 @@ public class ConfigSerializer extends BaseConfig{
     public static Map<String,Object> getArenaClasses(Map<Integer, ArenaClass> classes) {
         HashMap<String,Object> map = new HashMap<String, Object>();
         for (Integer teamNumber: classes.keySet()){
-            String teamName = teamNumber == ArenaClass.DEFAULT.intValue() ? "default" : "team" + teamNumber;
+            String teamName = teamNumber == ArenaClass.DEFAULT.intValue() ? "default" : "team" + (teamNumber + 1);
             map.put(teamName, classes.get(teamNumber).getName());
         }
         return map;
