@@ -48,13 +48,14 @@ public class TeleportLocationController {
     public static void teleportOut(PlayerHolder am, ArenaTeam team,
             ArenaPlayer player, StateOptions mo) {
         MatchParams mp = am.getParams();
-        Location loc;
+        Location loc = null;
         ArenaLocation src = player.getCurLocation();
         final LocationType type = LocationType.HOME;
         if (mo.hasOption(TransitionOption.TELEPORTTO)) {
             loc = mo.getTeleportToLoc();
         } else {
-            loc = player.getOldLocation().getLocation();
+            SpawnLocation sloc = player.getOldLocation();
+            if (sloc != null) loc = sloc.getLocation(); // Prevent NPE
             /// TODO
             /// This is a bit of a kludge, sometimes we are "teleporting them out"
             /// when they are already out... so need to rethink how this can happen and should it
