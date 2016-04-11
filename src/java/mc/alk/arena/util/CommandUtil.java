@@ -41,7 +41,7 @@ public class CommandUtil {
             @Override
             public boolean apply(String command) {
                 if (command.startsWith("/bad")
-                        || command.startsWith("/battleArenaDebug")) {
+                        || command.startsWith("/battleArenaDebug".toLowerCase())) {
                     return true;
                 }
                 for (String c : enabledCommands) {
