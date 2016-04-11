@@ -32,7 +32,16 @@ public class CommandUtil {
 
             @Override
             public boolean apply(String command) {
-                return (allDisabled || disabledCommands.contains(command));
+                return (allDisabled || disabledCommandsContains(command));
+            }
+            
+            public boolean disabledCommandsContains(String command) {
+                for (String c : disabledCommands) {
+                    if (command.startsWith(c)) {
+                        return true;
+                    }
+                }
+                return false;
             }
         };
         
