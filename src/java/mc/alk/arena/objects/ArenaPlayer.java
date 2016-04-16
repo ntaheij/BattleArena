@@ -79,7 +79,7 @@ public class ArenaPlayer {
     }
 
     public String getName() {
-        return player.getName();
+        return (player != null) ? player.getName() : null;
     }
 
     public void reset() {

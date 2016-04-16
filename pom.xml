@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.10.13</version>
+    <version>3.9.10.14</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -357,6 +357,9 @@
                 <configuration>
                     <tasks>
                         <copy file="target/BattleArena.jar" tofile="../server/plugins/BattleArena.jar"/>
+                        <copy file="target/BattleArena.jar" tofile="../server/plugins-1.9/BattleArena.jar"/>
+                        <copy file="target/BattleArena.jar" tofile="../server/plugins-1.8/BattleArena.jar"/>
+                        <copy file="target/BattleArena.jar" tofile="../server/plugins-1.7/BattleArena.jar"/>
                     </tasks>
                 </configuration>
                 <executions>
