@@ -428,7 +428,12 @@ public class InventoryUtil {
 	private static void addArmorToInventory(PlayerInventory inv,
 			ItemStack itemStack, int stockAmount, boolean ignoreCustomHelmet, Color color) {
 		Material itemType =itemStack.getType();
-		final boolean isHelmet = armor.get(itemType).type == ArmorType.HELM;
+		boolean isHelmet = false; // armor.get(itemType).type == ArmorType.HELM;
+                try {
+                    isHelmet = armor.get(itemType).type == ArmorType.HELM;
+                } catch (NullPointerException handled) {
+                    isHelmet = false;
+                }
 		/// no item: add to armor slot
 		/// item better: add old to inventory, new to armor slot
 		/// item notbetter: add to inventory
