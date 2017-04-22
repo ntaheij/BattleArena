@@ -78,3 +78,5 @@ Other Links:
 * [Ci Server](http://ci.battleplugins.org) (Jenkins Build Server)
 * [Battle Plugin Donations](http://donate.battleplugins.org) (Donation link)
 * [JavaDocs](http://null) (WIP)
+
+Minor Edit
