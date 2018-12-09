@@ -1,5 +1,18 @@
 package mc.alk.arena.competition.match;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.competition.Competition;
@@ -10,12 +23,12 @@ import mc.alk.arena.controllers.ParamController;
 import mc.alk.arena.controllers.PlayerStoreController;
 import mc.alk.arena.controllers.RewardController;
 import mc.alk.arena.controllers.Scheduler;
-import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.controllers.containers.GameManager;
 import mc.alk.arena.controllers.joining.AbstractJoinHandler;
 import mc.alk.arena.controllers.messaging.MatchMessager;
 import mc.alk.arena.controllers.messaging.MessageHandler;
 import mc.alk.arena.controllers.plugins.HeroesController;
+import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.controllers.plugins.WorldGuardController;
 import mc.alk.arena.events.EventManager;
 import mc.alk.arena.events.matches.MatchCancelledEvent;
@@ -79,28 +92,13 @@ import mc.alk.arena.util.InventoryUtil;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.TeamUtil;
-import mc.alk.scoreboardapi.api.SEntry;
-import mc.alk.scoreboardapi.api.SObjective;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
-
+import mc.alk.battlescoreboardapi.api.SEntry;
+import mc.alk.battlescoreboardapi.api.SObjective;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /// TODO once I have GameLogic, split this into two matches, one for always open, one for normal
 public abstract class Match extends Competition implements Runnable, ArenaController {

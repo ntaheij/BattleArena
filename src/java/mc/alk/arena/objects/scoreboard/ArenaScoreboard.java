@@ -6,18 +6,19 @@ import mc.alk.arena.competition.match.Match;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.MatchParams;
 import mc.alk.arena.objects.teams.ArenaTeam;
-import mc.alk.scoreboardapi.ScoreboardAPI;
-import mc.alk.scoreboardapi.api.SEntry;
-import mc.alk.scoreboardapi.api.SObjective;
-import mc.alk.scoreboardapi.api.SScoreboard;
-import mc.alk.scoreboardapi.api.STeam;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
+
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Collection;
 import java.util.List;
+import mc.alk.battlescoreboardapi.ScoreboardAPI;
+import mc.alk.battlescoreboardapi.api.SEntry;
+import mc.alk.battlescoreboardapi.api.SObjective;
+import mc.alk.battlescoreboardapi.api.SScoreboard;
+import mc.alk.battlescoreboardapi.api.STeam;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 
 public class ArenaScoreboard implements SScoreboard {
     final protected SScoreboard board;

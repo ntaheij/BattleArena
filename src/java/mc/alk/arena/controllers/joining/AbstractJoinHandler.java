@@ -21,9 +21,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
-import mc.alk.scoreboardapi.api.SAPI;
-import mc.alk.scoreboardapi.api.SAPIFactory;
-import mc.alk.scoreboardapi.api.SScoreboard;
+import mc.alk.battlescoreboardapi.api.SAPI;
+import mc.alk.battlescoreboardapi.api.SAPIFactory;
+import mc.alk.battlescoreboardapi.api.SScoreboard;
+
 
 
 public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {

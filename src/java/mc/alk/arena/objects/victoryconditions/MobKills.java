@@ -10,13 +10,14 @@ import mc.alk.arena.objects.scoreboard.ArenaScoreboard;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.objects.victoryconditions.interfaces.ScoreTracker;
 import mc.alk.arena.util.DmgDeathUtil;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
+
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.TreeMap;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 
 public class MobKills extends VictoryCondition implements ScoreTracker{
 	final ArenaObjective mkills;

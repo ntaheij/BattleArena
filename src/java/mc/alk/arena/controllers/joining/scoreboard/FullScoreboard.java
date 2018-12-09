@@ -13,9 +13,7 @@ import mc.alk.arena.objects.teams.TeamFactory;
 import mc.alk.arena.util.Countdown;
 import mc.alk.arena.util.Countdown.CountdownCallback;
 import mc.alk.arena.util.TeamUtil;
-import mc.alk.scoreboardapi.api.SEntry;
-import mc.alk.scoreboardapi.api.STeam;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +21,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import mc.alk.battlescoreboardapi.api.SEntry;
+import mc.alk.battlescoreboardapi.api.STeam;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 
 public class FullScoreboard implements WaitingScoreboard {
     Map<Integer, LinkedList<SEntry>> reqPlaceHolderPlayers = new HashMap<Integer, LinkedList<SEntry>>();

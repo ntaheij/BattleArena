@@ -11,12 +11,14 @@ import mc.alk.arena.objects.scoreboard.ArenaObjective;
 import mc.alk.arena.objects.scoreboard.ArenaScoreboard;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.objects.victoryconditions.interfaces.ScoreTracker;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
+
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.TreeMap;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
+
 public class AllKills extends VictoryCondition implements ScoreTracker {
     final ArenaObjective kills;
     final TrackerController sc;

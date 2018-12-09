@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.10.18</version>
+    <version>3.9.10.19</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -75,14 +75,12 @@
             <version>4.0.2</version>
             <scope>compile</scope>
         </dependency>
-        <!-- worldeditutil includes mc.euro:Version -->
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>WorldEditUtil</artifactId>
             <version>1.1.8</version>
             <scope>compile</scope>
         </dependency>
-        <!-- BattlePluginUpdater includes mc.euro:Version -->
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattlePluginUpdater</artifactId>
@@ -92,7 +90,7 @@
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleScoreboardAPI</artifactId>
-            <version>1.1.8.6</version>
+            <version>2.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -327,7 +325,7 @@
                                     <shadedPattern>mc.alk.arena.alib.battlepluginupdater</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>mc.alk.scoreboardapi</pattern>
+                                    <pattern>mc.alk.battlescoreboardapi</pattern>
                                     <shadedPattern>mc.alk.arena.alib.battlescoreboardapi</shadedPattern>
                                 </relocation>
                                 <relocation>

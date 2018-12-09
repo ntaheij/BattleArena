@@ -7,10 +7,11 @@ import mc.alk.arena.objects.scoreboard.ArenaScoreboard;
 import mc.alk.arena.objects.scoreboard.ScoreboardFactory;
 import mc.alk.arena.objects.scoreboard.WaitingScoreboard;
 import mc.alk.arena.objects.teams.ArenaTeam;
-import mc.alk.scoreboardapi.api.STeam;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
+
 
 import java.util.Collection;
+import mc.alk.battlescoreboardapi.api.STeam;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 
 public class AbridgedScoreboard implements WaitingScoreboard {
     final ArenaScoreboard scoreboard;

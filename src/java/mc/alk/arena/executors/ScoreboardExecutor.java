@@ -11,7 +11,8 @@ import mc.alk.arena.objects.scoreboard.ArenaObjective;
 import mc.alk.arena.objects.scoreboard.ArenaScoreboard;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.util.MessageUtil;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;

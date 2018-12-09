@@ -5,10 +5,11 @@ import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.scoreboard.ArenaObjective;
 import mc.alk.arena.objects.scoreboard.ArenaScoreboard;
 import mc.alk.arena.objects.teams.ArenaTeam;
-import mc.alk.scoreboardapi.api.STeam;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
+
 
 import java.util.List;
+import mc.alk.battlescoreboardapi.api.STeam;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 
 public class BAScoreboard extends ArenaScoreboard {
 	Match match;
