@@ -4,12 +4,12 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.10.16</version>
+    <version>3.9.10.17</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <url>http://maven.apache.org</url>
     <!-- Locations for jar repositories -->
@@ -101,6 +101,7 @@
             <version>2.0</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Used by Test Classes -->
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>MCApi</artifactId>
