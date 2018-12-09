@@ -1,20 +1,9 @@
 package mc.alk.arena.executors;
 
-import mc.alk.arena.BattleArena;
-import mc.alk.arena.util.Log;
-import mc.alk.arena.util.MessageUtil;
-import mc.alk.arena.util.ServerUtil;
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,6 +13,19 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import mc.alk.arena.BattleArena;
+import mc.alk.arena.util.Log;
+import mc.alk.arena.util.MessageUtil;
+import mc.alk.arena.util.ServerUtil;
+
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 public abstract class BaseExecutor implements ArenaExecutor{
     public static final String version = "2.1.0";
@@ -359,6 +361,23 @@ public abstract class BaseExecutor implements ArenaExecutor{
             try{
                 if (CommandSender.class == clazz){
                     objs[objIndex] = sender;
+                } else if (Map.class == clazz) {
+                    Map<Integer, String> map = new HashMap<Integer, String>();
+                    int mapIndex = 0;
+                    for (String s : args) {
+                        map.put(mapIndex, s);
+                        mapIndex = mapIndex + 1;
+                    }
+                    objs[objIndex] = map;
+                } else if (Set.class == clazz) {
+                    Set<String> set = new HashSet<String>(Arrays.asList(args));
+                    objs[objIndex] = set;
+                } else if (List.class == clazz) {
+                    List<String> list = Arrays.asList(args);
+                    objs[objIndex] = list;
+                } else if (Collection.class == clazz) {
+                    Collection<String> c = Arrays.asList(args);
+                    objs[objIndex] = c;
                 } else if (String[].class == clazz){
                     objs[objIndex] = args;
                 } else if (Object[].class == clazz){

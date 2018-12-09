@@ -3,8 +3,8 @@ package mc.alk.arena;
 import java.io.File;
 
 import mc.alk.arena.objects.CompetitionSize;
-import mc.alk.plugin.updater.PluginUpdater.AnnounceUpdateOption;
-import mc.alk.plugin.updater.PluginUpdater.UpdateOption;
+import mc.alk.battlepluginupdater.PluginUpdater.AnnounceUpdateOption;
+import mc.alk.battlepluginupdater.PluginUpdater.UpdateOption;
 
 import org.bukkit.Material;
 

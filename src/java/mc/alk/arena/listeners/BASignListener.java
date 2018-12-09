@@ -68,11 +68,13 @@ public class BASignListener implements Listener{
 
     @EventHandler
     public void onSignChange(SignChangeEvent event){
+        // System.out.println("SignChangeEvent called");
         if (Defaults.DEBUG_TRACE) System.out.println("onSignChange Event");
         final Block block = event.getBlock();
         final Material type = block.getType();
 
         if (!(type.equals(Material.SIGN) || type.equals(Material.SIGN_POST) || type.equals(Material.WALL_SIGN))) {
+            // System.out.println("SignChangeEvent exiting for " + type.toString());
             return;}
 
         Player p = event.getPlayer();

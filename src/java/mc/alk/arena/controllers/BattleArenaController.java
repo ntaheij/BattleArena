@@ -34,7 +34,6 @@ import mc.alk.arena.objects.pairs.JoinResult.JoinStatus;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.PlayerUtil;
-import mc.alk.arena.util.ServerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,8 +52,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
-
-import mc.euro.bukkit.BukkitInterface;
+import mc.euro.bukkitinterface.BukkitInterface;
 
 public class BattleArenaController implements ArenaListener, Listener{
 

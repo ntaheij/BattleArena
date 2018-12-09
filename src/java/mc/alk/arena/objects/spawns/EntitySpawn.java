@@ -112,7 +112,7 @@ public class EntitySpawn extends SpawnInstance{
     }
 
     public String getEntityString() {
-        return et.getName();
+        return et.name();
     }
 
     public int getNumber() {

@@ -3,7 +3,6 @@ package mc.alk.arena.listeners;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.MoneyController;
-import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.controllers.plugins.DisguiseInterface;
 import mc.alk.arena.controllers.plugins.EssentialsController;
 import mc.alk.arena.controllers.plugins.FactionsController;
@@ -12,12 +11,17 @@ import mc.alk.arena.controllers.plugins.McMMOController;
 import mc.alk.arena.controllers.plugins.MobArenaInterface;
 import mc.alk.arena.controllers.plugins.PylamoController;
 import mc.alk.arena.controllers.plugins.TagAPIController;
+import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.controllers.plugins.VanishNoPacketInterface;
 import mc.alk.arena.controllers.plugins.WorldGuardController;
 import mc.alk.arena.objects.messaging.AnnouncementOptions;
 import mc.alk.arena.objects.messaging.plugins.HerochatPlugin;
+import mc.alk.arena.plugins.combattag.TagsOff;
+import mc.alk.arena.plugins.combattag.TagsOn;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.PermissionsUtil;
+import mc.alk.arena.util.plugins.CombatTagUtil;
+
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 
@@ -121,6 +125,11 @@ public class BAPluginListener implements Listener {
             // so there's no need to do anything here
             // except alert server admins that CombatTag was detected.
             Log.info("[BattleArena] CombatTag detected, enabling limited tag support");
+        }
+        if (CombatTagUtil.getCombatTagInterface() instanceof TagsOn) {
+            Log.info("[BattleArena] CombatTagInterface is turned ON");
+        } else if (CombatTagUtil.getCombatTagInterface() instanceof TagsOff) {
+            Log.info("[BattleArena] CombatTagInterface is turned OFF");
         }
     }
 

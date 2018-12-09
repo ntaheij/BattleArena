@@ -1,12 +1,5 @@
 package mc.alk.arena.serializers;
 
-import mc.alk.arena.BattleArena;
-import mc.alk.arena.util.Log;
-import mc.alk.plugin.updater.FileUpdater;
-import mc.alk.plugin.updater.Version;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.Plugin;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,6 +10,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import mc.alk.arena.BattleArena;
+import mc.alk.arena.util.Log;
+import mc.alk.battlepluginupdater.FileUpdater;
+import mc.euro.version.Version;
+
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 
 public class YamlFileUpdater {
     private BufferedReader br = null;
@@ -44,17 +45,17 @@ public class YamlFileUpdater {
         configFile = ms.getFile();
         Version version = new Version(fc.getString("version","0"));
         File dir = BattleArena.getSelf().getDataFolder();
-        if (version.compareTo("1.5.1") < 0){
+        if (version.isLessThan("1.5.1")){
             messageTo1Point51(ms.getConfig(), version, new Version("1.5.1"));
             ms.setConfig(new File(dir+"/messages.yml"));
-        } else if (version.compareTo("1.5.2") < 0){
+        } else if (version.isLessThan("1.5.2")){
             messageTo1Point52(ms.getConfig(), version, new Version("1.5.2"));
             ms.setConfig(new File(dir+"/messages.yml"));
         }
         version = new Version(fc.getString("version","0"));
         YamlFileUpdater yfu = new YamlFileUpdater(plugin);
         Version newVersion = new Version("1.5.3");
-        if (version.compareTo(newVersion) < 0){
+        if (version.isLessThan(newVersion)){
             FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
             fu.replace("version:.*", "version: "+newVersion);
             fu.delete(".*you_joined_the_queue.*");
@@ -69,7 +70,7 @@ public class YamlFileUpdater {
             try {version = fu.update();} catch (IOException e) {Log.printStackTrace(e);}
         }
         newVersion = new Version("1.5.5");
-        if (version.compareTo(newVersion) < 0){
+        if (version.isLessThan(newVersion)){
             FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
             fu.replace("version:.*", "version: "+newVersion);
             fu.replace(".*joined_the_queue:.*",
@@ -78,7 +79,7 @@ public class YamlFileUpdater {
             try {version = fu.update();} catch (IOException e) {Log.printStackTrace(e);}
         }
         newVersion = new Version("1.6.0");
-        if (version.compareTo(newVersion) < 0){
+        if (version.isLessThan(newVersion)){
             FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
             fu.replace("version:.*", "version: "+newVersion);
             fu.addAfter(".*time_format:.*",
@@ -101,7 +102,7 @@ public class YamlFileUpdater {
             try {version = fu.update();} catch (IOException e) {Log.printStackTrace(e);}
         }
         newVersion = new Version("1.6.1");
-        if (version.compareTo(newVersion) < 0){
+        if (version.isLessThan(newVersion)){
             FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
             fu.replace("version:.*", "version: " + newVersion);
             fu.addAfter(".*match_starts_players_or_time:.*",
@@ -109,7 +110,7 @@ public class YamlFileUpdater {
             try {version = fu.update();} catch (IOException e) {Log.printStackTrace(e);}
         }
         newVersion = new Version("1.6.2");
-        if (version.compareTo(newVersion) < 0){
+        if (version.isLessThan(newVersion)){
             FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
             fu.replace("version:.*", "version: "+newVersion);
             fu.addAfter(".*you_joined_event:.*",
@@ -117,7 +118,7 @@ public class YamlFileUpdater {
             try {version = fu.update();} catch (IOException e) {Log.printStackTrace(e);}
         }
         newVersion = new Version("1.6.3");
-        if (version.compareTo(newVersion) < 0){
+        if (version.isLessThan(newVersion)){
             FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
             fu.replace("version:.*", "version: "+newVersion);
             fu.addAfter(".*match_starts_players_or_time2.*",
@@ -125,7 +126,7 @@ public class YamlFileUpdater {
             try {version = fu.update();} catch (IOException e) {Log.printStackTrace(e);}
         }
         newVersion = new Version("1.6.4");
-        if (version.compareTo(newVersion) < 0){
+        if (version.isLessThan(newVersion)){
             FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
             fu.replace("version:.*", "version: "+newVersion);
             fu.addAfter(".*server_onjoin.*",
@@ -136,7 +137,7 @@ public class YamlFileUpdater {
             try {version = fu.update();} catch (IOException e) {Log.printStackTrace(e);}
         }
         newVersion = new Version("1.6.5");
-        if (version.compareTo(newVersion) < 0){
+        if (version.isLessThan(newVersion)){
             FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
             fu.replace("version:.*", "version: "+newVersion);
             fu.replace(".*match_starts_plyers_or_time:.*",
@@ -147,7 +148,7 @@ public class YamlFileUpdater {
             try {version = fu.update();} catch (IOException e) {Log.printStackTrace(e);}
         }
         newVersion = new Version("1.6.7");
-        if (version.compareTo(newVersion) < 0){
+        if (version.isLessThan(newVersion)){
             FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
             fu.replace("version:.*", "version: "+newVersion);
             fu.addAfter(".*cancelled_lack_of_players.*",
@@ -171,28 +172,28 @@ public class YamlFileUpdater {
         File configFile = bacs.getFile();
         try{
             Version newVersion = new Version("2.2.5");
-            if (version.compareTo(newVersion) < 0){
+            if (version.isLessThan(newVersion)){
                 version = to2Point25(version, yfu, configFile, newVersion);}
             newVersion = new Version("2.2.6");
-            if (version.compareTo(newVersion) < 0){
+            if (version.isLessThan(newVersion)){
                 version = to2Point26(version, yfu, configFile, newVersion);}
             newVersion = new Version("2.2.7");
-            if (version.compareTo(newVersion) < 0){
+            if (version.isLessThan(newVersion)){
                 version = to2Point27(version, yfu, configFile, newVersion);}
             newVersion = new Version("2.2.8");
-            if (version.compareTo(newVersion) < 0){
+            if (version.isLessThan(newVersion)){
                 version = to2Point28(version, yfu, configFile, newVersion);}
             newVersion = new Version("2.2.9");
-            if (version.compareTo(newVersion) < 0){
+            if (version.isLessThan(newVersion)){
                 version = to2Point29(version, yfu, configFile, newVersion);}
             newVersion = new Version("2.3.0");
-            if (version.compareTo(newVersion) < 0){
+            if (version.isLessThan(newVersion)){
                 version = to2Point30(version, yfu, configFile, newVersion);}
             newVersion = new Version("2.3.1");
-            if (version.compareTo(newVersion) < 0){
+            if (version.isLessThan(newVersion)){
                 version = to2Point31(version, yfu, configFile, newVersion);}
             newVersion = new Version("2.3.2");
-            if (version.compareTo(newVersion) < 0){
+            if (version.isLessThan(newVersion)){
                 FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
                 fu.replace("configVersion:.*", "configVersion: "+newVersion);
                 fu.replace(".*which player commands should be disabled .*",
@@ -209,7 +210,7 @@ public class YamlFileUpdater {
                 try {version = fu.update();} catch (IOException e) {Log.printStackTrace(e);}
             }
             newVersion = new Version("2.3.3");
-            if (version.compareTo(newVersion) < 0){
+            if (version.isLessThan(newVersion)){
                 FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
                 fu.replace("configVersion:.*", "configVersion: "+newVersion);
                 fu.addAfter(".*needSameItemsToChangeClass.*", "",
@@ -314,14 +315,14 @@ public class YamlFileUpdater {
     }
 
     private void messageTo1Point51(FileConfiguration fc, Version version, Version newVersion) {
-        Log.warn("BattleArena updating messages.yml to "+newVersion.getVersion());
+        Log.warn("BattleArena updating messages.yml to "+newVersion.toString());
         if (!openFiles())
             return;
         String line =null;
         try {
             while ((line = br.readLine()) != null){
                 if (line.contains("version")){
-                    fw.write("version: "+newVersion.getVersion()+"\n");
+                    fw.write("version: "+newVersion.toString()+"\n");
                 } else if ((line.matches(".*countdownTillEvent:.*"))){
                     fw.write(line+"\n");
                     fw.write("    team_cancelled: ''\n");
@@ -331,7 +332,7 @@ public class YamlFileUpdater {
                 }
             }
             closeFiles();
-            renameTo(configFile,new File(backupDir +"/"+configFile.getName()+newVersion.getVersion()));
+            renameTo(configFile,new File(backupDir +"/"+configFile.getName()+newVersion.toString()));
             renameTo(tempFile,configFile);
         } catch (IOException e) {
             Log.printStackTrace(e);
@@ -342,14 +343,14 @@ public class YamlFileUpdater {
     }
 
     private void messageTo1Point52(FileConfiguration fc, Version version, Version newVersion) {
-        Log.warn("BattleArena updating messages.yml to "+newVersion.getVersion());
+        Log.warn("BattleArena updating messages.yml to "+newVersion.toString());
         if (!openFiles())
             return;
         String line =null;
         try {
             while ((line = br.readLine()) != null){
                 if (line.contains("version")){
-                    fw.write("version: "+newVersion.getVersion()+"\n");
+                    fw.write("version: "+newVersion.toString()+"\n");
                 } else if ((line.matches(".*event_invalid_team_size.*"))){
                     fw.write(line+"\n");
                     fw.write("    you_joined_event: 'You have joined the %s'\n");
@@ -358,7 +359,7 @@ public class YamlFileUpdater {
                 }
             }
             closeFiles();
-            renameTo(configFile,new File(backupDir +"/"+configFile.getName()+newVersion.getVersion()));
+            renameTo(configFile,new File(backupDir +"/"+configFile.getName()+newVersion.toString()));
             renameTo(tempFile,configFile);
         } catch (IOException e) {
             Log.printStackTrace(e);

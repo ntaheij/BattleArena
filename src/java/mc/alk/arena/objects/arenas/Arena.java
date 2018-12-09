@@ -410,7 +410,8 @@ public class Arena extends AreaContainer {
     }
 
     /**
-     * add a timed spawn to this arena
+     * Add a timed spawn to this arena.
+     * @param index Starts at 1.
      */
     public void putTimedSpawn(Long index, TimedSpawn s) {
         if (timedSpawns == null){
@@ -421,7 +422,7 @@ public class Arena extends AreaContainer {
     
     public long addTimedSpawn(TimedSpawn s) {
         timedSpawns = (timedSpawns == null) ? new HashMap<Long,TimedSpawn>() : timedSpawns;
-        long index = timedSpawns.size() + 1L;
+        long index = timedSpawns.size() + 1L; // index starts at 1
         timedSpawns.put(index, s);
         return index;
     }

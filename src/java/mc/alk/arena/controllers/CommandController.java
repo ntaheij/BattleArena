@@ -1,28 +1,28 @@
 package mc.alk.arena.controllers;
 
+import java.lang.reflect.Field;
+
 import mc.alk.arena.util.Log;
-import mc.alk.arena.util.Util;
-import mc.alk.plugin.updater.Version;
+import mc.euro.version.VersionFactory;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 
-import java.lang.reflect.Field;
-
 public class CommandController {
 
     public static CommandMap getCommandMap() {
-        Version version = Util.getCraftBukkitVersion();
-        final Class<?> clazz;
+        String NMS = VersionFactory.getNmsPackage();
+        Class<?> clazz;
         try {
-            if (version.compareTo("0") == 0 || version.getVersion().equalsIgnoreCase("craftbukkit")) {
-                clazz = Class.forName("org.bukkit.craftbukkit.CraftServer");
-            } else {
-                clazz = Class.forName("org.bukkit.craftbukkit." + version.getVersion() + ".CraftServer");
+            clazz = Class.forName("org.bukkit.craftbukkit.CraftServer");
+        } catch (ClassNotFoundException handled) {
+            try {
+                clazz = Class.forName("org.bukkit.craftbukkit." + NMS + ".CraftServer");
+            } catch (ClassNotFoundException ex) {
+                Log.printStackTrace(ex);
+                return null;
             }
-        } catch (ClassNotFoundException e) {
-            Log.printStackTrace(e);
-            return null;
         }
         return getCommandMapFromServer(clazz);
     }

@@ -50,6 +50,7 @@ public class ListenerAdder {
             holder.addArenaListener(new PotionListener(holder));}
         if (McMMOController.enabled() && McMMOController.hasDisabledSkills()){
             holder.addArenaListener(McMMOController.createNewListener());}
+        holder.getParams().getDBTableName();
         if (tops.getAllOptions().containsKey(MatchState.ONKILL)) {
             holder.addArenaListener(new ArenaPlayerKillListener(holder.getParams()));
         }

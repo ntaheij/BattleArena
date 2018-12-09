@@ -1,7 +1,9 @@
 package mc.alk.arena.util;
 
 import mc.alk.arena.util.compat.IEntityHelper;
-import mc.alk.plugin.updater.Version;
+import mc.euro.version.Version;
+import mc.euro.version.VersionFactory;
+
 import org.bukkit.DyeColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Wolf;
@@ -17,8 +19,8 @@ public class EntityUtil {
     static {
         Class<?>[] args = {};
         try {
-            Version version = Util.getCraftBukkitVersion();
-            if (version.compareTo("v1_4_5") >= 0){
+            Version version = VersionFactory.getServerVersion();
+            if (version.isGreaterThanOrEqualTo("1.4.5")){
                 final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.v1_4_5.EntityHelper");
                 handler = (IEntityHelper) clazz.getConstructor(args).newInstance((Object[])args);
             } else {

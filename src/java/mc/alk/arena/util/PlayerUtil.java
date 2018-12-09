@@ -1,21 +1,23 @@
 package mc.alk.arena.util;
 
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.UUID;
+
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.plugins.EssentialsController;
 import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.CommandLineString;
 import mc.alk.arena.util.compat.IPlayerHelper;
-import mc.alk.plugin.updater.Version;
+import mc.euro.version.Version;
+import mc.euro.version.VersionFactory;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.UUID;
 
 public class PlayerUtil {
     static IPlayerHelper handler = null;
@@ -27,11 +29,11 @@ public class PlayerUtil {
         Class<?>[] args = {};
         try {
             Method m = Player.class.getMethod("getHealth");
-            Version version = Util.getCraftBukkitVersion();
-            if (version.compareTo("v1_7_R3") >= 0) {
+            Version version = VersionFactory.getServerVersion();
+            if (version.isGreaterThanOrEqualTo("1.7.8")) {
                 final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.v1_7_R3.PlayerHelper");
                 handler = (IPlayerHelper) clazz.getConstructor(args).newInstance((Object[]) args);
-            } else if (m.getReturnType() == double.class || version.compareTo("v1_6_R1") >= 0){
+            } else if (m.getReturnType() == double.class || version.isGreaterThanOrEqualTo("1.6")){
                 final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.v1_6_R1.PlayerHelper");
                 handler = (IPlayerHelper) clazz.getConstructor(args).newInstance((Object[])args);
             } else {

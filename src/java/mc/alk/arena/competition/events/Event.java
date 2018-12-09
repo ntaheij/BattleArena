@@ -47,7 +47,7 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.TimeUtil;
-import mc.euro.bukkit.BukkitInterface;
+import mc.euro.bukkitinterface.BukkitInterface;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

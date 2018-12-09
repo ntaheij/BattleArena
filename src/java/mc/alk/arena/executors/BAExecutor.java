@@ -1373,7 +1373,7 @@ public class BAExecutor extends CustomCommandExecutor {
             sendMessage(ap,
                     "&4[Duel] &2Options: &6" + duelOptions.optionsString(mp));
             sendMessage(ap, "&4[Duel] &6/" + mp.getCommand()
-                    + " accept &2: to accept. &6" + mp.getCommand()
+                    + " accept &2: to accept. &6/" + mp.getCommand()
                     + " reject &e: to reject");
         }
 

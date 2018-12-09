@@ -19,7 +19,7 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.arena.util.plugins.CombatTagUtil;
-import mc.euro.bukkit.BukkitInterface;
+import mc.euro.bukkitinterface.BukkitInterface;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -82,6 +82,7 @@ import mc.alk.arena.util.TeamUtil;
 import mc.alk.scoreboardapi.api.SEntry;
 import mc.alk.scoreboardapi.api.SObjective;
 import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
@@ -518,6 +519,7 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         if (event.isCancelled()){
             return;
         }
+        this.matchResult = (MatchResult) event.getMatchResult();
         int timerid = Scheduler.scheduleSynchronousTask(
                 new NonEndingMatchVictory(this,result),(int)2L);
         for (ArenaTeam t: teams)
@@ -535,6 +537,7 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         if (event.isCancelled()){
             return;
         }
+        this.matchResult = (MatchResult) event.getMatchResult();
         transitionTo(MatchState.ONVICTORY);
         transitionTo(MatchState.INVICTORY);
         arenaInterface.onVictory(result);
@@ -683,7 +686,11 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
                 @Override
                 public void run() {
                     callEvent(new MatchCompletedEvent(am));
-                    arenaInterface.onComplete();
+                    try {
+                        arenaInterface.onComplete();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                     /// Losers and winners get handled after the match is complete
                     givePrizes(am, matchResult);
                     updateBukkitEvents(MatchState.ONCOMPLETE);
@@ -758,7 +765,11 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         if (oldArenaState != null){
             oldArenaState.revert(arena);}
         scoreboard.clear();
-        arenaInterface.onFinish();
+        try {
+            arenaInterface.onFinish();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         inMatch.clear();
         inMatchList = null;
         teams.clear();

@@ -15,4 +15,8 @@ public class CombatTagUtil {
     public static void untag(Player player) {
         tag.untag(player);
     }
+    
+    public static CombatTagInterface getCombatTagInterface() {
+        return tag;
+    }
 }

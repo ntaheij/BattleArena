@@ -9,10 +9,12 @@ import org.bukkit.entity.Player;
  *
  * @author alkarin version: 1.4
  *
- * Levels based off of 1.3 exp formulas verified by myself. Formulas used. lvl
- * <= 15 : 17*lvl; 15 < lvl < 31 : 17*l + 3*(0.5*l2*(l2+1)), and 17 + 3*l2,
- * where l2 = (l - 16) lvl > 30 : 17*l + 3*(0.5*l2*(l2+1))+4*(0.5*l3*(l3+1)) and
- * 17+inc, 17 + 3*l2 +4*l3, where l2 = (l-16) and l3=(l-31)
+ * Levels based off of 1.3 exp formulas verified by myself.
+ * Formulas used.
+ * lvl <= 15 : 17*lvl;
+ * 15 < lvl < 31 : 17*l + 3*(0.5*l2*(l2+1)), and 17 + 3*l2, where l2 = (l - 16)
+ * lvl > 30 : 17*l + 3*(0.5*l2*(l2+1))+4*(0.5*l3*(l3+1)) and
+ *            17+inc, 17 + 3*l2 +4*l3, where l2 = (l-16) and l3=(l-31)
  *
  * The forms you see in the functions are simplifications of the above
  */
@@ -21,6 +23,8 @@ public class ExpUtil {
     /**
      * Never use player.getTotalExperience(), use this method instead.
      * player.getTotalExperience() shows XP that has been spent on enchants.
+     * 
+     * player.getExp() is the percentage toward the next level (between 0 & 1).
      */
     public static int getTotalExperience(final Player player) {
         int exp = (int) Math.round(getExpAtLevel(player.getLevel()) * player.getExp());
@@ -40,13 +44,19 @@ public class ExpUtil {
      * New XP math for Minecraft 1.8 Credits go to andrewkm for the 1.8 code
      */
     public static int getExpAtLevel(final int level) {
-        if (level <= 15) {
-            return (2 * level) + 7;
-        }
-        if ((level >= 16) && (level <= 30)) {
+        if (level > 30) {
+            return (9 * level) - 158;
+        } else if (level > 15) {
             return (5 * level) - 38;
         }
-        return (9 * level) - 158;
+        return (2 * level) + 7;
+//        if (level <= 15) {
+//            return (2 * level) + 7;
+//        }
+//        if ((level >= 16) && (level <= 30)) {
+//            return (5 * level) - 38;
+//        }
+//        return (9 * level) - 158;
     }
 
     /**

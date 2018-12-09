@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.10.15</version>
+    <version>3.9.10.16</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,10 +14,6 @@
     <url>http://maven.apache.org</url>
     <!-- Locations for jar repositories -->
     <repositories>
-        <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public</url>
-        </repository>
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
@@ -62,21 +58,35 @@
         </dependency>
         <!-- Libraries that are shaded in -->
         <dependency>
-            <groupId>mc.alk</groupId>
-            <artifactId>BattleBukkitLib</artifactId>
-            <version>2.4.1</version>
+            <groupId>mc.euro</groupId>
+            <artifactId>Version</artifactId>
+            <version>4.0.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>mc.euro</groupId>
             <artifactId>BukkitInterface</artifactId>
-            <version>2.0.1</version>
+            <version>4.0.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
-            <artifactId>worldeditutil</artifactId>
-            <version>1.1.6</version>
+            <artifactId>BattleBukkitLib</artifactId>
+            <version>4.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- worldeditutil includes mc.euro:Version -->
+        <dependency>
+            <groupId>mc.alk</groupId>
+            <artifactId>WorldEditUtil</artifactId>
+            <version>1.1.8</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- BattlePluginUpdater includes mc.euro:Version -->
+        <dependency>
+            <groupId>mc.alk</groupId>
+            <artifactId>BattlePluginUpdater</artifactId>
+            <version>2.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -86,15 +96,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>mc.battleplugins</groupId>
-            <artifactId>BattlePluginsAPI</artifactId>
-            <version>1.0.8</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>mc.alk</groupId>
-            <artifactId>BattlePluginUpdater</artifactId>
-            <version>1.4.1</version>
+            <artifactId>BattleWebAPI</artifactId>
+            <version>2.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -103,6 +107,7 @@
             <version>2.0</version>
             <scope>compile</scope>
         </dependency>
+        <!-- End of Shaded Libraries -->
         <!-- Runtime dependencies -->
         <dependency>
             <groupId>mc.alk</groupId>
@@ -220,12 +225,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <distributionManagement>
-        <repository>
-            <id>rainbowcraft-repo</id>
-            <url>scp://rainbowcraft.sytes.net/var/www/maven/repository</url>
-        </repository>
-    </distributionManagement>
     <!-- How we will compile the plugin -->
     <build>
         <finalName>${project.name}</finalName>
@@ -233,7 +232,7 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh</artifactId>
-                <version>2.10</version>
+                <version>3.2.0</version>
             </extension>
         </extensions>
         <defaultGoal>install</defaultGoal>
@@ -288,7 +287,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.2</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -297,38 +296,48 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <relocations>
-                                <relocation>
-                                    <pattern>mc.alk.util</pattern>
-                                    <shadedPattern>mc.alk.arena.battlelib</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>mc.euro.bukkit</pattern>
-                                    <shadedPattern>mc.alk.arena.bukkit</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>mc.alk.plugin.updater</pattern>
-                                    <shadedPattern>mc.alk.mc.updater</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>mc.euro.version</pattern>
-                                    <shadedPattern>mc.alk.arena.version</shadedPattern>
-                                </relocation>
-                            </relocations>
-
                             <artifactSet>
                                 <includes>
+                                    <include>mc.euro:Version</include>
+                                    <include>mc.euro:BukkitInterface</include>
                                     <include>mc.alk:BattleBukkitLib</include>
                                     <include>mc.alk:BattlePluginUpdater</include>
                                     <include>mc.alk:BattleScoreboardAPI</include>
-                                    <include>mc.alk:worldeditutil</include>
-                                    <include>mc.battleplugins:BattlePluginsAPI</include>
-                                    <include>mc.euro:BukkitInterface</include>
-                                    <include>mc.euro:Version</include>
+                                    <include>mc.alk:BattleWebAPI</include>
+                                    <include>mc.alk:WorldEditUtil</include>
                                 </includes>
                             </artifactSet>
-                            <!-- Specify to remove all unneeded classes -->
-                            <minimizeJar>false</minimizeJar>
+                            <!-- alib = shaded -->
+                            <relocations>
+                                <relocation>
+                                    <pattern>mc.euro.version</pattern>
+                                    <shadedPattern>mc.alk.arena.alib.version</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>mc.euro.bukkitinterface</pattern>
+                                    <shadedPattern>mc.alk.arena.alib.bukkitinterface</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>mc.alk.battlebukkitlib</pattern>
+                                    <shadedPattern>mc.alk.arena.alib.battlebukkitlib</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>mc.alk.battlepluginupdater</pattern>
+                                    <shadedPattern>mc.alk.arena.alib.battlepluginupdater</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>mc.alk.scoreboardapi</pattern>
+                                    <shadedPattern>mc.alk.arena.alib.battlescoreboardapi</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>mc.alk.battlewebapi</pattern>
+                                    <shadedPattern>mc.alk.arena.alib.battlewebsapi</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>mc.alk.worldeditutil</pattern>
+                                    <shadedPattern>mc.alk.arena.alib.worldeditutil</shadedPattern>
+                                </relocation>
+                            </relocations>
                             <filters>
                                 <filter>
                                     <artifact>mc.alk:BattleScoreboardAPI</artifact>
@@ -338,6 +347,8 @@
                                     </includes>
                                 </filter>
                             </filters>
+                            <!-- Specify to remove all unneeded classes -->
+                            <minimizeJar>false</minimizeJar>
                         </configuration>
                     </execution>
                 </executions>
@@ -373,4 +384,10 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>rainbowcraft-repo</id>
+            <url>scp://rainbowcraft.sytes.net/var/www/maven/repository</url>
+        </repository>
+    </distributionManagement>
 </project>

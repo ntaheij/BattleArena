@@ -14,9 +14,6 @@ import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.objects.teams.TeamFactory;
 import mc.alk.arena.objects.teams.TeamHandler;
 import mc.alk.arena.util.Log;
-import mc.alk.scoreboardapi.api.SAPI;
-import mc.alk.scoreboardapi.api.SAPIFactory;
-import mc.alk.scoreboardapi.api.SScoreboard;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +21,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import mc.alk.scoreboardapi.api.SAPI;
+import mc.alk.scoreboardapi.api.SAPIFactory;
+import mc.alk.scoreboardapi.api.SScoreboard;
+
 
 public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
     public static final TeamJoinResult CANTFIT = new TeamJoinResult(TeamJoinStatus.CANT_FIT,-1,null);
