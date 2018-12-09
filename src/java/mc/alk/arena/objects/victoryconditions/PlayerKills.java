@@ -11,14 +11,16 @@ import mc.alk.arena.objects.scoreboard.ArenaObjective;
 import mc.alk.arena.objects.scoreboard.ArenaScoreboard;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.objects.victoryconditions.interfaces.ScoreTracker;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
+
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.TreeMap;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 
-public class PlayerKills extends VictoryCondition implements ScoreTracker{
+public class PlayerKills extends VictoryCondition implements ScoreTracker {
+
     final ArenaObjective kills;
     final TrackerController sc;
     final int points;
@@ -26,22 +28,23 @@ public class PlayerKills extends VictoryCondition implements ScoreTracker{
     public PlayerKills(Match match, ConfigurationSection section) {
         super(match);
         points = section.getInt("points.player", 1);
-        String displayName = section.getString("displayName","Player Kills");
+        String displayName = section.getString("displayName", "Player Kills");
         String criteria = section.getString("criteria", "Kill Players");
-        kills = new ArenaObjective(getClass().getSimpleName(),displayName, criteria,
+        kills = new ArenaObjective(getClass().getSimpleName(), displayName, criteria,
                 SAPIDisplaySlot.SIDEBAR, 60);
 
         boolean isRated = match.getParams().isRated();
         boolean soloRating = !match.getParams().isTeamRating();
-        sc = (isRated && soloRating) ? new TrackerController(match.getParams()): null;
+        sc = (isRated && soloRating) ? new TrackerController(match.getParams()) : null;
     }
 
-    @ArenaEventHandler(priority=EventPriority.LOW)
+    @ArenaEventHandler(priority = EventPriority.LOW)
     public void playerKillEvent(ArenaPlayerKillEvent event) {
         kills.addPoints(event.getPlayer(), points);
         kills.addPoints(event.getTeam(), points);
-        if (sc != null)
-            sc.addRecord(event.getPlayer(),event.getTarget(), WinLossDraw.WIN);
+        if (sc != null) {
+            sc.addRecord(event.getPlayer(), event.getTarget(), WinLossDraw.WIN);
+        }
     }
 
     @ArenaEventHandler(priority = EventPriority.LOW)
@@ -55,7 +58,7 @@ public class PlayerKills extends VictoryCondition implements ScoreTracker{
     }
 
     @Override
-    public TreeMap<Integer,Collection<ArenaTeam>> getRanks() {
+    public TreeMap<Integer, Collection<ArenaTeam>> getRanks() {
         return kills.getTeamRanks();
     }
 

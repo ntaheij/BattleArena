@@ -14,10 +14,10 @@ import mc.alk.arena.objects.victoryconditions.interfaces.DefinesTimeLimit;
 import mc.alk.arena.util.Countdown;
 import mc.alk.arena.util.Countdown.CountdownCallback;
 import mc.alk.arena.util.MessageUtil;
-import mc.alk.scoreboardapi.api.SObjective;
-import mc.alk.scoreboardapi.api.STeam;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
-import mc.alk.scoreboardapi.scoreboard.bukkit.BObjective;
+import mc.alk.battlescoreboardapi.api.SObjective;
+import mc.alk.battlescoreboardapi.api.STeam;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
+import mc.alk.battlescoreboardapi.scoreboard.bukkit.BObjective;
 
 public class TeamTimeLimit extends VictoryCondition implements DefinesTimeLimit, CountdownCallback {
 
@@ -29,8 +29,9 @@ public class TeamTimeLimit extends VictoryCondition implements DefinesTimeLimit,
         super(match);
         this.team = team;
     }
-    public void startCountdown(){
-        timer = new Countdown(BattleArena.getSelf(),match.getParams().getMatchTime(), 1, this);
+
+    public void startCountdown() {
+        timer = new Countdown(BattleArena.getSelf(), match.getParams().getMatchTime(), 1, this);
     }
 
     public void stopCountdown() {
@@ -38,43 +39,45 @@ public class TeamTimeLimit extends VictoryCondition implements DefinesTimeLimit,
     }
 
     @SuppressWarnings("UnusedParameters")
-    @ArenaEventHandler(priority=EventPriority.LOW)
-    public void onFinished(MatchFinishedEvent event){
+    @ArenaEventHandler(priority = EventPriority.LOW)
+    public void onFinished(MatchFinishedEvent event) {
         cancelTimers();
     }
 
     private void cancelTimers() {
-        if (timer != null){
+        if (timer != null) {
             timer.stop();
-            timer =null;
+            timer = null;
         }
     }
 
     @Override
-    public boolean intervalTick(int remaining){
-        if (match.isEnding())
+    public boolean intervalTick(int remaining) {
+        if (match.isEnding()) {
             return false;
+        }
         if (remaining <= 0) {
             MatchResult cr = new MatchResult();
             cr.setResult(WinLossDraw.LOSS);
             cr.addLoser(team);
             match.endMatchWithResult(cr);
         }
-        if (!Defaults.USE_SCOREBOARD)
+        if (!Defaults.USE_SCOREBOARD) {
             return true;
+        }
         ArenaScoreboard as = match.getScoreboard();
         if (as == null) {
-            return true;}
+            return true;
+        }
         STeam t = as.getTeam(team.getIDString());
         SObjective ao = as.getObjective(SAPIDisplaySlot.SIDEBAR);
-        if (t!=null && ao != null && ao instanceof BObjective){
-            ((BObjective)ao).setDisplayName(ao.getDisplayNamePrefix(), ao.getBaseDisplayName(),
+        if (t != null && ao != null && ao instanceof BObjective) {
+            ((BObjective) ao).setDisplayName(ao.getDisplayNamePrefix(), ao.getBaseDisplayName(),
                     MessageUtil.colorChat("&e(" + remaining + ")"), t);
         }
 
         return true;
     }
-
 
     @Override
     public int getTime() {

@@ -11,7 +11,8 @@ import mc.alk.arena.objects.scoreboard.ArenaObjective;
 import mc.alk.arena.objects.scoreboard.ArenaScoreboard;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.util.MessageUtil;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
@@ -87,17 +88,18 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
         amount2win.put(matchID, amountToWin);
         printMessage(sender, "Objective " + label + " created!");
         printMessage(sender, "Teams must reach " + amountToWin + " points to win");
-        
+
         String inverseCmd = "sb unregister " + arena.getName();
         saveInverseCommand(inverseCmd);
         return true;
     }
-    
+
     /**
      * This command is only partially implemented.
+     *
      * @param sender
      * @param arena
-     * @return 
+     * @return
      */
     @MCCommand(cmds = {"remove", "delete", "unregister"}, op = true)
     public boolean remove(CommandSender sender, Arena arena) {
@@ -167,11 +169,11 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
         int neg = x * -1;
         return add(sender, ap, neg);
     }
-    
+
     /**
      * Cmd to toggle between verbose and quiet modes. <br/>
      */
-    @MCCommand(cmds={"toggle"}, op=true)
+    @MCCommand(cmds = {"toggle"}, op = true)
     public boolean toggle(CommandSender sender) {
         if (MESSAGES) {
             MESSAGES = false;
@@ -180,30 +182,32 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
         }
         return true;
     }
+
     /**
      * In verbose mode, messages from this executor will be displayed. <br/>
      */
-    @MCCommand(cmds={"verbose", "v"}, op=true)
+    @MCCommand(cmds = {"verbose", "v"}, op = true)
     public boolean verbose(CommandSender sender) {
         MESSAGES = true;
         printMessage(sender, "The ArenaScoreboard command is now in verbose mode.");
         printMessage(sender, "All messages from this command will now be displayed.");
         return true;
     }
-    
+
     /**
      * In quiet mode, messages from this executor will NOT be displayed. <br/>
-     * 
-     * This was a requested feature because apparently, this cmd was spamming the console.
+     *
+     * This was a requested feature because apparently, this cmd was spamming
+     * the console.
      */
-    @MCCommand(cmds={"quiet", "q"}, op=true)
+    @MCCommand(cmds = {"quiet", "q"}, op = true)
     public boolean quiet(CommandSender sender) {
         MESSAGES = false;
         sender.sendMessage("The ArenaScoreboard command is now in quiet mode.");
         sender.sendMessage("All messages from this command will now be hidden");
         return true;
     }
-    
+
     private boolean printMessage(CommandSender sender, String msg) {
         if (MESSAGES) {
             MessageUtil.sendMessage(sender, msg);
@@ -214,8 +218,8 @@ public class ScoreboardExecutor extends CustomCommandExecutor {
     /**
      * Undo the last '/sb' command by the sender. <br/><br/>
      *
-     * I'm not sure there's an actual use-case-scenario for undo... 
-     * I just always wanted to write an undo command :P
+     * I'm not sure there's an actual use-case-scenario for undo... I just
+     * always wanted to write an undo command :P
      */
     @MCCommand(cmds = {"undo"}, op = true)
     public boolean undo(CommandSender sender) {

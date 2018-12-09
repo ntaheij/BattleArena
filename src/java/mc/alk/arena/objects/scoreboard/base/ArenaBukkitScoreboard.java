@@ -9,11 +9,7 @@ import mc.alk.arena.objects.scoreboard.ArenaObjective;
 import mc.alk.arena.objects.scoreboard.ArenaScoreboard;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.util.Log;
-import mc.alk.scoreboardapi.api.SObjective;
-import mc.alk.scoreboardapi.api.SScoreboard;
-import mc.alk.scoreboardapi.api.STeam;
-import mc.alk.scoreboardapi.scoreboard.SAPIDisplaySlot;
-import mc.alk.scoreboardapi.scoreboard.bukkit.BScoreboard;
+
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -21,11 +17,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import mc.alk.battlescoreboardapi.api.SObjective;
+import mc.alk.battlescoreboardapi.api.SScoreboard;
+import mc.alk.battlescoreboardapi.api.STeam;
+import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
+import mc.alk.battlescoreboardapi.scoreboard.bukkit.BScoreboard;
 
+public class ArenaBukkitScoreboard extends ArenaScoreboard {
 
-public class ArenaBukkitScoreboard extends ArenaScoreboard{
-
-    final HashMap<ArenaTeam,STeam> teams = new HashMap<ArenaTeam,STeam>();
+    final HashMap<ArenaTeam, STeam> teams = new HashMap<ArenaTeam, STeam>();
     final BScoreboard bboard;
     final boolean colorPlayerNames;
 
@@ -37,34 +37,35 @@ public class ArenaBukkitScoreboard extends ArenaScoreboard{
 
     public ArenaBukkitScoreboard(String scoreboardName, MatchParams params) {
         super(scoreboardName);
-        this.colorPlayerNames = Defaults.USE_COLORNAMES &&
-                (!params.getStateGraph().hasAnyOption(TransitionOption.NOTEAMNAMECOLOR));
+        this.colorPlayerNames = Defaults.USE_COLORNAMES
+                && (!params.getStateGraph().hasAnyOption(TransitionOption.NOTEAMNAMECOLOR));
         bboard = (BScoreboard) board;
     }
 
     @Deprecated
     /**
-     * Use 'public ArenaBukkitScoreboard(String scoreboardName, MatchParams params)' instead
+     * Use 'public ArenaBukkitScoreboard(String scoreboardName, MatchParams
+     * params)' instead
      */
     public ArenaBukkitScoreboard(Match match, MatchParams params) {
-        this(match.getName(),params);
+        this(match.getName(), params);
     }
 
     @Override
     public ArenaObjective createObjective(String id, String criteria, String displayName) {
-        return createObjective(id,criteria,displayName,SAPIDisplaySlot.SIDEBAR);
+        return createObjective(id, criteria, displayName, SAPIDisplaySlot.SIDEBAR);
     }
 
     @Override
     public ArenaObjective createObjective(String id, String criteria, String displayName,
-                                          SAPIDisplaySlot slot) {
-        return createObjective(id,criteria,displayName,slot, 50);
+            SAPIDisplaySlot slot) {
+        return createObjective(id, criteria, displayName, slot, 50);
     }
 
     @Override
     public ArenaObjective createObjective(String id, String criteria, String displayName,
-                                          SAPIDisplaySlot slot, int priority) {
-        ArenaObjective o = new ArenaObjective(id,criteria,displayName,slot,priority);
+            SAPIDisplaySlot slot, int priority) {
+        ArenaObjective o = new ArenaObjective(id, criteria, displayName, slot, priority);
         addObjective(o);
         return o;
     }
@@ -78,11 +79,11 @@ public class ArenaBukkitScoreboard extends ArenaScoreboard{
     @Override
     public STeam removeTeam(ArenaTeam team) {
         STeam t = teams.remove(team);
-        if (t != null){
+        if (t != null) {
             super.removeEntry(t);
-            for (SObjective o : this.getObjectives()){
+            for (SObjective o : this.getObjectives()) {
                 o.removeEntry(t);
-                for (OfflinePlayer player: t.getPlayers()){
+                for (OfflinePlayer player : t.getPlayers()) {
                     o.removeEntry(player);
                 }
             }
@@ -93,23 +94,25 @@ public class ArenaBukkitScoreboard extends ArenaScoreboard{
     @Override
     public STeam addTeam(ArenaTeam team) {
         STeam t = teams.get(team);
-        if (t != null)
+        if (t != null) {
             return t;
+        }
         t = createTeamEntry(team.getIDString(), team.getScoreboardDisplayName());
         Set<Player> bukkitPlayers = team.getBukkitPlayers();
 
         t.addPlayers(bukkitPlayers);
-        for (Player p: bukkitPlayers){
+        for (Player p : bukkitPlayers) {
             bboard.setScoreboard(p);
         }
-        if (colorPlayerNames)
-            t.setPrefix(team.getTeamChatColor()+"");
+        if (colorPlayerNames) {
+            t.setPrefix(team.getTeamChatColor() + "");
+        }
         teams.put(team, t);
 
-        for (SObjective o : this.getObjectives()){
+        for (SObjective o : this.getObjectives()) {
             o.addTeam(t, 0);
-            if (o.isDisplayPlayers()){
-                for (ArenaPlayer player: team.getPlayers()){
+            if (o.isDisplayPlayers()) {
+                for (ArenaPlayer player : team.getPlayers()) {
                     o.addEntry(player.getName(), 0);
                 }
             }
@@ -117,18 +120,18 @@ public class ArenaBukkitScoreboard extends ArenaScoreboard{
         return t;
     }
 
-
     @Override
     public STeam addedToTeam(ArenaTeam team, ArenaPlayer player) {
         STeam t = teams.get(team);
-        if (t == null){
-            t = addTeam(team);}
-        addedToTeam(t,player);
+        if (t == null) {
+            t = addTeam(team);
+        }
+        addedToTeam(t, player);
         return t;
     }
 
     @Override
-    public void addedToTeam(STeam team, ArenaPlayer player){
+    public void addedToTeam(STeam team, ArenaPlayer player) {
         team.addPlayer(player.getPlayer());
         bboard.setScoreboard(player.getPlayer());
     }
@@ -140,24 +143,24 @@ public class ArenaBukkitScoreboard extends ArenaScoreboard{
             Log.err(teams.size() + "  Removing from a team that doesn't exist player=" + player.getName() + "   team=" + team + "  " + team.getId());
             return null;
         }
-        removedFromTeam(t,player);
+        removedFromTeam(t, player);
         return t;
     }
 
     @Override
-    public void removedFromTeam(STeam team, ArenaPlayer player){
+    public void removedFromTeam(STeam team, ArenaPlayer player) {
         team.removePlayer(player.getPlayer());
         bboard.removeScoreboard(player.getPlayer());
     }
 
     @Override
     public void leaving(ArenaTeam team, ArenaPlayer player) {
-        removedFromTeam(team,player);
+        removedFromTeam(team, player);
     }
 
     @Override
     public void setDead(ArenaTeam team, ArenaPlayer player) {
-        removedFromTeam(team,player);
+        removedFromTeam(team, player);
     }
 
     @Override
@@ -166,7 +169,7 @@ public class ArenaBukkitScoreboard extends ArenaScoreboard{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return getPrintString();
     }
 

@@ -33,7 +33,7 @@ import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.arena.util.TeamUtil;
-import mc.alk.scoreboardapi.api.SEntry;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -52,9 +52,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
+import mc.alk.battlescoreboardapi.api.SEntry;
 
 public class ArenaMatch extends Match {
+
     static boolean disabledAllCommands;
     final static HashSet<String> disabledCommands = new HashSet<String>();
     final static HashSet<String> enabledCommands = new HashSet<String>();
@@ -63,20 +64,22 @@ public class ArenaMatch extends Match {
     final Map<UUID, Integer> respawnTimer = new HashMap<UUID, Integer>();
 
     public ArenaMatch(Arena arena, MatchParams mp, Collection<ArenaListener> listeners) {
-        super(arena, mp,listeners);
+        super(arena, mp, listeners);
     }
 
-
-    @ArenaEventHandler(suppressCastWarnings=true,bukkitPriority=org.bukkit.event.EventPriority.MONITOR)
+    @ArenaEventHandler(suppressCastWarnings = true, bukkitPriority = org.bukkit.event.EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent event) {
         final ArenaPlayer target = BattleArena.toArenaPlayer(event.getEntity());
-        if (Defaults.DEBUG_TRACE) MessageUtil.sendMessage(target, " -onPlayerDeath  t=" + target.getTeam());
+        if (Defaults.DEBUG_TRACE) {
+            MessageUtil.sendMessage(target, " -onPlayerDeath  t=" + target.getTeam());
+        }
         if (state == MatchState.ONCANCEL || state == MatchState.ONCOMPLETE) {
             return;
         }
         final ArenaTeam t = getTeam(target);
-        if (t == null)
+        if (t == null) {
             return;
+        }
 
         ArenaPlayerDeathEvent apde = new ArenaPlayerDeathEvent(target, t);
         apde.setPlayerDeathEvent(event);
@@ -91,11 +94,12 @@ public class ArenaMatch extends Match {
         }
     }
 
-    @ArenaEventHandler(bukkitPriority=org.bukkit.event.EventPriority.MONITOR)
-    public void onPlayerDeath(ArenaPlayerDeathEvent event){
+    @ArenaEventHandler(bukkitPriority = org.bukkit.event.EventPriority.MONITOR)
+    public void onPlayerDeath(ArenaPlayerDeathEvent event) {
         final ArenaPlayer target = event.getPlayer();
-        if (state == MatchState.ONCANCEL || state == MatchState.ONCOMPLETE){
-            return;}
+        if (state == MatchState.ONCANCEL || state == MatchState.ONCOMPLETE) {
+            return;
+        }
         final ArenaTeam t = event.getTeam();
 
         Integer nDeaths = t.addDeath(target);
@@ -106,19 +110,24 @@ public class ArenaMatch extends Match {
         if (nLivesPerPlayer != ArenaSize.MAX) {
             int curLives = nLivesPerPlayer - nDeaths;
             SEntry e = scoreboard.getEntry(target.getPlayer());
-            if (e != null)
+            if (e != null) {
                 scoreboard.setEntryNameSuffix(e, curLives <= 1 ? "" : "&4(" + curLives + ")");
+            }
         }
-        if (trueDeath){
+        if (trueDeath) {
             PlayerDeathEvent pde = event.getPlayerDeathEvent();
-            if (cancelExpLoss)
+            if (cancelExpLoss) {
                 pde.setKeepLevel(true);
+            }
 
             /// Handle Drops from bukkitEvent
-            if (clearsInventoryOnDeath || keepsInventory){ /// clear the drops
-                try {pde.getDrops().clear();} catch (Exception e){
-                    if (!Defaults.DEBUG_VIRTUAL)
+            if (clearsInventoryOnDeath || keepsInventory) { /// clear the drops
+                try {
+                    pde.getDrops().clear();
+                } catch (Exception e) {
+                    if (!Defaults.DEBUG_VIRTUAL) {
                         Log.printStackTrace(e);
+                    }
                 }
             } else if (woolTeams) {  /// Get rid of the wool from teams so it doesnt drop
                 final int index = t.getIndex();
@@ -127,10 +136,11 @@ public class ArenaMatch extends Match {
                 for (ItemStack is : items) {
                     if (is.getType() == teamHead.getType() && is.getDurability() == teamHead.getDurability()) {
                         final int amt = is.getAmount();
-                        if (amt > 1)
+                        if (amt > 1) {
                             is.setAmount(amt - 1);
-                        else
+                        } else {
                             is.setType(Material.AIR);
+                        }
                         break;
                     }
                 }
@@ -138,11 +148,11 @@ public class ArenaMatch extends Match {
             /// If keepInventory is specified, but not restoreAll, then we have a case
             /// where we need to give them back the current Inventory they have on them
             /// even if they log out
-            if (keepsInventory){
-                boolean restores = getParams().hasOptionAt(MatchState.ONLEAVE,TransitionOption.RESTOREITEMS);
+            if (keepsInventory) {
+                boolean restores = getParams().hasOptionAt(MatchState.ONLEAVE, TransitionOption.RESTOREITEMS);
                 /// Restores and exiting, means clear their match inventory so they won't
                 /// get their match and their already stored inventory
-                if (restores && exiting){
+                if (restores && exiting) {
                     psc.clearMatchItems(target);
                 } else { /// keep their current inv
                     psc.storeMatchItems(target);
@@ -152,7 +162,7 @@ public class ArenaMatch extends Match {
             /// We will cancel this onRespawn
             final ArenaMatch am = this;
             Integer timer = deathTimer.get(target.getID());
-            if (timer != null){
+            if (timer != null) {
                 Bukkit.getScheduler().cancelTask(timer);
             }
 //            timer = Scheduler.scheduleSynchronousTask(new Runnable(){
@@ -164,13 +174,11 @@ public class ArenaMatch extends Match {
 //            }, 15*20L);
 //            deathTimer.put(target.getID(), timer);
         }
-        if (exiting){
+        if (exiting) {
             performTransition(MatchState.ONCOMPLETE, target, t, true);
             checkAndHandleIfTeamDead(t);
         }
     }
-
-
 
     //	@MatchEventHandler(suppressCastWarnings=true,priority=EventPriority.HIGHER)
     //	public void onCheckEmulateDeath(EntityDamageEvent event) {
@@ -220,19 +228,21 @@ public class ArenaMatch extends Match {
     //			TeleportController.teleportPlayer(target, l, false, true);
     //		}
     //	}
-
-    @ArenaEventHandler(priority=EventPriority.HIGH)
+    @ArenaEventHandler(priority = EventPriority.HIGH)
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         final ArenaPlayer p = BattleArena.toArenaPlayer(event.getPlayer());
-        if (Defaults.DEBUG_TRACE) MessageUtil.sendMessage(p, " -onPlayerRespawn  t=" + p.getTeam());
+        if (Defaults.DEBUG_TRACE) {
+            MessageUtil.sendMessage(p, " -onPlayerRespawn  t=" + p.getTeam());
+        }
 
         if (isWon()) {
             return;
         }
         final StateOptions mo = tops.getOptions(MatchState.ONDEATH);
 
-        if (mo == null)
+        if (mo == null) {
             return;
+        }
 
         if (respawns) {
             final boolean randomRespawn = mo.randomRespawn();
@@ -258,8 +268,9 @@ public class ArenaMatch extends Match {
                 }
                 /// Should we respawn the player to the team spawn after a certain amount of time
                 Integer respawnTime = mo.getInt(TransitionOption.RESPAWNTIME);
-                if (respawnTime==null)
+                if (respawnTime == null) {
                     respawnTime = 15;
+                }
                 final Integer finalRespawnTime = respawnTime;
                 if (scoreboard != null) {
                     new Countdown(BattleArena.getSelf(), finalRespawnTime, 1, new CountdownCallback() {
@@ -274,9 +285,9 @@ public class ArenaMatch extends Match {
                                 if (secondsRemaining > 0) {
                                     scoreboard.setEntryNameSuffix(e, "&e(" + secondsRemaining + ")");
                                 } else {
-                                    Integer curLives  = nLivesPerPlayer - t.getNDeaths(p);
-                                    String s = (nLivesPerPlayer != ArenaSize.MAX && curLives != 1) ?
-                                            "&4(" + curLives + ")" : "";
+                                    Integer curLives = nLivesPerPlayer - t.getNDeaths(p);
+                                    String s = (nLivesPerPlayer != ArenaSize.MAX && curLives != 1)
+                                            ? "&4(" + curLives + ")" : "";
                                     scoreboard.setEntryNameSuffix(e, s);
                                 }
                             }
@@ -331,67 +342,70 @@ public class ArenaMatch extends Match {
                 }
             });
         } else { /// This player is now out of the system now that we have given the ondeath effects
-            Location l = tops.hasOptionAt(MatchState.ONLEAVE, TransitionOption.TELEPORTTO) ?
-                    tops.getOptions(MatchState.ONLEAVE).getTeleportToLoc() : p.getOldLocation().getLocation();
-            if (l != null)
+            Location l = tops.hasOptionAt(MatchState.ONLEAVE, TransitionOption.TELEPORTTO)
+                    ? tops.getOptions(MatchState.ONLEAVE).getTeleportToLoc() : p.getOldLocation().getLocation();
+            if (l != null) {
                 event.setRespawnLocation(l);
+            }
         }
     }
 
     /**
-     * Factions has slashless commands that get handled and then set to cancelled....
-     * so we need to act before them
+     * Factions has slashless commands that get handled and then set to
+     * cancelled.... so we need to act before them
+     *
      * @param event PlayerCommandPreprocessEvent
      */
-    @ArenaEventHandler(priority=EventPriority.HIGH, bukkitPriority=org.bukkit.event.EventPriority.LOWEST)
-    public void onPlayerCommandPreprocess1(PlayerCommandPreprocessEvent event){
+    @ArenaEventHandler(priority = EventPriority.HIGH, bukkitPriority = org.bukkit.event.EventPriority.LOWEST)
+    public void onPlayerCommandPreprocess1(PlayerCommandPreprocessEvent event) {
         handlePreprocess(event);
     }
 
-    @ArenaEventHandler(priority=EventPriority.HIGH)
-    public void onPlayerCommandPreprocess2(PlayerCommandPreprocessEvent event){
-        if (event.isCancelled()){
-            return;}
+    @ArenaEventHandler(priority = EventPriority.HIGH)
+    public void onPlayerCommandPreprocess2(PlayerCommandPreprocessEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
         handlePreprocess(event);
     }
 
     private void handlePreprocess(PlayerCommandPreprocessEvent event) {
-        if (CommandUtil.shouldCancel(event, disabledAllCommands, disabledCommands, enabledCommands)){
+        if (CommandUtil.shouldCancel(event, disabledAllCommands, disabledCommands, enabledCommands)) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(ChatColor.RED+"You cannot use that command when you are in a match");
-            if (PermissionsUtil.isAdmin(event.getPlayer())){
-                MessageUtil.sendMessage(event.getPlayer(),"&cYou can set &6/bad allowAdminCommands true: &c to change");}
+            event.getPlayer().sendMessage(ChatColor.RED + "You cannot use that command when you are in a match");
+            if (PermissionsUtil.isAdmin(event.getPlayer())) {
+                MessageUtil.sendMessage(event.getPlayer(), "&cYou can set &6/bad allowAdminCommands true: &c to change");
+            }
         }
     }
 
-    @ArenaEventHandler(priority=EventPriority.HIGH)
-    public void onPlayerInteract(PlayerInteractEvent event){
+    @ArenaEventHandler(priority = EventPriority.HIGH)
+    public void onPlayerInteract(PlayerInteractEvent event) {
         playerInteract(event);
     }
 
-    private void playerInteract(PlayerInteractEvent event){
-        if (event.getClickedBlock() == null ||
-                !(event.getClickedBlock().getType().equals(Material.SIGN) ||
-                        event.getClickedBlock().getType().equals(Material.WALL_SIGN) ||
-                        event.getClickedBlock().getType().equals(Defaults.READY_BLOCK)
-                )) {
+    private void playerInteract(PlayerInteractEvent event) {
+        if (event.getClickedBlock() == null
+                || !(event.getClickedBlock().getType().equals(Material.SIGN)
+                || event.getClickedBlock().getType().equals(Material.WALL_SIGN)
+                || event.getClickedBlock().getType().equals(Defaults.READY_BLOCK))) {
             return;
         }
 
         /// Check to see if it's a sign
-        if (event.getClickedBlock().getType().equals(Material.SIGN) ||
-                event.getClickedBlock().getType().equals(Material.WALL_SIGN)){ /// Only checking for signs
+        if (event.getClickedBlock().getType().equals(Material.SIGN)
+                || event.getClickedBlock().getType().equals(Material.WALL_SIGN)) { /// Only checking for signs
             //			signClick(event,this);
         } else { /// its a ready block
-            if (respawnTimer.containsKey(PlayerUtil.getID(event.getPlayer()))){
-                respawnClick(event,this,respawnTimer);
+            if (respawnTimer.containsKey(PlayerUtil.getID(event.getPlayer()))) {
+                respawnClick(event, this, respawnTimer);
             } else {
                 readyClick(event);
             }
         }
     }
 
-    public static void respawnClick(PlayerInteractEvent event, PlayerHolder am, Map<UUID,Integer> respawnTimer) {
+    public static void respawnClick(PlayerInteractEvent event, PlayerHolder am, Map<UUID, Integer> respawnTimer) {
         ArenaPlayer ap = BattleArena.toArenaPlayer(event.getPlayer());
         Integer id = respawnTimer.remove(ap.getID());
         Bukkit.getScheduler().cancelTask(id);
@@ -404,77 +418,88 @@ public class ArenaMatch extends Match {
         /// Get our sign
         final Sign sign = (Sign) event.getClickedBlock().getState();
         /// Check to see if sign has correct format (is more efficient than doing string manipulation )
-        if (!sign.getLine(0).matches("^.[0-9a-fA-F]\\*.*$") && !sign.getLine(0).matches("^\\[.*$")){
-            return;}
+        if (!sign.getLine(0).matches("^.[0-9a-fA-F]\\*.*$") && !sign.getLine(0).matches("^\\[.*$")) {
+            return;
+        }
 
         final Action action = event.getAction();
-        if (action != Action.LEFT_CLICK_BLOCK && action != Action.RIGHT_CLICK_BLOCK){
-            return;}
-        if (action == Action.LEFT_CLICK_BLOCK){ /// Dont let them break the sign
-            event.setCancelled(true);}
+        if (action != Action.LEFT_CLICK_BLOCK && action != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+        if (action == Action.LEFT_CLICK_BLOCK) { /// Dont let them break the sign
+            event.setCancelled(true);
+        }
 
         final ArenaClass ac = ArenaClassController.getClass(MessageUtil.decolorChat(
-                sign.getLine(0)).replace('*',' ').replace('[',' ').replace(']',' ').trim());
+                sign.getLine(0)).replace('*', ' ').replace('[', ' ').replace(']', ' ').trim());
         ArenaClassController.changeClass(event.getPlayer(), am, ac);
     }
 
-
-
     private void readyClick(PlayerInteractEvent event) {
-        if (!Defaults.ENABLE_PLAYER_READY_BLOCK)
+        if (!Defaults.ENABLE_PLAYER_READY_BLOCK) {
             return;
+        }
         final ArenaPlayer ap = BattleArena.toArenaPlayer(event.getPlayer());
-        if (!isInWaitRoomState()){
-            return;}
-        final Action action = event.getAction();
-        if (action == Action.LEFT_CLICK_BLOCK){ /// Dont let them break the block
-            event.setCancelled(true);}
-
-        if (ap.isReady())
+        if (!isInWaitRoomState()) {
             return;
+        }
+        final Action action = event.getAction();
+        if (action == Action.LEFT_CLICK_BLOCK) { /// Dont let them break the block
+            event.setCancelled(true);
+        }
+
+        if (ap.isReady()) {
+            return;
+        }
         ap.setReady(true);
         MessageUtil.sendMessage(ap, "&2You ready yourself for the arena");
-        callEvent(new ArenaPlayerReadyEvent(ap,true));
+        callEvent(new ArenaPlayerReadyEvent(ap, true));
     }
 
     @ArenaEventHandler
     /// TODO
     @SuppressWarnings("unused")
-    public void onPlayerReady(ArenaPlayerReadyEvent event){
-        if (!Defaults.ENABLE_PLAYER_READY_BLOCK){
-            return;}
+    public void onPlayerReady(ArenaPlayerReadyEvent event) {
+        if (!Defaults.ENABLE_PLAYER_READY_BLOCK) {
+            return;
+        }
         int tcount = 0;
         int pcount = 0;
-        for (ArenaTeam t: teams){
-            if (!t.isReady() && t.size() > 0)
+        for (ArenaTeam t : teams) {
+            if (!t.isReady() && t.size() > 0) {
                 return;
+            }
             tcount++;
-            pcount+= t.size();
+            pcount += t.size();
         }
-        if (tcount < params.getMinTeams() || pcount < params.getMinPlayers())
+        if (tcount < params.getMinTeams() || pcount < params.getMinPlayers()) {
             return;
+        }
         callEvent(new MatchPlayersReadyEvent(this));
     }
 
     public static void setDisabledCommands(List<String> commands) {
-        if (commands == null)
+        if (commands == null) {
             return;
+        }
         disabledCommands.clear();
         if (commands.contains("all")) {
             disabledAllCommands = true;
         } else {
-            for (String s: commands){
-                disabledCommands.add("/" + s.toLowerCase());}
+            for (String s : commands) {
+                disabledCommands.add("/" + s.toLowerCase());
+            }
         }
     }
 
-
     public static void setEnabledCommands(List<String> commands) {
-        if (commands == null)
+        if (commands == null) {
             return;
+        }
         enabledCommands.clear();
-        for (String s: commands){
-            enabledCommands.add("/" + s.toLowerCase());}
+        for (String s : commands) {
+            enabledCommands.add("/" + s.toLowerCase());
+        }
     }
 
 }

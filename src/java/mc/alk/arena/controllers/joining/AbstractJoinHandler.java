@@ -21,19 +21,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
-import mc.alk.scoreboardapi.api.SAPI;
-import mc.alk.scoreboardapi.api.SAPIFactory;
-import mc.alk.scoreboardapi.api.SScoreboard;
-
+import mc.alk.battlescoreboardapi.api.SAPI;
+import mc.alk.battlescoreboardapi.api.SAPIFactory;
+import mc.alk.battlescoreboardapi.api.SScoreboard;
 
 public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
-    public static final TeamJoinResult CANTFIT = new TeamJoinResult(TeamJoinStatus.CANT_FIT,-1,null);
+
+    public static final TeamJoinResult CANTFIT = new TeamJoinResult(TeamJoinStatus.CANT_FIT, -1, null);
 
     final MatchParams matchParams;
 
     final List<ArenaTeam> teams = new CopyOnWriteArrayList<ArenaTeam>();
 
-    final int minTeams,maxTeams;
+    final int minTeams, maxTeams;
 
     Competition competition;
 
@@ -43,7 +43,7 @@ public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
 
     public Collection<ArenaPlayer> getPlayers() {
         List<ArenaPlayer> players = new ArrayList<ArenaPlayer>();
-        for (ArenaTeam at: teams) {
+        for (ArenaTeam at : teams) {
             players.addAll(at.getPlayers());
         }
         return players;
@@ -56,36 +56,47 @@ public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
         addToTeam(ct, player);
     }
 
-    public void useWaitingScoreboard(){
-        if (scoreboard==null)
+    public void useWaitingScoreboard() {
+        if (scoreboard == null) {
             return;
-        for (ArenaTeam at: teams){
-            for (ArenaPlayer ap: at.getPlayers()){
+        }
+        for (ArenaTeam at : teams) {
+            for (ArenaPlayer ap : at.getPlayers()) {
                 scoreboard.getScoreboard().setScoreboard(ap.getPlayer());
             }
         }
     }
 
     public void setWaitingScoreboardTime(int seconds) {
-        if (scoreboard==null)
+        if (scoreboard == null) {
             return;
+        }
         scoreboard.setRemainingSeconds(seconds);
     }
 
-
-    public static enum TeamJoinStatus{
+    public static enum TeamJoinStatus {
         ADDED, CANT_FIT, ADDED_TO_EXISTING, ADDED_STILL_NEEDS_PLAYERS
     }
 
-    public static class TeamJoinResult{
+    public static class TeamJoinResult {
+
         final public TeamJoinStatus status;
         final public int remaining;
         final public ArenaTeam team;
 
-        public TeamJoinResult(TeamJoinStatus status, int remaining, ArenaTeam team){
-            this.status = status; this.remaining = remaining; this.team = team;}
-        public TeamJoinStatus getEventType(){ return status;}
-        public int getRemaining(){return remaining;}
+        public TeamJoinResult(TeamJoinStatus status, int remaining, ArenaTeam team) {
+            this.status = status;
+            this.remaining = remaining;
+            this.team = team;
+        }
+
+        public TeamJoinStatus getEventType() {
+            return status;
+        }
+
+        public int getRemaining() {
+            return remaining;
+        }
     }
 
     public AbstractJoinHandler(MatchParams params, Competition competition, List<ArenaTeam> teams) {
@@ -94,8 +105,9 @@ public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
         this.maxTeams = params.getMaxTeams();
 
         setCompetition(competition);
-        if (Defaults.USE_SCOREBOARD && SAPI.hasBukkitScoreboard())
+        if (Defaults.USE_SCOREBOARD && SAPI.hasBukkitScoreboard()) {
             initWaitingScoreboard(teams);
+        }
     }
 
     private void initWaitingScoreboard(List<ArenaTeam> startingTeams) {
@@ -131,41 +143,45 @@ public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
         this.competition = comp;
     }
 
-    public void transferOldScoreboards(SScoreboard newScoreboard){
-        if (scoreboard == null)
+    public void transferOldScoreboards(SScoreboard newScoreboard) {
+        if (scoreboard == null) {
             return;
+        }
         SAPIFactory.transferOldScoreboards(
-                scoreboard.getScoreboard()!=null ? scoreboard.getScoreboard().getBScoreboard() : scoreboard.getScoreboard()
-                , newScoreboard);
+                scoreboard.getScoreboard() != null ? scoreboard.getScoreboard().getBScoreboard() : scoreboard.getScoreboard(),
+                 newScoreboard);
     }
 
     protected ArenaTeam addToPreviouslyLeftTeam(ArenaPlayer player) {
-        for (ArenaTeam t: teams){
-            if (t.hasLeft(player)){
+        for (ArenaTeam t : teams) {
+            if (t.hasLeft(player)) {
                 t.addPlayer(player);
                 nPlayers++;
-                if (competition!=null)
-                    competition.addedToTeam(t,player);
-                if (scoreboard!=null)
-                    scoreboard.addedToTeam(t,player);
+                if (competition != null) {
+                    competition.addedToTeam(t, player);
+                }
+                if (scoreboard != null) {
+                    scoreboard.addedToTeam(t, player);
+                }
                 return t;
             }
         }
         return null;
     }
 
-
     @Override
     public void addToTeam(ArenaTeam team, Collection<ArenaPlayer> players) {
         team.addPlayers(players);
-        for (ArenaPlayer ap : players){
+        for (ArenaPlayer ap : players) {
             ap.setTeam(team);
         }
-        nPlayers+=players.size();
-        if (competition!=null)
-            competition.addedToTeam(team,players);
-        if (scoreboard!=null)
-            scoreboard.addedToTeam(team,players);
+        nPlayers += players.size();
+        if (competition != null) {
+            competition.addedToTeam(team, players);
+        }
+        if (scoreboard != null) {
+            scoreboard.addedToTeam(team, players);
+        }
     }
 
     @Override
@@ -173,10 +189,12 @@ public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
         team.addPlayer(player);
         player.setTeam(team);
         nPlayers++;
-        if (competition!=null)
-            competition.addedToTeam(team,player);
-        if (scoreboard!=null)
-            scoreboard.addedToTeam(team,player);
+        if (competition != null) {
+            competition.addedToTeam(team, player);
+        }
+        if (scoreboard != null) {
+            scoreboard.addedToTeam(team, player);
+        }
         return true;
     }
 
@@ -185,16 +203,18 @@ public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
         team.removePlayer(player);
         player.setTeam(null);
         nPlayers--;
-        if (competition!=null)
+        if (competition != null) {
             competition.removedFromTeam(team, player);
-        if (scoreboard!=null)
-            scoreboard.removedFromTeam(team,player);
+        }
+        if (scoreboard != null) {
+            scoreboard.removedFromTeam(team, player);
+        }
         return true;
     }
 
     @Override
     public void removeFromTeam(ArenaTeam team, Collection<ArenaPlayer> players) {
-        for (ArenaPlayer ap: players){
+        for (ArenaPlayer ap : players) {
             removeFromTeam(team, ap);
         }
     }
@@ -204,16 +224,17 @@ public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
         return true;
     }
 
-
     @Override
-    public boolean addTeam(ArenaTeam team){
-        nPlayers+=team.size();
+    public boolean addTeam(ArenaTeam team) {
+        nPlayers += team.size();
         team.setIndex(teams.size());
         teams.add(team);
-        if (competition!=null)
+        if (competition != null) {
             competition.addedTeam(team);
-        if (scoreboard!=null)
+        }
+        if (scoreboard != null) {
             scoreboard.addedTeam(team);
+        }
         return true;
     }
 
@@ -226,15 +247,15 @@ public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
 
     @Override
     public boolean leave(ArenaPlayer p) {
-        for (ArenaTeam t: teams){
+        for (ArenaTeam t : teams) {
             if (t.hasMember(p)) {
                 nPlayers--;
                 t.removePlayer(p);
-                if (competition!=null) {
-                    competition.removedFromTeam(t,p);
+                if (competition != null) {
+                    competition.removedFromTeam(t, p);
                 }
-                if (scoreboard != null ) {
-                    scoreboard.removedFromTeam(t,p);
+                if (scoreboard != null) {
+                    scoreboard.removedFromTeam(t, p);
                 }
                 return true;
             }
@@ -254,10 +275,10 @@ public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
         return tplayers;
     }
 
-    public List<ArenaTeam> removeImproperTeams(){
+    public List<ArenaTeam> removeImproperTeams() {
         List<ArenaTeam> improper = new ArrayList<ArenaTeam>();
         for (ArenaTeam t : teams) {
-            if (t.size() < t.getMinPlayers()|| t.size() > t.getMaxPlayers()) {
+            if (t.size() < t.getMinPlayers() || t.size() > t.getMaxPlayers()) {
                 improper.add(t);
                 nPlayers -= t.size();
             }
@@ -266,51 +287,64 @@ public abstract class AbstractJoinHandler implements JoinHandler, TeamHandler {
         return improper;
     }
 
-    public boolean hasEnough(int allowedTeamSizeDifference){
+    public boolean hasEnough(int allowedTeamSizeDifference) {
         final int teamssize = teams.size();
-        if (teamssize < minTeams)
+        if (teamssize < minTeams) {
             return false;
+        }
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
         int valid = 0;
-        for (ArenaTeam t: teams){
+        for (ArenaTeam t : teams) {
             final int tsize = t.size();
-            if (tsize ==0)
+            if (tsize == 0) {
                 continue;
-            if (tsize < min) min = tsize;
-            if (tsize > max) max = tsize;
+            }
+            if (tsize < min) {
+                min = tsize;
+            }
+            if (tsize > max) {
+                max = tsize;
+            }
 
-            if (max - min > allowedTeamSizeDifference)
+            if (max - min > allowedTeamSizeDifference) {
                 return false;
+            }
 
-            if (tsize < t.getMinPlayers() || tsize > t.getMaxPlayers())
+            if (tsize < t.getMinPlayers() || tsize > t.getMaxPlayers()) {
                 continue;
+            }
             valid++;
         }
         return valid >= minTeams && valid <= maxTeams;
     }
 
     public boolean isFull() {
-        if (maxTeams == CompetitionSize.MAX )
+        if (maxTeams == CompetitionSize.MAX) {
             return false;
+        }
         /// Check to see if we have filled up our number of teams
-        if ( maxTeams > teams.size()){
-            return false;}
+        if (maxTeams > teams.size()) {
+            return false;
+        }
         /// Check to see if there is any space left on the team
-        for (ArenaTeam t: teams){
-            if (t.size() < t.getMaxPlayers()){
-                return false;}
+        for (ArenaTeam t : teams) {
+            if (t.size() < t.getMaxPlayers()) {
+                return false;
+            }
         }
         /// we can't add a team.. and all teams are full
         return true;
     }
 
     public boolean isEmpty() {
-        if (teams.isEmpty())
+        if (teams.isEmpty()) {
             return true;
-        for (ArenaTeam t: teams){
-            if (t.size() != 0){
-                return false;}
+        }
+        for (ArenaTeam t : teams) {
+            if (t.size() != 0) {
+                return false;
+            }
         }
         return true;
     }
