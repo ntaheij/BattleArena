@@ -20,6 +20,7 @@ import java.util.TreeMap;
 import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 
 public class AllKills extends VictoryCondition implements ScoreTracker {
+
     final ArenaObjective kills;
     final TrackerController sc;
     final ConfigurationSection section;
@@ -29,20 +30,21 @@ public class AllKills extends VictoryCondition implements ScoreTracker {
         this.section = section;
         String displayName = section.getString("displayName", "All Kills");
         String criteria = section.getString("criteria", "Kill Mobs/players");
-        kills = new ArenaObjective(getClass().getSimpleName(),displayName, criteria,
+        kills = new ArenaObjective(getClass().getSimpleName(), displayName, criteria,
                 SAPIDisplaySlot.SIDEBAR, 60);
         boolean isRated = match.getParams().isRated();
         boolean soloRating = !match.getParams().isTeamRating();
-        sc = (isRated && soloRating) ? new TrackerController(match.getParams()): null;
+        sc = (isRated && soloRating) ? new TrackerController(match.getParams()) : null;
     }
 
-    @ArenaEventHandler(priority=EventPriority.LOW)
+    @ArenaEventHandler(priority = EventPriority.LOW)
     public void playerKillEvent(ArenaPlayerKillEvent event) {
         int points = section.getInt("points.player", 1);
         kills.addPoints(event.getPlayer(), points);
         kills.addPoints(event.getTeam(), points);
-        if (sc != null)
+        if (sc != null) {
             sc.addRecord(event.getPlayer(), event.getTarget(), WinLossDraw.WIN);
+        }
     }
 
     @ArenaEventHandler(priority = EventPriority.LOW)
@@ -56,7 +58,7 @@ public class AllKills extends VictoryCondition implements ScoreTracker {
     }
 
     @Override
-    public TreeMap<Integer,Collection<ArenaTeam>> getRanks() {
+    public TreeMap<Integer, Collection<ArenaTeam>> getRanks() {
         return kills.getTeamRanks();
     }
 

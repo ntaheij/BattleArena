@@ -14,7 +14,6 @@ import mc.alk.arena.util.Countdown;
 import mc.alk.arena.util.Countdown.CountdownCallback;
 import mc.alk.arena.util.TeamUtil;
 
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,6 +24,7 @@ import mc.alk.battlescoreboardapi.api.STeam;
 import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 
 public class CutoffScoreboard implements WaitingScoreboard {
+
     Map<Integer, LinkedList<SEntry>> reqPlaceHolderPlayers = new HashMap<Integer, LinkedList<SEntry>>();
 
     Map<Integer, LinkedList<SEntry>> opPlaceHolderPlayers = new HashMap<Integer, LinkedList<SEntry>>();
@@ -32,6 +32,7 @@ public class CutoffScoreboard implements WaitingScoreboard {
     ArenaObjective ao;
     final int minTeams;
     Countdown countdown;
+
     public CutoffScoreboard(MatchParams params, List<ArenaTeam> teams) {
         scoreboard = ScoreboardFactory.createScoreboard(String.valueOf(this.hashCode()), params);
         ao = scoreboard.createObjective("waiting",
@@ -44,7 +45,7 @@ public class CutoffScoreboard implements WaitingScoreboard {
         if (maxTeams < 16) {
             ppteam = 15 / maxTeams;
         }
-        for (int i = 0; i <maxTeams && count < 15; i++) {
+        for (int i = 0; i < maxTeams && count < 15; i++) {
 //            Log.debug("&4i = " + i);
             ArenaTeam team = i < teams.size() ? teams.get(i) : TeamFactory.createCompositeTeam(i, params);
             team.setIDString(String.valueOf(team.getIndex()));
@@ -54,21 +55,21 @@ public class CutoffScoreboard implements WaitingScoreboard {
                 addPlaceholder(team, t, i >= minTeams);
             }
         }
-        if (params.getForceStartTime() >0 &&
-                params.getForceStartTime() != ArenaSize.MAX
-                && !params.getMaxPlayers().equals(params.getMinPlayers())
-                ){
-            countdown = new Countdown(BattleArena.getSelf(), params.getForceStartTime(),1,new DisplayCountdown());
+        if (params.getForceStartTime() > 0
+                && params.getForceStartTime() != ArenaSize.MAX
+                && !params.getMaxPlayers().equals(params.getMinPlayers())) {
+            countdown = new Countdown(BattleArena.getSelf(), params.getForceStartTime(), 1, new DisplayCountdown());
         }
     }
 
     class DisplayCountdown implements CountdownCallback {
+
         @Override
         public boolean intervalTick(int secondsRemaining) {
-            if (secondsRemaining == 0){
+            if (secondsRemaining == 0) {
                 ao.setDisplayNameSuffix("");
             } else {
-                ao.setDisplayNameSuffix(" &e("+secondsRemaining+")");
+                ao.setDisplayNameSuffix(" &e(" + secondsRemaining + ")");
             }
             return true;
         }
@@ -76,17 +77,16 @@ public class CutoffScoreboard implements WaitingScoreboard {
 
     @Override
     public void setRemainingSeconds(int seconds) {
-        if (countdown !=null){
+        if (countdown != null) {
             countdown.stop();
         }
-        countdown = new Countdown(BattleArena.getSelf(), seconds,1,new DisplayCountdown());
+        countdown = new Countdown(BattleArena.getSelf(), seconds, 1, new DisplayCountdown());
     }
 
     private int getReqSize(int teamIndex) {
-        return reqPlaceHolderPlayers.containsKey(teamIndex) ?
-                reqPlaceHolderPlayers.get(teamIndex).size() : 0;
+        return reqPlaceHolderPlayers.containsKey(teamIndex)
+                ? reqPlaceHolderPlayers.get(teamIndex).size() : 0;
     }
-
 
     private void addPlaceholder(ArenaTeam team, STeam t, boolean optionalTeam) {
         String name;
@@ -127,7 +127,7 @@ public class CutoffScoreboard implements WaitingScoreboard {
         t.addPlayer(e.getOfflinePlayer());
     }
 
-    private void removePlaceHolder(int teamIndex){
+    private void removePlaceHolder(int teamIndex) {
         LinkedList<SEntry> list = reqPlaceHolderPlayers.get(teamIndex);
         if (list == null || list.isEmpty()) {
             list = opPlaceHolderPlayers.get(teamIndex);
@@ -150,23 +150,23 @@ public class CutoffScoreboard implements WaitingScoreboard {
     @Override
     public void addedToTeam(ArenaTeam team, Collection<ArenaPlayer> players) {
         for (ArenaPlayer player : players) {
-            addedToTeam(team,player);
+            addedToTeam(team, player);
         }
     }
 
     @Override
     public void removedFromTeam(ArenaTeam team, ArenaPlayer player) {
         STeam t = scoreboard.getTeam(String.valueOf(team.getIndex()));
-        scoreboard.removedFromTeam(t,player);
-        addPlaceholder(team, t,team.getIndex()>= minTeams);
+        scoreboard.removedFromTeam(t, player);
+        addPlaceholder(team, t, team.getIndex() >= minTeams);
     }
 
     @Override
     public void removedFromTeam(ArenaTeam team, Collection<ArenaPlayer> players) {
         STeam t = scoreboard.getTeam(String.valueOf(team.getIndex()));
         for (ArenaPlayer player : players) {
-            scoreboard.removedFromTeam(team,player);
-            addPlaceholder(team, t, team.getIndex()>= minTeams);
+            scoreboard.removedFromTeam(team, player);
+            addPlaceholder(team, t, team.getIndex() >= minTeams);
         }
     }
 
@@ -190,6 +190,5 @@ public class CutoffScoreboard implements WaitingScoreboard {
     public ArenaScoreboard getScoreboard() {
         return scoreboard;
     }
-
 
 }

@@ -8,15 +8,14 @@ import mc.alk.arena.objects.scoreboard.ScoreboardFactory;
 import mc.alk.arena.objects.scoreboard.WaitingScoreboard;
 import mc.alk.arena.objects.teams.ArenaTeam;
 
-
 import java.util.Collection;
 import mc.alk.battlescoreboardapi.api.STeam;
 import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 
 public class AbridgedScoreboard implements WaitingScoreboard {
+
     final ArenaScoreboard scoreboard;
     final ArenaObjective ao;
-
 
     public AbridgedScoreboard(MatchParams params) {
         scoreboard = ScoreboardFactory.createScoreboard(String.valueOf(this.hashCode()), params);
@@ -29,7 +28,7 @@ public class AbridgedScoreboard implements WaitingScoreboard {
     public void addedToTeam(ArenaTeam team, ArenaPlayer player) {
         STeam t = scoreboard.addedToTeam(team, player);
         scoreboard.setScoreboard(player.getPlayer());
-        setTeamSuffix(team,t);
+        setTeamSuffix(team, t);
         ao.setTeamPoints(t, team.size());
     }
 
@@ -47,7 +46,7 @@ public class AbridgedScoreboard implements WaitingScoreboard {
     @Override
     public void removedFromTeam(ArenaTeam team, ArenaPlayer player) {
         STeam t = scoreboard.getTeam(team.getIDString());
-        scoreboard.removedFromTeam(team,player);
+        scoreboard.removedFromTeam(team, player);
         setTeamSuffix(team, t);
         ao.setTeamPoints(t, team.size());
     }
@@ -56,7 +55,7 @@ public class AbridgedScoreboard implements WaitingScoreboard {
     public void removedFromTeam(ArenaTeam team, Collection<ArenaPlayer> players) {
         STeam t = scoreboard.getTeam(team.getIDString());
         for (ArenaPlayer player : players) {
-            scoreboard.removedFromTeam(team,player);
+            scoreboard.removedFromTeam(team, player);
             setTeamSuffix(team, t);
         }
         ao.setTeamPoints(t, team.size());
