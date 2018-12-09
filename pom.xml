@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.10.19</version>
+    <version>3.9.10.20</version>
     <name>BattleArena</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -341,7 +341,7 @@
                                 <filter>
                                     <artifact>mc.alk:BattleScoreboardAPI</artifact>
                                     <includes>
-                                        <include>mc/alk/scoreboardapi/**</include>
+                                        <include>mc/alk/battlescoreboardapi/**</include>
                                         <!--<include>mc/alk/profiling/**</include>-->
                                     </includes>
                                 </filter>
