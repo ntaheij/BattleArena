@@ -73,7 +73,7 @@ import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.battlepluginupdater.FileUpdater;
 import mc.alk.battlepluginupdater.PluginUpdater;
-import mc.battleplugins.api.BattlePluginsAPI;
+import mc.alk.battlewebapi.BattlePluginsAPI;
 import mc.euro.bukkitinterface.BukkitInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;

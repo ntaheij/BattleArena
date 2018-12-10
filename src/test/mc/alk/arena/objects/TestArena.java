@@ -1,4 +1,4 @@
-package test.mc.alk.arena.objects;
+package mc.alk.arena.objects;
 
 import mc.alk.arena.objects.MatchState;
 import mc.alk.arena.objects.arenas.Arena;

@@ -1,4 +1,4 @@
-package test.mc.alk.arena;
+package mc.alk.arena;
 
 import junit.framework.TestCase;
 import mc.alk.arena.Defaults;
@@ -13,7 +13,7 @@ import mc.alk.arena.objects.exceptions.ConfigException;
 import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.serializers.BaseConfig;
 import mc.alk.arena.serializers.ConfigSerializer;
-import test.mc.alk.arena.objects.TestPlugin;
+import mc.alk.arena.objects.TestPlugin;
 import mc.alk.tests.testbukkit.TestBukkitServer;
 
 import java.io.File;

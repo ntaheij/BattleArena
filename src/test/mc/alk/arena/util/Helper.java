@@ -1,4 +1,4 @@
-package test.mc.alk.arena.util;
+package mc.alk.arena.util;
 
 import mc.alk.arena.objects.MatchParams;
 import mc.alk.arena.serializers.BaseConfig;

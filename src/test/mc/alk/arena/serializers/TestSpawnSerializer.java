@@ -1,4 +1,4 @@
-package test.mc.alk.arena.serializers;
+package mc.alk.arena.serializers;
 
 import junit.framework.TestCase;
 

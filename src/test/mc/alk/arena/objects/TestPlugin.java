@@ -1,4 +1,4 @@
-package test.mc.alk.arena.objects;
+package mc.alk.arena.objects;
 
 import java.io.File;
 import java.io.InputStream;

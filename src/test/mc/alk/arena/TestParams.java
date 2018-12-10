@@ -1,4 +1,4 @@
-package test.mc.alk.arena;
+package mc.alk.arena;
 
 import mc.alk.arena.controllers.ParamController;
 import mc.alk.arena.objects.MatchParams;

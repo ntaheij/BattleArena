@@ -1,4 +1,4 @@
-package test.mc.alk.arena;
+package mc.alk.arena;
 
 import junit.framework.TestCase;
 import mc.alk.arena.BattleArena;
@@ -21,8 +21,8 @@ import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.MinMax;
 import mc.alk.mc.MCServer;
 import org.bukkit.entity.Player;
-import test.mc.alk.arena.objects.TestPlugin;
-import test.mc.alk.arena.util.Helper;
+import mc.alk.arena.objects.TestPlugin;
+import mc.alk.arena.util.Helper;
 import mc.alk.tests.testbukkit.TestBukkitPlayer;
 import mc.alk.tests.testbukkit.TestBukkitServer;
 import mc.alk.tests.testbukkit.TestMCBukkitServer;

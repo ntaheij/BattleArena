@@ -1,4 +1,4 @@
-package test.mc.alk.arena;
+package mc.alk.arena;
 
 import junit.framework.TestCase;
 import mc.alk.arena.BattleArena;
@@ -21,7 +21,7 @@ import mc.alk.arena.serializers.ConfigSerializer;
 import mc.alk.arena.serializers.MessageSerializer;
 import mc.alk.mc.MCServer;
 import org.bukkit.entity.Player;
-import test.mc.alk.arena.objects.TestPlugin;
+import mc.alk.arena.objects.TestPlugin;
 import mc.alk.tests.testbukkit.TestBukkitPlayer;
 import mc.alk.tests.testbukkit.TestBukkitServer;
 import mc.alk.tests.testbukkit.TestMCBukkitServer;

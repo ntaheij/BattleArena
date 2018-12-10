@@ -1,4 +1,4 @@
-package test.mc.alk.arena;
+package mc.alk.arena;
 
 import mc.alk.arena.Defaults;
 import org.bukkit.plugin.PluginLogger;
