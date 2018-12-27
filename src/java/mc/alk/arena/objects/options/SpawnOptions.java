@@ -1,5 +1,6 @@
 package mc.alk.arena.objects.options;
 
+import mc.euro.bukkitadapter.MaterialAdapter;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class SpawnOptions {
                     }
                 } else {
                     try {
-                        Material m = Material.valueOf(as[1]);
+                        Material m = MaterialAdapter.getMaterial(as[1]);
                         options.put(SpawnOption.DESPAWNMATERIAL, m);
                     } catch (Exception e ){
                         throw new IllegalStateException("Material value not valid. arg='" + arg+"'");

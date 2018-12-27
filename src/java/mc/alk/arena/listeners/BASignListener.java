@@ -9,6 +9,7 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.SignUtil;
+import mc.euro.bukkitadapter.MaterialAdapter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,7 +38,7 @@ public class BASignListener implements Listener{
     public void onPlayerInteract(PlayerInteractEvent event) {
         /// If this is an uninteresting block get out of here as quickly as we can
         if (event.getClickedBlock() == null ||
-                !(event.getClickedBlock().getType().equals(Material.SIGN_POST) ||
+                !(event.getClickedBlock().getType().equals(MaterialAdapter.getMaterial("SIGN_POST")) ||
                         event.getClickedBlock().getType().equals(Material.WALL_SIGN))) {
             return;
         }
@@ -73,7 +74,7 @@ public class BASignListener implements Listener{
         final Block block = event.getBlock();
         final Material type = block.getType();
 
-        if (!(type.equals(Material.SIGN) || type.equals(Material.SIGN_POST) || type.equals(Material.WALL_SIGN))) {
+        if (!(type.equals(Material.SIGN) || type.equals(MaterialAdapter.getMaterial("SIGN_POST")) || type.equals(Material.WALL_SIGN))) {
             // System.out.println("SignChangeEvent exiting for " + type.toString());
             return;}
 

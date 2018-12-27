@@ -7,6 +7,7 @@ import mc.alk.arena.objects.StateGraph;
 import mc.alk.arena.objects.options.TransitionOption;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.objects.teams.TeamAppearance;
+import mc.euro.bukkitadapter.MaterialAdapter;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -72,7 +73,7 @@ public class TeamUtil {
 			ItemStack is = p.getInventory().getHelmet();
             try{
 			p.getInventory().setHelmet(item);
-			if (is != null && is.getType() != Material.AIR && is.getType()!= Material.WOOL){
+			if (is != null && is.getType() != Material.AIR && is.getType()!= MaterialAdapter.getMaterial("WOOL")){
 				InventoryUtil.addItemToInventory(p, is.clone(), is.getAmount(),true, true);}
 				p.updateInventory();
 			}catch (Exception e){

@@ -1,12 +1,10 @@
 package mc.alk.arena.controllers;
 
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.bukkit.selections.Selection;
+import com.sk89q.worldedit.regions.Region;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.containers.RoomContainer;
 import mc.alk.arena.controllers.plugins.PylamoController;
-import mc.alk.arena.controllers.plugins.WorldGuardController;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.CompetitionState;
 import mc.alk.arena.objects.LocationType;
@@ -27,6 +25,8 @@ import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.TeamUtil;
 import mc.alk.arena.util.Util;
 import mc.alk.arena.util.plugins.WorldEditUtil;
+import mc.alk.worldeditutil.controllers.WorldGuardController;
+import mc.alk.worldeditutil.math.BlockSelection;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -213,9 +213,10 @@ public class ArenaAlterController {
         if (!PylamoController.enabled()){
             sendMessage(sender,"&cYou need PylamoRestorationSystem to use this command");
             return false;}
-        WorldEditPlugin wep = WorldEditUtil.getWorldEditPlugin();
-        Selection sel = wep.getSelection(sender);
-        if (sel == null){
+
+        Region weRegion = WorldGuardController.getWorldEditRegion(sender);
+        BlockSelection sel = WorldGuardController.getBlockSelection(weRegion);
+        if (weRegion == null){
             sendMessage(sender,"&cYou need to select a region to use this command.");
             return false;
         }
@@ -230,8 +231,9 @@ public class ArenaAlterController {
     private static boolean addWorldGuardRegion(Player sender, Arena arena) {
         if (!checkWorldGuard(sender)){
             return false;}
-        WorldEditPlugin wep = WorldEditUtil.getWorldEditPlugin();
-        Selection sel = wep.getSelection(sender);
+        Region weRegion = WorldGuardController.getWorldEditRegion(sender);
+        BlockSelection sel = WorldGuardController.getBlockSelection(weRegion);
+
         if (sel == null){
             sendMessage(sender,"&cYou need to select a region to use this command.");
             return false;

@@ -33,6 +33,7 @@ import mc.alk.arena.util.InventoryUtil;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MinMax;
 import mc.alk.arena.util.SerializerUtil;
+import mc.euro.bukkitadapter.MaterialAdapter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -471,10 +472,10 @@ public class ArenaSerializer extends BaseConfig{
         SpawnInstance si;
         if (cs.contains("type") && cs.getString("type").equalsIgnoreCase("block")){
             si = new BlockSpawn(loc.getBlock(),false);
-            Material mat = Material.valueOf(cs.getString("spawn"));
+            Material mat = MaterialAdapter.getMaterial(cs.getString("spawn"));
             ((BlockSpawn)si).setMaterial(mat);
             try {
-                mat = Material.valueOf(cs.getString("despawnMaterial", "AIR"));
+                mat = MaterialAdapter.getMaterial(cs.getString("despawnMaterial", "AIR"));
             } catch (Exception e) {
                 Log.err("Error setting despawnMaterial. " +e.getMessage());
                 mat = Material.AIR;
@@ -483,7 +484,7 @@ public class ArenaSerializer extends BaseConfig{
                 ((BlockSpawn)si).setDespawnMaterial(mat);
         }else if (cs.contains("type") && cs.getString("type").equalsIgnoreCase("chest")) {
             si = new ChestSpawn(loc.getBlock(), false);
-            Material mat = Material.valueOf(cs.getString("spawn"));
+            Material mat = MaterialAdapter.getMaterial(cs.getString("spawn"));
             ((BlockSpawn)si).setMaterial(mat);
             List<ItemStack> items = InventoryUtil.getItemList(cs,"items");
             List<ItemStack> giveItems = InventoryUtil.getItemList(cs, "giveItems");
