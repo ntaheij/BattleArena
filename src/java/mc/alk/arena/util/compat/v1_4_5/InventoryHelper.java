@@ -90,7 +90,7 @@ public class InventoryHelper implements IInventoryHelper{
 
     @Override
     public String getCommonNameByEnchantment(Enchantment enchantment) {
-        if (enchantment.getId() == Enchantment.THORNS.getId()){return "Thorns";}
+        if (enchantment.equals(Enchantment.THORNS)){return "Thorns";}
 		else return enchantment.getName();
     }
 

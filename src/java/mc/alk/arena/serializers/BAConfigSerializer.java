@@ -41,6 +41,7 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MinMax;
 import mc.alk.battlepluginupdater.PluginUpdater.AnnounceUpdateOption;
 import mc.alk.battlepluginupdater.PluginUpdater.UpdateOption;
+import mc.euro.bukkitadapter.MaterialAdapter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -222,13 +223,8 @@ public class BAConfigSerializer extends BaseConfig {
         Defaults.ENABLE_PLAYER_READY_BLOCK = cs.getBoolean("enablePlayerReadyBlock", Defaults.ENABLE_PLAYER_READY_BLOCK);
         
         String readyBlock = cs.getString("readyBlockType", Defaults.READY_BLOCK.name()).toUpperCase();
-        Material value = null;
-        try {
-            int x = Integer.valueOf(readyBlock);
-            value = Material.getMaterial(x);
-        } catch (NumberFormatException ex) {
-            value = Material.matchMaterial(readyBlock);
-        }
+        Material value = MaterialAdapter.getMaterial(readyBlock);
+
         if (value != null) {
             Defaults.READY_BLOCK = value;
         }

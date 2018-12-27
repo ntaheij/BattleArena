@@ -138,7 +138,7 @@ public class SerializerUtil {
 
 
     public static String getBlockString(Block b) {
-        return b.getTypeId() +";" +b.getData() + ";"+getBlockLocString(b.getLocation());
+        return b.getType() +";" +b.getData() + ";"+getBlockLocString(b.getLocation());
     }
 
 

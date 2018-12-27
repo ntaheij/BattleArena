@@ -96,7 +96,7 @@ public class ArenaDebugger {
 		Location key = getLocKey(l);
 		if (!oldBlocks.containsKey(key)){
 			Block b = l.getBlock();
-			player.sendBlockChange(l, is.getTypeId(), (byte)is.getDurability());
+			player.sendBlockChange(l, is.getType(), (byte)is.getDurability());
 			oldBlocks.put(key, new ItemStack(b.getType(), b.getData()));
 		}
 	}

@@ -2,6 +2,8 @@ package mc.alk.arena.util;
 
 import mc.alk.arena.Defaults;
 import mc.alk.arena.util.compat.IInventoryHelper;
+import mc.euro.bukkitadapter.EnchantAdapter;
+import mc.euro.bukkitadapter.MaterialAdapter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -138,59 +140,59 @@ public class InventoryUtil {
 	}
 
 	public static String getCommonNameByEnchantment(Enchantment enc){
-		if (enc.getId() == Enchantment.PROTECTION_ENVIRONMENTAL.getId()){return "Protection";}
-		else if (enc.getId() == Enchantment.PROTECTION_FIRE.getId()){return "Fire Protection";}
-		else if (enc.getId() == Enchantment.PROTECTION_FALL.getId()){return "Fall Protection";}
-		else if (enc.getId() == Enchantment.PROTECTION_EXPLOSIONS.getId()){return "Blast Protection";}
-		else if (enc.getId() == Enchantment.PROTECTION_PROJECTILE.getId()){return "Projectile Protection";}
-		else if (enc.getId() == Enchantment.OXYGEN.getId()){return "Respiration";}
-		else if (enc.getId() == Enchantment.WATER_WORKER.getId()){return "Aqua Affinity";}
-		else if (enc.getId() == Enchantment.DAMAGE_ALL.getId()){return "Sharp";}
-		else if (enc.getId() == Enchantment.DAMAGE_UNDEAD.getId()){return "Smite";}
-		else if (enc.getId() == Enchantment.DAMAGE_ARTHROPODS.getId()){return "Bane of Arthropods";}
-		else if (enc.getId() == Enchantment.KNOCKBACK.getId()){return "Knockback";}
-		else if (enc.getId() == Enchantment.FIRE_ASPECT.getId()){return "Fire Aspect";}
-		else if (enc.getId() == Enchantment.LOOT_BONUS_MOBS.getId()){return "Looting";}
-		else if (enc.getId() == Enchantment.DIG_SPEED.getId()){return "Efficiency";}
-		else if (enc.getId() == Enchantment.SILK_TOUCH.getId()){return "Silk Touch";}
-		else if (enc.getId() == Enchantment.DURABILITY.getId()){return "Unbreaking";}
-		else if (enc.getId() == Enchantment.LOOT_BONUS_BLOCKS.getId()){return "Fortune";}
-		else if (enc.getId() == Enchantment.ARROW_DAMAGE.getId()){return "Power";}
-		else if (enc.getId() == Enchantment.ARROW_KNOCKBACK.getId()){return "Punch";}
-		else if (enc.getId() == Enchantment.ARROW_FIRE.getId()){return "Flame";}
-		else if (enc.getId() == Enchantment.ARROW_INFINITE.getId()){return "Infinity";}
-		else if (enc.getId() == Enchantment.DEPTH_STRIDER.getId()){return "Depth Strider";}
+		if (enc.equals(Enchantment.PROTECTION_ENVIRONMENTAL)){return "Protection";}
+		else if (enc.equals(Enchantment.PROTECTION_FIRE)){return "Fire Protection";}
+		else if (enc.equals(Enchantment.PROTECTION_FALL)){return "Fall Protection";}
+		else if (enc.equals(Enchantment.PROTECTION_EXPLOSIONS)){return "Blast Protection";}
+		else if (enc.equals(Enchantment.PROTECTION_PROJECTILE)){return "Projectile Protection";}
+		else if (enc.equals(Enchantment.OXYGEN)){return "Respiration";}
+		else if (enc.equals(Enchantment.WATER_WORKER)){return "Aqua Affinity";}
+		else if (enc.equals(Enchantment.DAMAGE_ALL)){return "Sharp";}
+		else if (enc.equals(Enchantment.DAMAGE_UNDEAD)){return "Smite";}
+		else if (enc.equals(Enchantment.DAMAGE_ARTHROPODS)){return "Bane of Arthropods";}
+		else if (enc.equals(Enchantment.KNOCKBACK)){return "Knockback";}
+		else if (enc.equals(Enchantment.FIRE_ASPECT)){return "Fire Aspect";}
+		else if (enc.equals(Enchantment.LOOT_BONUS_MOBS)){return "Looting";}
+		else if (enc.equals(Enchantment.DIG_SPEED)){return "Efficiency";}
+		else if (enc.equals(Enchantment.SILK_TOUCH)){return "Silk Touch";}
+		else if (enc.equals(Enchantment.DURABILITY)){return "Unbreaking";}
+		else if (enc.equals(Enchantment.LOOT_BONUS_BLOCKS)){return "Fortune";}
+		else if (enc.equals(Enchantment.ARROW_DAMAGE)){return "Power";}
+		else if (enc.equals(Enchantment.ARROW_KNOCKBACK)){return "Punch";}
+		else if (enc.equals(Enchantment.ARROW_FIRE)){return "Flame";}
+		else if (enc.equals(Enchantment.ARROW_INFINITE)){return "Infinity";}
+		else if (enc.equals(Enchantment.DEPTH_STRIDER)){return "Depth Strider";}
         else return (handler.getCommonNameByEnchantment(enc));
 	}
 
 	static final Map<Material,Armor> armor;
 	static {
 		armor = new EnumMap<Material,Armor>(Material.class);
-		try{armor.put(Material.SKULL_ITEM,new Armor(ArmorType.HELM, ArmorLevel.DISGUISE));} catch(Throwable e){
+		try{armor.put(MaterialAdapter.getMaterial("SKULL_ITEM"),new Armor(ArmorType.HELM, ArmorLevel.DISGUISE));} catch(Throwable e){
             /* no errors as it's just an old bukkit that doesn't have this Material*/
         }
-		armor.put(Material.WOOL,new Armor(ArmorType.HELM, ArmorLevel.WOOL));
+		armor.put(MaterialAdapter.getMaterial("WOOL"),new Armor(ArmorType.HELM, ArmorLevel.WOOL));
 		armor.put(Material.LEATHER_HELMET,new Armor(ArmorType.HELM, ArmorLevel.LEATHER));
 		armor.put(Material.IRON_HELMET,new Armor(ArmorType.HELM, ArmorLevel.IRON));
-		armor.put(Material.GOLD_HELMET,new Armor(ArmorType.HELM, ArmorLevel.GOLD));
+		armor.put(MaterialAdapter.getMaterial("GOLD_HELMET"),new Armor(ArmorType.HELM, ArmorLevel.GOLD));
 		armor.put(Material.DIAMOND_HELMET,new Armor(ArmorType.HELM, ArmorLevel.DIAMOND));
 		armor.put(Material.CHAINMAIL_HELMET,new Armor(ArmorType.HELM, ArmorLevel.CHAINMAIL));
 
 		armor.put(Material.LEATHER_CHESTPLATE,new Armor(ArmorType.CHEST,ArmorLevel.LEATHER));
 		armor.put(Material.IRON_CHESTPLATE,new Armor(ArmorType.CHEST,ArmorLevel.IRON));
-		armor.put(Material.GOLD_CHESTPLATE,new Armor(ArmorType.CHEST,ArmorLevel.GOLD));
+		armor.put(MaterialAdapter.getMaterial("GOLD_CHESTPLATE"),new Armor(ArmorType.CHEST,ArmorLevel.GOLD));
 		armor.put(Material.DIAMOND_CHESTPLATE,new Armor(ArmorType.CHEST,ArmorLevel.DIAMOND));
 		armor.put(Material.CHAINMAIL_CHESTPLATE,new Armor(ArmorType.CHEST,ArmorLevel.CHAINMAIL));
 
 		armor.put(Material.LEATHER_LEGGINGS,new Armor(ArmorType.LEGGINGS,ArmorLevel.LEATHER));
 		armor.put(Material.IRON_LEGGINGS,new Armor(ArmorType.LEGGINGS,ArmorLevel.IRON));
-		armor.put(Material.GOLD_LEGGINGS,new Armor(ArmorType.LEGGINGS,ArmorLevel.GOLD));
+		armor.put(MaterialAdapter.getMaterial("GOLD_LEGGINGS"),new Armor(ArmorType.LEGGINGS,ArmorLevel.GOLD));
 		armor.put(Material.DIAMOND_LEGGINGS,new Armor(ArmorType.LEGGINGS,ArmorLevel.DIAMOND));
 		armor.put(Material.CHAINMAIL_LEGGINGS,new Armor(ArmorType.LEGGINGS,ArmorLevel.CHAINMAIL));
 
 		armor.put(Material.LEATHER_BOOTS,new Armor(ArmorType.BOOTS,ArmorLevel.LEATHER));
 		armor.put(Material.IRON_BOOTS,new Armor(ArmorType.BOOTS,ArmorLevel.IRON));
-		armor.put(Material.GOLD_BOOTS,new Armor(ArmorType.BOOTS,ArmorLevel.GOLD));
+		armor.put(MaterialAdapter.getMaterial("GOLD_BOOTS"),new Armor(ArmorType.BOOTS,ArmorLevel.GOLD));
 		armor.put(Material.DIAMOND_BOOTS,new Armor(ArmorType.BOOTS,ArmorLevel.DIAMOND));
 		armor.put(Material.CHAINMAIL_BOOTS,new Armor(ArmorType.BOOTS,ArmorLevel.CHAINMAIL));
 	}
@@ -217,7 +219,7 @@ public class InventoryUtil {
 		return armor.get(is.getType()) != null;
 	}
 	public static boolean isRealArmor(ItemStack is) {
-		return armor.get(is.getType()) != null && is.getType()!= Material.WOOL;
+		return armor.get(is.getType()) != null && is.getType()!= MaterialAdapter.getMaterial("WOOL");
 	}
 
 	public static boolean hasArmor(Player p) {
@@ -284,10 +286,10 @@ public class InventoryUtil {
 				itemStr = split[0];
 			}
 		}
-		Material mat = Material.matchMaterial(itemStr);
+		Material mat = MaterialAdapter.getMaterial(itemStr);
 		if (DEBUG) Log.info(mat +"   " + itemStr +"   " + dataValue);
 		if (mat != null && mat != Material.AIR) {
-			return new ItemStack(mat.getId(), 1, dataValue);
+			return new ItemStack(mat, 1, dataValue);
 		} else {
 			if (itemStr.equalsIgnoreCase("steak")){
 				return new ItemStack(Material.COOKED_BEEF, 1);
@@ -301,7 +303,7 @@ public class InventoryUtil {
 			int index = itemName.indexOf(itemStr,0);
 			if (index != -1 && index == 0){
 				if (DEBUG) Log.info(m +"   " + itemStr +"   " + dataValue);
-				return new ItemStack(m.getId(), 1, dataValue);
+				return new ItemStack(m, 1, dataValue);
 			}
 		}
 		return null;
@@ -318,14 +320,14 @@ public class InventoryUtil {
 		try{ id = Integer.parseInt(name);}catch(Exception e){/* do nothing*/}
 		if (id == null){
 			id = getMaterialID(name);}
-		return id != -1 && id >= 0 ? Material.getMaterial(id) : null;
+		return id != -1 && id >= 0 ? MaterialAdapter.getMaterial(name) : null;
 	}
 
 	/// This allows for abbreviations to work, useful for sign etc
 	public static int getMaterialID(String name) {
 		name = name.toUpperCase();
 		/// First try just getting it from the Material Name
-		Material mat = Material.getMaterial(name);
+		Material mat = MaterialAdapter.getMaterial(name);
 		if (mat != null)
 			return mat.getId();
 		/// Might be an abbreviation, or a more complicated
@@ -473,7 +475,7 @@ public class InventoryUtil {
 		for (int i = 0; i < inventory.length; i++) {
 			ItemStack is2 = inventory[i];
 			if (is2 == null) continue;
-			if (is1.getTypeId() == is2.getTypeId() && is1.getDurability() == is2.getDurability()) {
+			if (is1.getType() == is2.getType() && is1.getDurability() == is2.getDurability()) {
 				return i;
 			}
 		}
@@ -490,22 +492,22 @@ public class InventoryUtil {
 			return leftover;
 		for (ItemStack is1: items){
 			ItemStack is2 = inv.getBoots();
-			if (is2 != null && is1.getTypeId() == is2.getTypeId() && is1.getDurability() == is2.getDurability()){
+			if (is2 != null && is1.getType() == is2.getType() && is1.getDurability() == is2.getDurability()){
 				inv.setBoots(null);
 				continue;
 			}
 			is2 = inv.getLeggings();
-			if (is2 != null && is1.getTypeId() == is2.getTypeId() && is1.getDurability() == is2.getDurability()){
+			if (is2 != null && is1.getType() == is2.getType() && is1.getDurability() == is2.getDurability()){
 				inv.setLeggings(null);
 				continue;
 			}
 			is2 = inv.getChestplate();
-			if (is2 != null && is1.getTypeId() == is2.getTypeId() && is1.getDurability() == is2.getDurability()){
+			if (is2 != null && is1.getType() == is2.getType() && is1.getDurability() == is2.getDurability()){
 				inv.setChestplate(null);
 				continue;
 			}
 			is2 = inv.getHelmet();
-			if (is2 != null && is1.getTypeId() == is2.getTypeId() && is1.getDurability() == is2.getDurability()){
+			if (is2 != null && is1.getType() == is2.getType() && is1.getDurability() == is2.getDurability()){
 				inv.setHelmet(null);
 			}
 		}
@@ -661,12 +663,12 @@ public class InventoryUtil {
 	}
 
 	public static Object getCommonName(ItemStack is) {
-		int id = is.getTypeId();
+		Material mat = is.getType();
 		int datavalue = is.getDurability();
 		if (datavalue > 0){
-			return Material.getMaterial(id).toString() + ":" + datavalue;
+			return mat.toString() + ":" + datavalue;
 		}
-		return Material.getMaterial(id).toString();
+		return mat.toString();
 	}
 
 
@@ -820,7 +822,7 @@ public class InventoryUtil {
 			str = str.substring(0,index);
 		}
 
-		try {e = Enchantment.getById(Integer.valueOf(str));} catch (Exception err){/*do nothing*/}
+		try {e = EnchantAdapter.getEnchantment(str);} catch (Exception err){/*do nothing*/}
 		if (e == null)
 			e = Enchantment.getByName(str);
 		if (e == null)
@@ -931,7 +933,7 @@ public class InventoryUtil {
     }
 
 	public static ItemStack getWool(int color) {
-		return new ItemStack(Material.WOOL,1,(short) color);
+		return new ItemStack(MaterialAdapter.getMaterial("WOOL"),1,(short) color);
 	}
 
 	public static void printInventory(Player p) {
@@ -965,8 +967,8 @@ public class InventoryUtil {
             return 1;
         if (item2 == null)
             return -1;
-        Integer i = item1.getTypeId();
-        Integer i2 = item2.getTypeId();
+        Integer i = item1.getType().getId();
+        Integer i2 = item2.getType().getId();
         if (i== Material.AIR.getId() && i2 == Material.AIR.getId()) return 0;
         if (i == Material.AIR.getId()) return 1;
         if (i2 == Material.AIR.getId()) return -1;

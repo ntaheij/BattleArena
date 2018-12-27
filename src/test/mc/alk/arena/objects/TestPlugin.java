@@ -23,8 +23,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 
-import com.avaje.ebean.EbeanServer;
-
 
 public class TestPlugin implements Plugin{
 
@@ -125,11 +123,6 @@ public class TestPlugin implements Plugin{
 	@Override
 	public void setNaggable(boolean canNag) {
 
-	}
-
-	@Override
-	public EbeanServer getDatabase() {
-		return null;
 	}
 
 	@Override
