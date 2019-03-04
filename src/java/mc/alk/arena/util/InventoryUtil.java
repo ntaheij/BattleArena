@@ -681,7 +681,7 @@ public class InventoryUtil {
 	}
 
 	private static final Pattern PATTERN_LORE =
-			Pattern.compile("lore= ?\"([^\"]*)\"",Pattern.CASE_INSENSITIVE); //The pattern for matching lore
+			Pattern.compile("lore= ?\"((?s).*)\"",Pattern.CASE_INSENSITIVE); //The pattern for matching lore
 	private static final Pattern PATTERN_OWNER =
 			Pattern.compile("owner= ?\"([^\"]*)\"",Pattern.CASE_INSENSITIVE); //The pattern for matching lore
 	private static final Pattern PATTERN_DISPLAY_NAME =
@@ -700,10 +700,6 @@ public class InventoryUtil {
 
 		if (DEBUG) Log.info("item=" + str);
 
-		/// Parse Lore (thanks to Netherfoam)
-		List<String> lore = parseLore(str);
-		if(lore != null){ //We have lore, so strip it.
-			str = PATTERN_LORE.matcher(str).replaceFirst("");}
 		String ownerName = parseOwner(str);
 		if(ownerName != null){ //We have lore, so strip it.
 			str = PATTERN_OWNER.matcher(str).replaceFirst("");}
@@ -716,6 +712,10 @@ public class InventoryUtil {
 		Integer pos = parsePosition(str);
 		if (pos != null){ /// we have position, so strip it
 			str = PATTERN_POSITION.matcher(str).replaceFirst("");}
+		/// Parse Lore (thanks to Netherfoam)
+		List<String> lore = parseLore(str);
+		if(lore != null){ //We have lore, so strip it.
+			str = PATTERN_LORE.matcher(str).replaceFirst("");}
 		ItemStack is;
 		String split[] = str.split(" +");
 		is = InventoryUtil.getItemStack(split[0].trim());
@@ -884,21 +884,21 @@ public class InventoryUtil {
 		for (Enchantment enc : encs.keySet()){
 			sb.append(enc.getName()).append(":").append(encs.get(enc)).append(" ");
 		}
-		List<String> lore = handler.getLore(is);
-		if (lore != null && !lore.isEmpty()){
-            sb.append("lore=\"").append(StringUtils.join(lore, "\\n")).append("\" ");
-		}
 
 		Color color = handler.getColor(is);
 		if (color!=null)
-			sb.append("color=\"").append(color.getRed()).append(",").
-                    append(color.getGreen()).append(",").append(color.getBlue()).append("\" ");
+			sb.append("color=").append(color.getRed()).append(",").
+                    append(color.getGreen()).append(",").append(color.getBlue()).append(" ");
 		String op = handler.getDisplayName(is);
 		if (op != null && !op.isEmpty())
 			sb.append("displayName=\"").append(op).append("\" ");
 		op = handler.getOwnerName(is);
 		if (op != null && !op.isEmpty())
-			sb.append("ownerName=\"").append(op).append("\" ");
+			sb.append("owner=\"").append(op).append("\" ");
+		List<String> lore = handler.getLore(is);
+		if (lore != null && !lore.isEmpty()){
+			sb.append("lore=\"").append(StringUtils.join(lore, "\\n")).append("\" ");
+		}
 		sb.append(is.getAmount());
 		return sb.toString();
 	}
