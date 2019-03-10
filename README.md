@@ -1,9 +1,9 @@
-![BattleArena](http://dev.bukkit.org/media/images/44/472/BattleArena_Large.png)
+![BattleArena](https://wiki.battleplugins.org/images/6/62/BATTLEARENA.png "BattleArena")
 ==========
 
-A complete Event system for minecraft.
-* Comes default with several Match and Event Types
-* Huge amounts of customization through the configs and in game commands
+A complete Event system for Minecraft.
+* Comes default with several Match and Event Types.
+* Huge amounts of customization through the configs and in game commands/
 * Framework and API for easily creating custom matches/events.
 
 Reporting Issues:
@@ -19,25 +19,15 @@ a bug is present, then it becomes harder to fix.
 Please, if you report a bug, provide ample information about your situation. 
 
 
-If you need an answer in a timely manner, pleasr contact Zach or Europia via Skype: 
-
-Zach's Skype: zach_443
-
-Europia79's Skype: Nicodemis79
-
-
-The reason for this, is because in a Skype call, we can share screens, 
-where we can see your entire setup, and ask you to verify parts of your setup 
-(like your config files, etc), and overall it just makes things easier. 
-
+If you need an answer in a timely manner, please contact us on [Discord](https://discord.gg/tMVPVJf): 
 
 We really appreciate when you report bugs, and we would like you to report them to us whenever you find them.
 However please be mindful of the information that you give us and/or how you contact us. If you really have no 
-idea where to start, maybe a 1 on 1 conversation on Skype. If you know exactly how to replicate your problem, or 
+idea where to start, maybe a 1 on 1 conversation on Discord may be the way to go. If you know exactly how to replicate your problem, or 
 you have a good amount of information about it, creating a new issue might be a better solution:
 
 
-* https://github.com/BattlePluginsDev/BattleArena/issues
+* https://github.com/BattlePlugins/BattleArena/issues
 
 
 Default Match Types:
@@ -55,8 +45,8 @@ Default Event Types:
 
 Adding to BattleArena
 ------------
-I will gladly accept any code contributions through github.
-If you need help with the API or writing a plugin for BattleArena I will help as well.
+We will gladly accept any code contributions through GitHub.
+If you need help with the API or writing a plugin for BattleArena, we can assist as well.
 
 Links
 ------------
@@ -76,6 +66,6 @@ Other Links:
 * [BattleWiki](http://wiki.battleplugins.org) (Support Wiki)
 * ~~[Ci Server] (Jenkins Build Server)~~ *Not currently in use
 * [Battle Plugin Donations] (Donation link, coming soon)
-* [JavaDocs](http://null) (WIP)
+* [JavaDocs](http://rainbowcraft.sytes.net/javadocs/battlearena/apidocs/)
 
 Minor Edit
