@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -55,15 +56,15 @@ public class InventoryUtil {
 				final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.pre.InventoryHelper");
 				handler = (IInventoryHelper) clazz.getConstructor(args).newInstance((Object[])args);
 			} catch (Exception e2){
-                //noinspection PointlessBooleanExpression,ConstantConditions
-                if (!Defaults.TESTSERVER && !Defaults.TESTSERVER_DEBUG) Log.printStackTrace(e2);
+				//noinspection PointlessBooleanExpression,ConstantConditions
+				if (!Defaults.TESTSERVER && !Defaults.TESTSERVER_DEBUG) Log.printStackTrace(e2);
 			}
-            //noinspection PointlessBooleanExpression,ConstantConditions
-            if (!Defaults.TESTSERVER && !Defaults.TESTSERVER_DEBUG) Log.printStackTrace(e);
+			//noinspection PointlessBooleanExpression,ConstantConditions
+			if (!Defaults.TESTSERVER && !Defaults.TESTSERVER_DEBUG) Log.printStackTrace(e);
 		}
 	}
 
-    public static class Armor{
+	public static class Armor{
 		final public ArmorLevel level;
 		final public ArmorType type;
 		Armor(ArmorType at, ArmorLevel al){this.level = al; this.type = at;}
@@ -136,7 +137,7 @@ public class InventoryUtil {
 		if (iname.contains("unbreaking")) return Enchantment.DURABILITY;
 		if (iname.contains("dura")) return Enchantment.DURABILITY;
 		if (iname.contains("strider")) return Enchantment.DEPTH_STRIDER;
-        return handler.getEnchantmentByCommonName(iname);
+		return handler.getEnchantmentByCommonName(iname);
 	}
 
 	public static String getCommonNameByEnchantment(Enchantment enc){
@@ -162,7 +163,7 @@ public class InventoryUtil {
 		else if (enc.equals(Enchantment.ARROW_FIRE)){return "Flame";}
 		else if (enc.equals(Enchantment.ARROW_INFINITE)){return "Infinity";}
 		else if (enc.equals(Enchantment.DEPTH_STRIDER)){return "Depth Strider";}
-        else return (handler.getCommonNameByEnchantment(enc));
+		else return (handler.getCommonNameByEnchantment(enc));
 	}
 
 	static final Map<Material,Armor> armor;
@@ -170,7 +171,7 @@ public class InventoryUtil {
 		armor = new EnumMap<Material,Armor>(Material.class);
 		try{armor.put(MaterialAdapter.getMaterial("SKULL_ITEM"),new Armor(ArmorType.HELM, ArmorLevel.DISGUISE));} catch(Throwable e){
             /* no errors as it's just an old bukkit that doesn't have this Material*/
-        }
+		}
 		armor.put(MaterialAdapter.getMaterial("WOOL"),new Armor(ArmorType.HELM, ArmorLevel.WOOL));
 		armor.put(Material.LEATHER_HELMET,new Armor(ArmorType.HELM, ArmorLevel.LEATHER));
 		armor.put(Material.IRON_HELMET,new Armor(ArmorType.HELM, ArmorLevel.IRON));
@@ -201,15 +202,15 @@ public class InventoryUtil {
 		return getItemAmount(p.getInventory().getContents(), new ItemStack(Material.ARROW,1));
 	}
 
-    /**
-     * If I have to do too many specific items b/c of 1.2.5 problems should make a more robust method
-     * such as itType along with my own enum
-     * @param type InventoryType
-     * @return whether its an ender chest
-     */
-    public static boolean isEnderChest(InventoryType type) {
-        return handler.isEnderChest(type);
-    }
+	/**
+	 * If I have to do too many specific items b/c of 1.2.5 problems should make a more robust method
+	 * such as itType along with my own enum
+	 * @param type InventoryType
+	 * @return whether its an ender chest
+	 */
+	public static boolean isEnderChest(InventoryType type) {
+		return handler.isEnderChest(type);
+	}
 
 	public static int getItemAmountFromInventory(Inventory inv, ItemStack is) {
 		return getItemAmount(inv.getContents(), is);
@@ -237,10 +238,10 @@ public class InventoryUtil {
 			if (a == null)
 				continue;
 			switch (a.type){
-			case BOOTS: armorSet[0] = a.level; break;
-			case LEGGINGS: armorSet[1] = a.level; break;
-			case CHEST: armorSet[2] = a.level; break;
-			case HELM: armorSet[3] = a.level; break;
+				case BOOTS: armorSet[0] = a.level; break;
+				case LEGGINGS: armorSet[1] = a.level; break;
+				case CHEST: armorSet[2] = a.level; break;
+				case HELM: armorSet[3] = a.level; break;
 			}
 		}
 		ArmorLevel lvl = null;
@@ -310,8 +311,8 @@ public class InventoryUtil {
 	}
 
 	@SuppressWarnings("ResultOfMethodCallIgnored")
-    public static boolean isInt(String i) {try {Integer.parseInt(i);return true;} catch (Exception e) {return false;}}
-    @SuppressWarnings("ResultOfMethodCallIgnored")
+	public static boolean isInt(String i) {try {Integer.parseInt(i);return true;} catch (Exception e) {return false;}}
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static boolean isFloat(String i){try{Float.parseFloat(i);return true;} catch (Exception e){return false;}}
 
 	/// Get the Material
@@ -358,13 +359,13 @@ public class InventoryUtil {
 		return false;
 	}
 
-    public static boolean hasAllItems(Player p, List<ItemStack> items) {
-        for (ItemStack is : items){
-            if (!hasItem(p,is))
-                return false;
-        }
-        return true;
-    }
+	public static boolean hasAllItems(Player p, List<ItemStack> items) {
+		for (ItemStack is : items){
+			if (!hasItem(p,is))
+				return false;
+		}
+		return true;
+	}
 
 	public static boolean hasAnyItem(Player p) {
 		PlayerInventory inv = p.getInventory();
@@ -399,19 +400,19 @@ public class InventoryUtil {
 			InventoryUtil.addItemToInventory(p, is.clone(), is.getAmount(), false, ignoreCustomHelmet, color);
 		}
 		try { p.updateInventory(); } catch (Exception e){
-            if (!Defaults.DEBUG_VIRTUAL)
-                Log.printStackTrace(e);
-        }
+			if (!Defaults.DEBUG_VIRTUAL)
+				Log.printStackTrace(e);
+		}
 	}
 
 	public static void addItemToInventory(Player player, ItemStack itemStack, int stockAmount,
-			boolean update, boolean ignoreCustomHelmet) {
+										  boolean update, boolean ignoreCustomHelmet) {
 		addItemToInventory(player,itemStack,stockAmount,update,ignoreCustomHelmet,null);
 	}
 
 	@SuppressWarnings("deprecation")
 	public static void addItemToInventory(Player player, ItemStack itemStack, int stockAmount,
-			boolean update, boolean ignoreCustomHelmet, Color color) {
+										  boolean update, boolean ignoreCustomHelmet, Color color) {
 		PlayerInventory inv = player.getInventory();
 		Material itemType =itemStack.getType();
 		if (armor.containsKey(itemType)){
@@ -421,21 +422,21 @@ public class InventoryUtil {
 		}
 		if (update)
 			try { player.updateInventory(); } catch (Exception e){
-                if (!Defaults.DEBUG_VIRTUAL)
-                    Log.printStackTrace(e);
-            }
+				if (!Defaults.DEBUG_VIRTUAL)
+					Log.printStackTrace(e);
+			}
 	}
 
 
 	private static void addArmorToInventory(PlayerInventory inv,
-			ItemStack itemStack, int stockAmount, boolean ignoreCustomHelmet, Color color) {
+											ItemStack itemStack, int stockAmount, boolean ignoreCustomHelmet, Color color) {
 		Material itemType =itemStack.getType();
 		boolean isHelmet = false; // armor.get(itemType).type == ArmorType.HELM;
-                try {
-                    isHelmet = armor.get(itemType).type == ArmorType.HELM;
-                } catch (NullPointerException handled) {
-                    isHelmet = false;
-                }
+		try {
+			isHelmet = armor.get(itemType).type == ArmorType.HELM;
+		} catch (NullPointerException handled) {
+			isHelmet = false;
+		}
 		/// no item: add to armor slot
 		/// item better: add old to inventory, new to armor slot
 		/// item notbetter: add to inventory
@@ -449,13 +450,13 @@ public class InventoryUtil {
 		}
 		if (empty || better){
 			switch (armor.get(itemType).type){
-			case HELM:
-				if (empty || !ignoreCustomHelmet)
-					inv.setHelmet(itemStack);
-				break;
-			case CHEST: inv.setChestplate(itemStack); break;
-			case LEGGINGS: inv.setLeggings(itemStack); break;
-			case BOOTS: inv.setBoots(itemStack); break;
+				case HELM:
+					if (empty || !ignoreCustomHelmet)
+						inv.setHelmet(itemStack);
+					break;
+				case CHEST: inv.setChestplate(itemStack); break;
+				case LEGGINGS: inv.setLeggings(itemStack); break;
+				case BOOTS: inv.setBoots(itemStack); break;
 			}
 		}
 		if (!empty){
@@ -563,15 +564,15 @@ public class InventoryUtil {
 		return leftover;
 	}
 	private static boolean armorSlotBetter(Armor oldArmor, Armor newArmor) {
-        return !(oldArmor == null || newArmor == null) && oldArmor.level.ordinal() < newArmor.level.ordinal();
-    }
+		return !(oldArmor == null || newArmor == null) && oldArmor.level.ordinal() < newArmor.level.ordinal();
+	}
 
 	private static ItemStack getArmorSlot(PlayerInventory inv, ArmorType armorType) {
 		switch (armorType){
-		case HELM: return inv.getHelmet();
-		case CHEST: return inv.getChestplate();
-		case LEGGINGS: return inv.getLeggings();
-		case BOOTS:return inv.getBoots();
+			case HELM: return inv.getHelmet();
+			case CHEST: return inv.getChestplate();
+			case LEGGINGS: return inv.getLeggings();
+			case BOOTS:return inv.getBoots();
 		}
 		return null;
 	}
@@ -690,6 +691,8 @@ public class InventoryUtil {
 			Pattern.compile("color= ?([0-9]+),([0-9]+),([0-9]+)",Pattern.CASE_INSENSITIVE); //The pattern for matching lore
 	private static final Pattern PATTERN_POSITION =
 			Pattern.compile("position= ?\"([^\"]*)\"",Pattern.CASE_INSENSITIVE); //The pattern for matching position
+	private static final Pattern PATTERN_EFFECT =
+			Pattern.compile("effects= ?\"([^\"]*)\"",Pattern.CASE_INSENSITIVE); //The pattern for matching potion effects
 
 	public static ItemStack parseItem(String str) throws Exception{
 		/// items in yaml get stored like this {leather_chest=fireprot:5 1}
@@ -712,6 +715,9 @@ public class InventoryUtil {
 		Integer pos = parsePosition(str);
 		if (pos != null){ /// we have position, so strip it
 			str = PATTERN_POSITION.matcher(str).replaceFirst("");}
+		List<PotionEffect> effects = parseEffects(str);
+		if (effects != null) { // we have the effect, so strip it
+			str = PATTERN_EFFECT.matcher(str).replaceFirst("");}
 		/// Parse Lore (thanks to Netherfoam)
 		List<String> lore = parseLore(str);
 		if(lore != null){ //We have lore, so strip it.
@@ -740,11 +746,16 @@ public class InventoryUtil {
 			handler.setDisplayName(is,displayName);
 		if (ownerName != null)
 			handler.setOwnerName(is,ownerName);
+		if (effects != null) {
+			for (PotionEffect effect : effects) {
+				handler.addCustomEffect(is, effect);
+			}
+		}
 
 		for (int i = 1; i < split.length-1;i++){
-            if (Defaults.TESTSERVER) continue;
+			if (Defaults.TESTSERVER) continue;
 			EnchantmentWithLevel ewl = getEnchantment(split[i].trim());
-            if (ewl == null){
+			if (ewl == null){
 				throw new IllegalArgumentException(" enchantment " + split[i].trim() +" does not exist");
 			}
 			try {
@@ -761,6 +772,17 @@ public class InventoryUtil {
 		if (!m.find())
 			return null;
 		return Integer.valueOf(m.group(1));
+	}
+
+	public static List<PotionEffect> parseEffects(String str){
+		Matcher m = PATTERN_EFFECT.matcher(str);
+		if (!m.find())
+			return null;
+		List<PotionEffect> effects = new ArrayList<PotionEffect>();
+		for (String eff : m.group(1).replace(" ", "").split(",")) {
+			effects.add(EffectUtil.parseArg(eff, 0, 120));
+		}
+		return effects;
 	}
 
 	public static Color parseColor(String str){
@@ -788,8 +810,8 @@ public class InventoryUtil {
 		try{
 			Matcher matcher = PATTERN_LORE.matcher(str);
 			if(matcher.find()){
-                //Replace color codes
-                String part = ChatColor.translateAlternateColorCodes('&', matcher.group(1));
+				//Replace color codes
+				String part = ChatColor.translateAlternateColorCodes('&', matcher.group(1));
 				//Now we can split it.
 				String[] lines = part.split("([;\\n]|\\\\n)");
 				//DEBUG
@@ -797,7 +819,7 @@ public class InventoryUtil {
 				//Create a new list
 				LinkedList<String> lore = new LinkedList<String>();
 				//Add all the sections to the list
-                Collections.addAll(lore, lines);
+				Collections.addAll(lore, lines);
 				//Success!
 				return lore;
 			}
@@ -809,7 +831,7 @@ public class InventoryUtil {
 	}
 
 	public static EnchantmentWithLevel getEnchantment(String str) {
-        if (str.equalsIgnoreCase("all")){
+		if (str.equalsIgnoreCase("all")){
 			return new EnchantmentWithLevel(true);
 		}
 		Enchantment e = null;
@@ -888,13 +910,17 @@ public class InventoryUtil {
 		Color color = handler.getColor(is);
 		if (color!=null)
 			sb.append("color=").append(color.getRed()).append(",").
-                    append(color.getGreen()).append(",").append(color.getBlue()).append(" ");
+					append(color.getGreen()).append(",").append(color.getBlue()).append(" ");
 		String op = handler.getDisplayName(is);
 		if (op != null && !op.isEmpty())
 			sb.append("displayName=\"").append(op).append("\" ");
 		op = handler.getOwnerName(is);
 		if (op != null && !op.isEmpty())
 			sb.append("owner=\"").append(op).append("\" ");
+		List<PotionEffect> effects = handler.getCustomEffects(is);
+		if (effects != null && !effects.isEmpty()) {
+			sb.append("effects=\"" + EffectUtil.getEnchantString(effects)).append("\" ");
+		}
 		List<String> lore = handler.getLore(is);
 		if (lore != null && !lore.isEmpty()){
 			sb.append("lore=\"").append(StringUtils.join(lore, "\\n")).append("\" ");
@@ -929,8 +955,8 @@ public class InventoryUtil {
 
 	public static boolean sameMaterial(ArmorLevel lvl, ItemStack is) {
 		Armor a = armor.get(is.getType());
-        return a != null && a.level == lvl;
-    }
+		return a != null && a.level == lvl;
+	}
 
 	public static ItemStack getWool(int color) {
 		return new ItemStack(MaterialAdapter.getMaterial("WOOL"),1,(short) color);
@@ -952,57 +978,57 @@ public class InventoryUtil {
 	public static class ItemComparator implements Comparator<ItemStack>{
 		@Override
 		public int compare(ItemStack arg0, ItemStack arg1) {
-            return compareItem(arg0,arg1);
-        }
-    }
+			return compareItem(arg0,arg1);
+		}
+	}
 
-    public static boolean sameItem(ItemStack item1, ItemStack item2) {
-        return compareItem(item1, item2) == 0;
-    }
+	public static boolean sameItem(ItemStack item1, ItemStack item2) {
+		return compareItem(item1, item2) == 0;
+	}
 
-    public static int compareItem(ItemStack item1, ItemStack item2) {
-        if (item1 == null && item2 == null)
-            return 0;
-        if (item1 == null)
-            return 1;
-        if (item2 == null)
-            return -1;
-        Integer i = item1.getType().getId();
-        Integer i2 = item2.getType().getId();
-        if (i== Material.AIR.getId() && i2 == Material.AIR.getId()) return 0;
-        if (i == Material.AIR.getId()) return 1;
-        if (i2 == Material.AIR.getId()) return -1;
+	public static int compareItem(ItemStack item1, ItemStack item2) {
+		if (item1 == null && item2 == null)
+			return 0;
+		if (item1 == null)
+			return 1;
+		if (item2 == null)
+			return -1;
+		Integer i = item1.getType().getId();
+		Integer i2 = item2.getType().getId();
+		if (i== Material.AIR.getId() && i2 == Material.AIR.getId()) return 0;
+		if (i == Material.AIR.getId()) return 1;
+		if (i2 == Material.AIR.getId()) return -1;
 
-        int c = i.compareTo(i2);
-        if (c!= 0)
-            return c;
-        Short s= item1.getDurability();
-        c = s.compareTo(item2.getDurability());
-        if (c!= 0)
-            return c;
-        i = item1.getAmount();
-        c = i.compareTo(item2.getAmount());
-        if (c!= 0)
-            return c;
-        Map<Enchantment, Integer> e1 = item1.getEnchantments();
-        Map<Enchantment, Integer> e2 = item1.getEnchantments();
-        i = e1.size();
-        c = i.compareTo(e2.size());
-        if (c!=0)
-            return c;
-        for (Enchantment e: e1.keySet()){
-            if (!e2.containsKey(e))
-                return -1;
-            i = e1.get(e);
-            i2 = e2.get(e);
-            c = i.compareTo(i2);
-            if (c != 0)
-                return c;
-        }
-        return 0;
-    }
+		int c = i.compareTo(i2);
+		if (c!= 0)
+			return c;
+		Short s= item1.getDurability();
+		c = s.compareTo(item2.getDurability());
+		if (c!= 0)
+			return c;
+		i = item1.getAmount();
+		c = i.compareTo(item2.getAmount());
+		if (c!= 0)
+			return c;
+		Map<Enchantment, Integer> e1 = item1.getEnchantments();
+		Map<Enchantment, Integer> e2 = item1.getEnchantments();
+		i = e1.size();
+		c = i.compareTo(e2.size());
+		if (c!=0)
+			return c;
+		for (Enchantment e: e1.keySet()){
+			if (!e2.containsKey(e))
+				return -1;
+			i = e1.get(e);
+			i2 = e2.get(e);
+			c = i.compareTo(i2);
+			if (c != 0)
+				return c;
+		}
+		return 0;
+	}
 
-    public static boolean sameItems(List<ItemStack> items, PlayerInventory inv, boolean woolTeams) {
+	public static boolean sameItems(List<ItemStack> items, PlayerInventory inv, boolean woolTeams) {
 		ItemStack[] contents =inv.getContents();
 		ItemStack[] armor = inv.getArmorContents();
 		/// This is a basic check to make sure we have the same number of items, and same total durability
@@ -1136,10 +1162,10 @@ public class InventoryUtil {
 				boolean empty = (oldArmor == null || oldArmor.getType() == Material.AIR);
 				if (empty) {
 					switch(armor){
-					case HELM: inv.setHelmet(newArmor); break;
-					case CHEST: inv.setChestplate(newArmor); break;
-					case LEGGINGS: inv.setLeggings(newArmor); break;
-					case BOOTS: inv.setBoots(newArmor); break;
+						case HELM: inv.setHelmet(newArmor); break;
+						case CHEST: inv.setChestplate(newArmor); break;
+						case LEGGINGS: inv.setLeggings(newArmor); break;
+						case BOOTS: inv.setBoots(newArmor); break;
 					}
 				} else {
 					addItemToInventory(p, newArmor, newArmor.getAmount(),false,false);
@@ -1150,8 +1176,8 @@ public class InventoryUtil {
 			Log.printStackTrace(e);
 		}
 		try {p.getPlayer().updateInventory(); } catch (Exception e){
-            Log.printStackTrace(e);
-        }
+			Log.printStackTrace(e);
+		}
 	}
 
 

@@ -11,7 +11,10 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class InventoryHelper implements IInventoryHelper{
 
@@ -34,6 +37,36 @@ public class InventoryHelper implements IInventoryHelper{
 			return new Color(lam.getColor().getRed(), lam.getColor().getGreen(), lam.getColor().getBlue());
 		}
 		return null;
+	}
+
+	@Override
+	public List<PotionEffect> getCustomEffects(ItemStack itemStack) {
+		ItemMeta meta = itemStack.getItemMeta();
+		if (meta != null && itemStack.getItemMeta() instanceof PotionMeta) {
+			PotionMeta potionMeta = (PotionMeta) itemStack.getItemMeta();
+			return potionMeta.getCustomEffects();
+		}
+		return null;
+	}
+
+	@Override
+	public void addCustomEffect(ItemStack itemStack, PotionEffect effect) {
+		ItemMeta meta = itemStack.getItemMeta();
+		if (meta != null && itemStack.getItemMeta() instanceof PotionMeta) {
+			PotionMeta potionMeta = (PotionMeta) itemStack.getItemMeta();
+			potionMeta.addCustomEffect(effect, true);
+			itemStack.setItemMeta(potionMeta);
+		}
+	}
+
+	@Override
+	public void removeCustomEffect(ItemStack itemStack, PotionEffectType effectType) {
+		ItemMeta meta = itemStack.getItemMeta();
+		if (meta != null && itemStack.getItemMeta() instanceof PotionMeta) {
+			PotionMeta potionMeta = (PotionMeta) itemStack.getItemMeta();
+			potionMeta.removeCustomEffect(effectType);
+			itemStack.setItemMeta(potionMeta);
+		}
 	}
 
 	public static org.bukkit.Color getBukkitColor(Color color){
@@ -75,8 +108,8 @@ public class InventoryHelper implements IInventoryHelper{
 		ItemMeta im = itemStack.getItemMeta();
 		if (im != null && im instanceof SkullMeta){
 			SkullMeta sm = (SkullMeta) im;
-		    sm.setOwner(ownerName);
-		    itemStack.setItemMeta(sm);
+			sm.setOwner(ownerName);
+			itemStack.setItemMeta(sm);
 		}
 	}
 
@@ -88,20 +121,20 @@ public class InventoryHelper implements IInventoryHelper{
 		return null;
 	}
 
-    @Override
-    public String getCommonNameByEnchantment(Enchantment enchantment) {
-        if (enchantment.equals(Enchantment.THORNS)){return "Thorns";}
+	@Override
+	public String getCommonNameByEnchantment(Enchantment enchantment) {
+		if (enchantment.equals(Enchantment.THORNS)){return "Thorns";}
 		else return enchantment.getName();
-    }
+	}
 
-    @Override
-    public Enchantment getEnchantmentByCommonName(String itemName) {
-        if (itemName.contains("thorn")) return Enchantment.THORNS;
+	@Override
+	public Enchantment getEnchantmentByCommonName(String itemName) {
+		if (itemName.contains("thorn")) return Enchantment.THORNS;
 		return null;
-    }
+	}
 
-    @Override
-    public boolean isEnderChest(InventoryType type) {
-        return type == InventoryType.ENDER_CHEST;
-    }
+	@Override
+	public boolean isEnderChest(InventoryType type) {
+		return type == InventoryType.ENDER_CHEST;
+	}
 }
