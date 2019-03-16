@@ -12,9 +12,9 @@ classes:
             - diamond_chest: 1
             - diamond_leggings: 1
             - diamond_boots: 1
-            - 373;8229: 1 # potion of healing 2
-            - 373;8193: 1 # potion of regen
-            - 373;16396: 1 # splash potion of harming 1
+            - potion: effects="heal:2" displayName="Potion of Healing" 1 # potion of healing 2
+            - potion: effects="regeneration:1:45" displayName="Potion of Regeneration" 1 # potion of regen
+            - splash_potion: effects="harm:1" displayName="Splash Potion of Harming" 1 # splash potion of harming 1
         enchants:
             - speed:1:120
             - resistance:1:120
@@ -28,9 +28,9 @@ classes:
             - iron_chest: prot:3 1
             - leather_leggings: 1
             - leather_boots: 1
-            - 373;8229: 1 # potion of healing 2
-            - 373;8193: 1 # potion of regen
-            - 373;16396: 1 # splash potion of harming 1
+            - potion: effects="heal:2" displayName="Potion of Healing" 1 # potion of healing 2
+            - potion: effects="regeneration:1:45" displayName="Potion of Regeneration" 1 # potion of regen
+            - splash_potion: effects="harm:1" displayName="Splash Potion of Harming" 1 # splash potion of harming 1
     monk:
         displayName: "&fMonk" ### Used for signs
         items:
@@ -38,9 +38,9 @@ classes:
             - leather_chest: 1
             - leather_leggings: 1
             - leather_boots: 1
-            - 373;8229: 2 # potion of healing 2
-            - 373;8193: 2 # potion of regen
-            - 373;16396: 3 # splash potion of harming 1
+            - potion: effects="heal:2" displayName="Potion of Healing" 1 # potion of healing 2
+            - potion: effects="regeneration:1:45" displayName="Potion of Regeneration" 1 # potion of regen
+            - splash_potion: effects="harm:1" displayName="Splash Potion of Harming" 1 # splash potion of harming 1
         enchants:
             - strength:2:900 # increase attack power
             - speed:2:900 # increase movement
