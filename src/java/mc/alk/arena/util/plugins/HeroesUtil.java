@@ -99,9 +99,7 @@ public abstract class HeroesUtil {
         if (hero == null) {
             return;
         }
-        for (Effect effect : hero.getEffects()) {
-            hero.removeEffect(effect);
-        }
+	hero.clearEffects();
     }
 
     public static HeroParty createParty(ArenaTeam team, Hero hero) {
