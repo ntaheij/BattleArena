@@ -75,6 +75,7 @@ import mc.alk.battlepluginupdater.FileUpdater;
 import mc.alk.battlepluginupdater.PluginUpdater;
 import mc.alk.battlewebapi.BattlePluginsAPI;
 import mc.euro.bukkitinterface.BukkitInterface;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -276,6 +277,8 @@ public class BattleArena extends JavaPlugin {
         PluginUpdater.update(this, bukkitId, this.getFile(),
                 Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
         Log.info("&4[" + pluginname + "] &6v" + BattleArena.version + "&f enabled!");
+
+        new Metrics(this);
     }
 
     /**
