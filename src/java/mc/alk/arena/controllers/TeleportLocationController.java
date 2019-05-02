@@ -94,13 +94,13 @@ public class TeleportLocationController {
                 dest.onPreJoin(player, apte);
                 break;
             case IN:
-                src.onPreLeave(player, apte);
+                src.onPreJoin(player, apte);
                 dest.onPreEnter(player, apte);
                 break;
             case OUT:
                 mp.getGameManager().onPreQuit(player, apte);
                 src.onPreQuit(player, apte);
-                dest.onPreJoin(player, apte);
+                dest.onPreLeave(player, apte);
                 break;
             default:
                 break;

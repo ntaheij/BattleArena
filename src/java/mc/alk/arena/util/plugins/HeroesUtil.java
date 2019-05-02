@@ -54,7 +54,8 @@ public abstract class HeroesUtil {
         if (hero == null) {
             return;
         }
-        if (hero.getHeroClass().getName().equals(hc.getName())) {
+        HeroClass currentClass = hero.getHeroClass();
+        if (currentClass != null && currentClass.getName().equals(hc.getName())) {
             return;
         }
         hero.setHeroClass(hc, false);
