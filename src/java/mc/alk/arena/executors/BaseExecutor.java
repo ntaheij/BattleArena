@@ -242,7 +242,7 @@ public abstract class BaseExecutor implements ArenaExecutor{
         }
 
         if (methodmap == null || methodmap.isEmpty()){
-            return sendMessage(sender, "&cThat command does not exist!&6 /"+command.getLabel()+" help &c for help");}
+            return sendMessage(sender, "&cThat command does not exist!&6 /"+command.getLabel()+" help &cfor help");}
 
         MCCommand mccmd;
         List<CommandException> errs =null;
@@ -281,7 +281,7 @@ public abstract class BaseExecutor implements ArenaExecutor{
         if (!success && errs != null && !errs.isEmpty()){
             HashSet<String> usages = new HashSet<String>();
             for (CommandException e: errs){
-                usages.add(ChatColor.GOLD+command.getLabel() +" " +e.mw.usage+" &c:"+e.err.getMessage());
+                usages.add(ChatColor.GOLD + "/" + command.getLabel() + " " + e.mw.usage+"&c: "+e.err.getMessage());
             }
             for (String msg : usages){
                 sendMessage(sender, msg);}
@@ -394,7 +394,7 @@ public abstract class BaseExecutor implements ArenaExecutor{
                 if (numUsedStrings.get() > 0){
                     strIndex+=numUsedStrings.get();}
             } catch (ArrayIndexOutOfBoundsException e){
-                throw new IllegalArgumentException("You didnt supply enough arguments for this method");
+                throw new IllegalArgumentException("You didn't supply enough arguments for this method");
             }
             objIndex++;
         }
@@ -414,7 +414,7 @@ public abstract class BaseExecutor implements ArenaExecutor{
 
     protected Object verifySender(CommandSender sender, Class<?> clazz) {
         if (!clazz.isAssignableFrom(sender.getClass())){
-            throw new IllegalArgumentException("sender must be a " + clazz.getSimpleName());}
+            throw new IllegalArgumentException("Sender must be a " + clazz.getSimpleName());}
         return sender;
     }
 

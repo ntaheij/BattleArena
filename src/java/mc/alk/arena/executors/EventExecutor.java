@@ -60,15 +60,15 @@ public class EventExecutor extends BAExecutor{
 	public boolean eventCancel(CommandSender sender, ArenaPlayer player) {
 		Event event = controller.getEvent(player);
 		if (event == null){
-			return sendMessage(sender, "&cThere was no event with " + player.getName() +" inside");}
+			return sendMessage(sender, "&cThere was no event with &6" + player.getName() +" &cinside");}
 		return cancelEvent(sender,event);
 	}
 
 	public boolean cancelEvent(CommandSender sender, Event event){
 		if (!event.isRunning() && !event.isOpen()){
-			return sendMessage(sender,"&eA "+event.getCommand()+" is not running");}
+			return sendMessage(sender,"&cA &6"+event.getCommand()+" &cis not running");}
 		controller.cancelEvent(event);
-		return sendMessage(sender,"&eYou have canceled the &6" + event.getName());
+		return sendMessage(sender,"&2You have canceled the &6" + event.getName());
 	}
 
 	@MCCommand(cmds={"start"},admin=true,usage="start", order=2)
@@ -80,7 +80,7 @@ public class EventExecutor extends BAExecutor{
 
 		final String name = event.getName();
 		if (!event.isOpen()){
-			sendMessage(sender,"&eYou need to open a "+name+" before starting one");
+			sendMessage(sender,"&cYou need to open a &6"+name+" &cbefore starting one");
 			return sendMessage(sender,"&eType &6/"+event.getCommand()+" open <params>&e : to open one");
 		}
 		boolean forceStart = args.length > 1 && args[1].equalsIgnoreCase("force");
@@ -88,7 +88,7 @@ public class EventExecutor extends BAExecutor{
 			final int nteams = event.getNTeams();
 			final int neededTeams = event.getParams().getMinTeams();
 			sendMessage(sender,"&cThe "+name+" only has &6" + nteams +" &cteams and it needs &6" +neededTeams);
-			return sendMessage(sender,"&cIf you really want to start the bukkitEvent anyways. &6/"+event.getCommand()+" start force");
+			return sendMessage(sender,"&cIf you really want to start the event anyways. &6/"+event.getCommand()+" start force");
 		}
 		try {
 			controller.startEvent(event);
@@ -107,7 +107,7 @@ public class EventExecutor extends BAExecutor{
 			return true;}
 
 		if (!event.isOpen() && !event.isRunning()){
-			return sendMessage(sender,"&eThere is no open "+event.getCommand()+" right now");}
+			return sendMessage(sender,"&cThere is no open &6"+event.getCommand()+" &cright now");}
 		int size = event.getNTeams();
 		String teamOrPlayers = MessageUtil.getTeamsOrPlayers(eventParams.getMaxTeamSize());
 		sendMessage(sender,"&eThere are currently &6" + size +"&e "+teamOrPlayers);
@@ -122,7 +122,7 @@ public class EventExecutor extends BAExecutor{
 			return true;}
 
 		if (!event.isOpen()){
-			return sendMessage(sender,"&eThere is no open &6"+event.getCommand()+"&e right now");}
+			return sendMessage(sender,"&cThere is no open &6"+event.getCommand()+"&c right now");}
 		int size = event.getNTeams();
 		String teamOrPlayers = MessageUtil.getTeamsOrPlayers(eventParams.getMaxTeamSize());
 		return  sendMessage(sender,"&eThere are currently &6" + size +"&e "+teamOrPlayers+" that have joined");
@@ -266,7 +266,7 @@ public class EventExecutor extends BAExecutor{
 
 		StringBuilder sb = new StringBuilder(event.getResultString());
 		if (sb.length() == 0){
-			return sendMessage(sender,"&eThere are no results for a previous &6" +event.getDisplayName() +"&e right now");
+			return sendMessage(sender,"&cThere are no results for a previous &6" +event.getDisplayName() +"&c right now");
 		}
 		return sendMessage(sender,"&eResults for the &6" + event.getDisplayName() + "&e\n" + sb.toString());
 	}

@@ -20,12 +20,12 @@ public class BASchedulerExecutor extends CustomCommandExecutor{
 	public boolean schedule(CommandSender sender, String eventType, String[] args) {
 		MatchParams ep = ParamController.getMatchParamCopy(eventType);
 		if (ep == null){
-			return sendMessage(sender, "&cEvent type " + eventType+ " not found!");
+			return sendMessage(sender, "&cEvent type &6" + eventType+ " &cwas not found!");
 		}
 		if (es.scheduleEvent(ep, Arrays.copyOfRange(args, 2, args.length))){
 			sendMessage(sender, "&2Event scheduled!. &6/bas list&2 to see a list of scheduled events");
 		} else {
-			sendMessage(sender, "&cEvent not scheduled!. There was some error scheduling this events");
+			sendMessage(sender, "&cEvent not scheduled!. There was some error scheduling this event");
 		}
 		return true;
 	}
@@ -37,7 +37,7 @@ public class BASchedulerExecutor extends CustomCommandExecutor{
 			return sendMessage(sender, "&cNo &4BattleArena&c events have been scheduled");}
 
 		if (events.size() < index || index <= 0){
-			return sendMessage(sender, "&cIndex is out of range.  Valid Range: &61-"+events.size());}
+			return sendMessage(sender, "&cIndex is out of range. Valid Range: &61-"+events.size());}
 		es.deleteEvent(index-1);
 		return sendMessage(sender, "&2Event &6"+index+"&2 deleted");
 	}
@@ -67,7 +67,7 @@ public class BASchedulerExecutor extends CustomCommandExecutor{
 		} else {
 			es.start();
 		}
-		return sendMessage(sender, "&2Scheduled events are now &astarted");
+		return sendMessage(sender, "&2Scheduled events have now &astarted");
 	}
 
 	@MCCommand(cmds={"stop"}, admin=true)
@@ -87,6 +87,6 @@ public class BASchedulerExecutor extends CustomCommandExecutor{
 			return sendMessage(sender, "&cNo &4BattleArena&c events have been scheduled");}
 
 		es.startNext();
-		return sendMessage(sender, "&2Next Scheduled event is now starting");
+		return sendMessage(sender, "&2Next scheduled event is now starting");
 	}
 }

@@ -177,8 +177,8 @@ public class BAExecutor extends CustomCommandExecutor {
     @MCCommand(cmds = {"enabled"}, admin = true)
     public boolean arenaCheckArenaTypes(CommandSender sender) {
         String types = ArenaType.getValidList();
-        sendMessage(sender, "&e valid types are = &6" + types);
-        return sendMessage(sender, "&5Enabled types = &6 " + ParamController.getAvaibleTypes(disabled));
+        sendMessage(sender, "&eValid types are: &6" + types);
+        return sendMessage(sender, "&5Enabled types: &6 " + ParamController.getAvaibleTypes(disabled));
     }
 
     @MCCommand(cmds = {"join", "j"}, usage = "add [options]", helpOrder = 1)
@@ -203,7 +203,7 @@ public class BAExecutor extends CustomCommandExecutor {
         /// Make sure we have Match Options
         final StateGraph ops = omp.getStateGraph();
         if (ops == null) {
-            return sendMessage(player, "&cThis match type has no valid options, contact an admin to fix");
+            return sendMessage(player, "&cThis match type has no valid options. If you believe this is a problem, contact an administrator.");
         }
 
         /// Check if this match type is disabled
@@ -238,7 +238,7 @@ public class BAExecutor extends CustomCommandExecutor {
 
         if (!canJoin(t, true)) {
             sendSystemMessage(player, "teammate_cant_join", omp.getName());
-            return sendMessage(player, "&6/team leave: &cto leave the team");
+            return sendMessage(player, "&6/team leave: &cTo leave the team");
         }
 
         MatchParams mp = jp.getMatchParams();
@@ -522,7 +522,7 @@ public class BAExecutor extends CustomCommandExecutor {
                         "&2You have canceled the match for &6"
                         + player.getName());
             } else {
-                return sendMessage(sender, "&cMatch couldnt be found for &6"
+                return sendMessage(sender, "&cMatch could not be found for &6"
                         + player.getName());
             }
         }
@@ -560,20 +560,19 @@ public class BAExecutor extends CustomCommandExecutor {
         if (a == null) {
             player = ServerUtil.findPlayer(pormatch);
             if (player == null) {
-                return sendMessage(sender, "&eCouldnt find arena or player="
-                        + pormatch);
+                return sendMessage(sender, "&cCould not find arena or player &6" + pormatch);
             }
             ArenaPlayer ap = PlayerController.toArenaPlayer(player);
             am = ac.getMatch(ap);
             if (am == null) {
-                return sendMessage(sender, "&ePlayer " + pormatch
-                        + " is not in a match");
+                return sendMessage(sender, "&6Player &e" + pormatch
+                        + " &6is not in a match");
             }
         } else {
             am = ac.getArenaMatch(a);
             if (am == null) {
-                return sendMessage(sender, "&earena " + pormatch
-                        + " is not being used in a match");
+                return sendMessage(sender, "&cArena &6" + pormatch
+                        + " &cis not being used in a match");
             }
         }
         return sendMessage(sender, am.getMatchInfo());
@@ -583,8 +582,8 @@ public class BAExecutor extends CustomCommandExecutor {
     public boolean arenaSetVictor(CommandSender sender, ArenaPlayer ap) {
         Match am = ac.getMatch(ap);
         if (am == null) {
-            return sendMessage(sender, "&ePlayer " + ap.getName()
-                    + " is not in a match");
+            return sendMessage(sender, "&cPlayer &6" + ap.getName()
+                    + " &cis not in a match");
         }
         am.setVictor(ap);
         return sendMessage(sender, "&6" + ap.getName()
@@ -595,7 +594,7 @@ public class BAExecutor extends CustomCommandExecutor {
     public boolean resetElo(CommandSender sender, MatchParams mp) {
         if (!TrackerController.hasInterface(mp)) {
             return sendMessage(sender,
-                    "&eThere is no tracking for " + mp.getName());
+                    "&cThere is no tracking for &6" + mp.getName());
         }
         TrackerController sc = new TrackerController(mp);
         sc.resetStats();
@@ -608,7 +607,7 @@ public class BAExecutor extends CustomCommandExecutor {
             OfflinePlayer player, int rating) {
         if (!TrackerController.hasInterface(mp)) {
             return sendMessage(sender,
-                    "&eThere is no tracking for " + mp.getName());
+                    "&cThere is no tracking for &c" + mp.getName());
         }
         TrackerController sc = new TrackerController(mp);
         if (sc.setRating(player, rating)) {
@@ -635,7 +634,7 @@ public class BAExecutor extends CustomCommandExecutor {
             OfflinePlayer player) {
         if (!TrackerController.hasInterface(mp)) {
             return sendMessage(sender,
-                    "&cThere is no tracking for " + mp.getName());
+                    "&cThere is no tracking for &6" + mp.getName());
         }
         TrackerController sc = new TrackerController(mp);
         String rankMsg = sc.getRankMessage(player);
@@ -651,16 +650,16 @@ public class BAExecutor extends CustomCommandExecutor {
             try {
                 x = Integer.valueOf(args[1]);
             } catch (Exception e) {
-                return sendMessage(sender, "&e top length " + args[1]
-                        + " is not a number");
+                return sendMessage(sender, "&6" + args[1]
+                        + " &cis not a number");
             }
         }
         if (length > 2) {
             try {
                 teamSize = Integer.valueOf(args[length - 1]);
             } catch (Exception e) {
-                return sendMessage(sender, "&e team size " + args[length - 1]
-                        + " is not a number");
+                return sendMessage(sender, "&cTeam size &6" + args[length - 1]
+                        + " &cis not a number");
             }
         }
         MatchParams top = new MatchParams(mp.getType());
@@ -675,7 +674,7 @@ public class BAExecutor extends CustomCommandExecutor {
         }
         if (!TrackerController.hasInterface(mp)) {
             return sendMessage(sender,
-                    "&eThere is no tracking for " + mp.getName());
+                    "&cThere is no tracking for &6" + mp.getName());
         }
 
         final String teamSizeStr = (mp.getMinTeamSize() > 1 ? "teamSize=&6"
@@ -730,22 +729,22 @@ public class BAExecutor extends CustomCommandExecutor {
             String arenaName) {
         if (arenaName.equalsIgnoreCase("all")) {
             ac.openAll(mp);
-            return sendMessage(sender, "&6Arenas for " + mp.getName()
+            return sendMessage(sender, "&eArenas for &6" + mp.getName()
                     + ChatColor.YELLOW + " are now &2open");
         } else if (arenaName.equalsIgnoreCase("lobby")) {
             LobbyContainer lc = RoomController.getLobby(mp.getType());
             if (lc == null) {
-                return sendMessage(sender, "&cYou need to set a lobby for "
+                return sendMessage(sender, "&cYou need to set a lobby for &6"
                         + mp.getName());
             }
             lc.setContainerState(ContainerState.OPEN);
-            return sendMessage(sender, "&6 Lobby for " + mp.getName()
+            return sendMessage(sender, "e6 Lobby for &6" + mp.getName()
                     + ChatColor.YELLOW + " is now &2open");
         } else {
             Arena arena = ac.getArena(arenaName);
             if (arena == null) {
-                return sendMessage(sender, "&cArena " + arenaName
-                        + " could not be found");
+                return sendMessage(sender, "&cArena &6" + arenaName
+                        + " &ccould not be found");
             }
 
             arena.setAllContainerState(ContainerState.OPEN);
@@ -762,7 +761,7 @@ public class BAExecutor extends CustomCommandExecutor {
                 LobbyContainer lc = RoomController.getLobby(arena
                         .getArenaType());
                 if (lc == null) {
-                    return sendMessage(sender, "&cYou need to set a lobby for "
+                    return sendMessage(sender, "&cYou need to set a lobby for &c"
                             + arena.getArenaType().getName());
                 }
                 lc.setContainerState(ContainerState.OPEN);
@@ -783,22 +782,22 @@ public class BAExecutor extends CustomCommandExecutor {
             for (Arena arena : ac.getArenas(mp)) {
                 arena.setAllContainerState(ContainerState.CLOSED);
             }
-            return sendMessage(sender, "&6Arenas for " + mp.getName()
-                    + ChatColor.YELLOW + " are now &4closed");
+            return sendMessage(sender, "&eArenas for &6" + mp.getName()
+                    + ChatColor.YELLOW + " &eare now &4closed");
         } else if (arenaName.equalsIgnoreCase("lobby")) {
             LobbyContainer lc = RoomController.getLobby(mp.getType());
             if (lc == null) {
-                return sendMessage(sender, "&cYou need to set a lobby for "
+                return sendMessage(sender, "&cYou need to set a lobby for &6"
                         + mp.getName());
             }
             lc.setContainerState(ContainerState.CLOSED);
-            return sendMessage(sender, "&6 Lobby for " + mp.getName()
-                    + ChatColor.YELLOW + " is now &4closed");
+            return sendMessage(sender, "&e Lobby for &6" + mp.getName()
+                    + ChatColor.YELLOW + " &eis now &4closed");
         } else {
             Arena arena = ac.getArena(arenaName);
             if (arena == null) {
-                return sendMessage(sender, "&cArena " + arenaName
-                        + " could not be found");
+                return sendMessage(sender, "&cArena &6" + arenaName
+                        + " c&could not be found");
             }
             arena.setAllContainerState(ContainerState.CLOSED);
             return sendMessage(sender, "&6" + arena.getName()
@@ -823,8 +822,7 @@ public class BAExecutor extends CustomCommandExecutor {
         new ArenaDeleteEvent(arena).callEvent();
         ac.deleteArena(arena);
         BattleArena.saveArenas(arena.getArenaType().getPlugin());
-        return sendMessage(sender, ChatColor.GREEN
-                + "You have deleted the arena &6" + arena.getName());
+        return sendMessage(sender, "&2You have deleted the arena &6" + arena.getName());
     }
 
     @MCCommand(cmds = {"save"}, admin = true, perm = "arena.save")
@@ -906,11 +904,11 @@ public class BAExecutor extends CustomCommandExecutor {
             return true;
         }
         if (arena.getVisitorLocs() == null) {
-            return sendMessage(sender, ChatColor.YELLOW + "That arena doesnt allow visitors!");
+            return sendMessage(sender, "&cThat arena doesnt allow visitors!");
         }
         if (watchController.watch(sender, arena)) {
-            return sendMessage(sender, ChatColor.YELLOW + "You are now watching "
-                    + arena.getName() + " /watch leave : to leave");
+            return sendMessage(sender, ChatColor.YELLOW + "You are now watching &6"
+                    + arena.getName() + "&e. Use &6/watch leave &eto leave");
         } else {
             return sendMessage(sender, ChatColor.RED + "You can't watch at this time");
         }
@@ -938,7 +936,7 @@ public class BAExecutor extends CustomCommandExecutor {
 
         Arena arena = ArenaType.createArena(name, ap, false);
         if (arena == null) {
-            return sendMessage(sender, "&cCouldn't create the arena " + name + " of type " + ap.getType());
+            return sendMessage(sender, "&cCouldn't create the arena &6" + name + " &cof type &c" + ap.getType());
         }
 
         arena.setSpawnLoc(0, 0, new FixedLocation(sender.getLocation()));
@@ -948,7 +946,7 @@ public class BAExecutor extends CustomCommandExecutor {
         new ArenaCreateEvent(arena).callEvent();
         aci.init();
 
-        sendMessage(sender, "&2You have created the arena &6" + arena);
+        sendMessage(sender, "&2You have created arena &6" + arena);
         sendMessage(sender, "&2A spawn point has been created where you are standing");
         sendMessage(sender, "&2You can add/change spawn points using &6/arena alter "
                 + arena.getName() + " <1,2,...,x : which spawn>");
@@ -1065,7 +1063,7 @@ public class BAExecutor extends CustomCommandExecutor {
         } catch (IllegalStateException e) {
             return sendMessage(sender, "&c" + e.getMessage());
         }
-        return sendMessage(sender, "&2Arena &6" + arena.getName() + "set back to default game options");
+        return sendMessage(sender, "&2Arena &6" + arena.getName() + "&2set back to default game options");
     }
 
     @MCCommand(cmds = {"restoreDefaultArenaOptions"}, admin = true, perm = "arena.alter")
@@ -1075,7 +1073,7 @@ public class BAExecutor extends CustomCommandExecutor {
         } catch (IllegalStateException e) {
             return sendMessage(sender, "&c" + e.getMessage());
         }
-        return sendMessage(sender, "&2Game type &6" + params.getType() + " set back to default game options");
+        return sendMessage(sender, "&2Game type &6" + params.getType() + " &2set back to default game options");
     }
 
     @MCCommand(cmds = {"rescind"}, helpOrder = 13)
@@ -1222,11 +1220,11 @@ public class BAExecutor extends CustomCommandExecutor {
             if (wager >= 0) {
                 if (MoneyController.balance(player.getName()) < wager) {
                     return sendMessage(player,
-                            "&4[Duel] You can't afford that wager!");
+                            "&4[Duel] &cYou can't afford that wager!");
                 }
             } else {
                 return sendMessage(player,
-                        "&4[Duel] The wager must be positive");
+                        "&4[Duel] &cThe wager must be positive");
             }
         }
         if (!duelOptions.matches(player, mp)) {
@@ -1315,7 +1313,7 @@ public class BAExecutor extends CustomCommandExecutor {
             if (wager != null) {
                 if (MoneyController.balance(ap.getName()) < wager) {
                     return sendMessage(player,
-                            "&4[Duel] Your teammate &6" + ap.getDisplayName()
+                            "&4[Duel] &cYour teammate &6" + ap.getDisplayName()
                             + "&c can't afford that wager!");
                 }
             }
@@ -1396,15 +1394,15 @@ public class BAExecutor extends CustomCommandExecutor {
                     + " cancel <arena>");
         }
         ac.startMatch(matches.get(0));
-        return sendMessage(sender, "&2" + mp.getType() + " has been started");
+        return sendMessage(sender, "&7" + mp.getType() + " &2has been started");
     }
 
     @MCCommand(cmds = {"forceStart"}, admin = true, perm = "arena.forcestart")
     public boolean arenaForceStart(CommandSender sender, MatchParams mp) {
         if (ac.forceStart(mp, false)) {
-            return sendMessage(sender, "&2" + mp.getType() + " has been started");
+            return sendMessage(sender, "&6" + mp.getType() + " &2has been started");
         } else {
-            return sendMessage(sender, "&c" + mp.getType() + " could not be started");
+            return sendMessage(sender, "&6" + mp.getType() + " &2could not be started");
         }
     }
 
@@ -1415,7 +1413,7 @@ public class BAExecutor extends CustomCommandExecutor {
             return sendMessage(sender, "&cThere is no class called &6" + arenaClass);
         }
         if (sender.getCurLocation().getType() == LocationType.HOME) {
-            return sendMessage(sender, "&cYou aren't in a game&6");
+            return sendMessage(sender, "&cYou aren't in a game");
         }
         ArenaClassController.changeClass(sender.getPlayer(), sender.getCompetition(), ac);
         return true;
@@ -1484,13 +1482,13 @@ public class BAExecutor extends CustomCommandExecutor {
         /// Check for any competition
         if (player.getCompetition() != null) {
             if (showMessages) {
-                sendMessage(player, "&cYou are still in the " + player.getCompetition().getName() + ". &6/arena leave");
+                sendMessage(player, "&cYou are still in the &6" + player.getCompetition().getName() + "&c. &6/arena leave");
             }
             return false;
         }
         /// Inside the queue waiting for a match?
         if (InArenaListener.inQueue(player.getID())) {
-            sendMessage(player, "&eYou are in the queue.");
+            sendMessage(player, "&eYou are already in the queue.");
             if (showMessages) {
                 sendMessage(player, "&eType &6/arena leave");
             }
@@ -1519,7 +1517,7 @@ public class BAExecutor extends CustomCommandExecutor {
         Event ae = insideEvent(player);
         if (ae != null) {
             if (showMessages) {
-                sendMessage(player, "&eYou need to leave the Event first. &6/" + ae.getCommand() + " leave");
+                sendMessage(player, "&cYou need to leave the Event first. &6/" + ae.getCommand() + " leave");
             }
             return false;
         }
@@ -1531,7 +1529,7 @@ public class BAExecutor extends CustomCommandExecutor {
             if (am.isHandled(player)
                     || (!t.hasLeft(player) && t.hasAliveMember(player))) {
                 if (showMessages) {
-                    sendMessage(player, "&eYou are already in a match.");
+                    sendMessage(player, "&cYou are already in a match.");
                 }
                 return false;
             } else {
@@ -1611,12 +1609,12 @@ public class BAExecutor extends CustomCommandExecutor {
                     boolean has = MoneyController.hasEnough(player.getName(), fee);
                     hasEnough &= has;
                     if (!has) {
-                        sendMessage(player, "&eYou need &6" + fee + "&e to compete");
+                        sendMessage(player, "&cYou need &6" + fee + "&c to compete");
                     }
                 }
                 if (!hasEnough) {
                     if (t.size() > 1) {
-                        t.sendMessage("&eYour team does not have enough money to compete");
+                        t.sendMessage("&cYour team does not have enough money to compete");
                     }
                     return false;
                 }
@@ -1631,7 +1629,7 @@ public class BAExecutor extends CustomCommandExecutor {
                     boolean has = InventoryUtil.hasAllItems(player.getPlayer(), fee);
                     hasEnough &= has;
                     if (!has) {
-                        sendMessage(player, "&eYou don't have all the needed items to compete");
+                        sendMessage(player, "&cYou don't have all the needed items to compete");
                         for (ItemStack is : fee) {
                             sendMessage(player, "&c- &e" + InventoryUtil.getItemString(is));
                         }
@@ -1639,7 +1637,7 @@ public class BAExecutor extends CustomCommandExecutor {
                 }
                 if (!hasEnough) {
                     if (t.size() > 1) {
-                        t.sendMessage("&eYour team does not have all the items to compete");
+                        t.sendMessage("&cYour team does not have all the items to compete");
                     }
                     return false;
                 }
@@ -1654,7 +1652,7 @@ public class BAExecutor extends CustomCommandExecutor {
                     boolean has = InventoryUtil.hasAllItems(player.getPlayer(), fee);
                     hasEnough &= has;
                     if (!has) {
-                        sendMessage(player, "&eYou don't have all the needed items to compete");
+                        sendMessage(player, "&cYou don't have all the needed items to compete");
                         for (ItemStack is : fee) {
                             sendMessage(player, "&c- &e" + InventoryUtil.getItemString(is));
                         }
@@ -1662,7 +1660,7 @@ public class BAExecutor extends CustomCommandExecutor {
                 }
                 if (!hasEnough) {
                     if (t.size() > 1) {
-                        t.sendMessage("&eYour team does not have all the items to compete");
+                        t.sendMessage("&cYour team does not have all the items to compete");
                     }
                     return false;
                 }
@@ -1676,7 +1674,7 @@ public class BAExecutor extends CustomCommandExecutor {
                 for (ArenaPlayer player : t.getPlayers()) {
                     getOrCreateJoinReqs(player).setMoney(fee);
                     MoneyController.subtract(player.getName(), fee);
-                    sendMessage(player, "&6" + fee + " has been subtracted from your account");
+                    sendMessage(player, "&6" + fee + " &ehas been subtracted from your account");
                 }
             }
         }

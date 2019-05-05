@@ -48,8 +48,9 @@ public class BattleArenaExecutor extends CustomCommandExecutor {
     @MCCommand(cmds = {"listInv"}, admin = true)
     public boolean listSave(CommandSender sender, OfflinePlayer p, Integer index) {
         if (index < 0 || index > Defaults.NUM_INV_SAVES) {
-            return sendMessage(sender, "&c index must be between 1-" + Defaults.NUM_INV_SAVES);
+            return sendMessage(sender, "&cIndex must be between 1-" + Defaults.NUM_INV_SAVES);
         }
+        // TODO: Make this display in a GUI possibly?
         PInv pinv = InventorySerializer.getInventory(p, index - 1);
         if (pinv == null)
             return sendMessage(sender, "&cThis index doesn't have an inventory!");
@@ -57,12 +58,12 @@ public class BattleArenaExecutor extends CustomCommandExecutor {
         boolean has = false;
         for (ItemStack is : pinv.armor) {
             if (is == null || is.getType() == Material.AIR) continue;
-            sendMessage(sender, "&a armor: &6" + InventoryUtil.getItemString(is));
+            sendMessage(sender, "&a Armor: &6" + InventoryUtil.getItemString(is));
             has = true;
         }
         for (ItemStack is : pinv.contents) {
             if (is == null || is.getType() == Material.AIR) continue;
-            sendMessage(sender, "&b inv: &6" + InventoryUtil.getItemString(is));
+            sendMessage(sender, "&b Inventory: &6" + InventoryUtil.getItemString(is));
             has = true;
         }
         if (!has) {
@@ -74,7 +75,7 @@ public class BattleArenaExecutor extends CustomCommandExecutor {
     @MCCommand(cmds = {"giveInv"}, admin = true)
     public boolean restoreInv(CommandSender sender, ArenaPlayer p, Integer index, Player other) {
         if (index < 0 || index > Defaults.NUM_INV_SAVES) {
-            return sendMessage(sender, "&c index must be between 1-" + Defaults.NUM_INV_SAVES);
+            return sendMessage(sender, "&cIndex must be between 1-" + Defaults.NUM_INV_SAVES);
         }
         if (InventorySerializer.giveInventory(p, index - 1, other)) {
             return sendMessage(sender, "&2Player inventory given to " + other.getDisplayName());
@@ -86,7 +87,7 @@ public class BattleArenaExecutor extends CustomCommandExecutor {
     @MCCommand(cmds = {"restoreInv"}, admin = true)
     public boolean restoreInv(CommandSender sender, ArenaPlayer p, Integer index) {
         if (index < 0 || index > Defaults.NUM_INV_SAVES) {
-            return sendMessage(sender, "&c index must be between 1-" + Defaults.NUM_INV_SAVES);
+            return sendMessage(sender, "&cIndex must be between 1-" + Defaults.NUM_INV_SAVES);
         }
         if (InventorySerializer.giveInventory(p, index - 1, p.getPlayer())) {
             return sendMessage(sender, "&2Player inventory restored");

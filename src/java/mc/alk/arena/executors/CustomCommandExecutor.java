@@ -275,7 +275,7 @@ public abstract class CustomCommandExecutor extends BaseExecutor{
         if (cs == null)
             throw new IllegalArgumentException(ChatColor.RED + "You need to select an arena first");
         if (System.currentTimeMillis() - cs.lastUsed > 5*60*1000){
-            throw new IllegalArgumentException(ChatColor.RED + "its been over a 5 minutes since you selected an arena, reselect it");
+            throw new IllegalArgumentException(ChatColor.RED + "It has been over a 5 minutes since you selected an arena, reselect it");
         }
         cs.updateCurrentSelection();
         return cs;
