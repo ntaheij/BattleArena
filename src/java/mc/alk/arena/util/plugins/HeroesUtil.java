@@ -5,14 +5,7 @@ import com.herocraftonline.heroes.characters.CharacterManager;
 import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.characters.classes.HeroClass;
 import com.herocraftonline.heroes.characters.classes.HeroClassManager;
-import com.herocraftonline.heroes.characters.effects.Effect;
 import com.herocraftonline.heroes.characters.party.HeroParty;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.teams.ArenaTeam;
@@ -20,9 +13,13 @@ import mc.alk.arena.objects.teams.TeamFactory;
 import mc.alk.arena.util.plugins.heroes.Heroes_1_5_2;
 import mc.alk.arena.util.plugins.heroes.Heroes_pre1_5_2;
 import mc.euro.version.Version;
-
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class HeroesUtil {
 
@@ -100,7 +97,8 @@ public abstract class HeroesUtil {
         if (hero == null) {
             return;
         }
-	hero.clearEffects();
+        hero.clearSummons();
+        hero.clearEffects();
     }
 
     public static HeroParty createParty(ArenaTeam team, Hero hero) {
@@ -239,5 +237,4 @@ public abstract class HeroesUtil {
     public static double getHealth(Player player) {
         return util.getHeroHealth(player);
     }
-
 }
