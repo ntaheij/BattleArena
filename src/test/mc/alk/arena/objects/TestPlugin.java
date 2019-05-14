@@ -1,5 +1,6 @@
 package mc.alk.arena.objects;
 
+import com.avaje.ebean.EbeanServer;
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
@@ -139,5 +140,10 @@ public class TestPlugin implements Plugin{
 	public String getName() {
 		return "TestBattleArenaPlugin";
 	}
+
+    @Override
+    public EbeanServer getDatabase() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
 }
