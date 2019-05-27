@@ -396,7 +396,7 @@ public class PlayerSave {
     }
 
     public void storeArenaClass() {
-        if (!HeroesController.enabled() || arenaClass != null)
+        if (!HeroesController.enabled())
             return;
         arenaClass = HeroesController.getHeroClassName(player.getPlayer());
     }

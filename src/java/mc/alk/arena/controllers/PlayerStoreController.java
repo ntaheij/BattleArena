@@ -323,13 +323,16 @@ public class PlayerStoreController {
     }
 
     public void deEnchant(Player p) {
-        try{ EffectUtil.deEnchantAll(p);} catch (Exception e){/* do nothing */}
-        HeroesController.deEnchant(p);
-        if (!p.isOnline() || p.isDead()){
-            BAPlayerListener.deEnchantOnEnter(BattleArena.toArenaPlayer(p));
+        try {
+            HeroesController.deEnchant(p);
+            EffectUtil.deEnchantAll(p);
+            if (!p.isOnline() || p.isDead()) {
+                BAPlayerListener.deEnchantOnEnter(BattleArena.toArenaPlayer(p));
+            }
+        } catch (Exception e) {
+            Log.err("[BA Warning] Failed de-Enchant step");
         }
     }
-
 
     public void storeScoreboard(ArenaPlayer player) {
         getOrCreateSave(player).storeScoreboard();

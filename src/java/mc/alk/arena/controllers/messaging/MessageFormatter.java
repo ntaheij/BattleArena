@@ -12,6 +12,7 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.TimeUtil;
 
+import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
@@ -24,6 +25,7 @@ import java.util.Set;
  * need to revisit this later
  */
 public class MessageFormatter{
+	final DecimalFormat decFormat = new DecimalFormat("#0.##");
 	final String[] searchList;
 	final String[] replaceList;
 	final TrackerController sc;
@@ -302,7 +304,7 @@ public class MessageFormatter{
 
 					for (ArenaPlayer ap: team.getLivingPlayers()){
 						if (!first) sb.append(", ");
-						sb.append("&6").append(ap.getDisplayName()).append("&e(&4").append(ap.getHealth()).append("&e)");
+						sb.append("&6").append(ap.getDisplayName()).append("&e(&4").append(decFormat.format(ap.getHealth())).append("&e)");
 						first = false;
 					}
 					for (ArenaPlayer ap: team.getDeadPlayers()){
