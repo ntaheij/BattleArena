@@ -1,6 +1,5 @@
 package mc.alk.arena.serializers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import mc.alk.arena.BattleArena;
@@ -9,8 +8,8 @@ import mc.alk.arena.objects.ArenaClass;
 import mc.alk.arena.objects.CommandLineString;
 import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.objects.spawns.SpawnInstance;
-import mc.alk.arena.util.InventoryUtil;
 import mc.alk.arena.util.Log;
+import mc.alk.battlebukkitlib.InventoryUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;

@@ -10,6 +10,7 @@ import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.SignUtil;
 import mc.euro.bukkitadapter.MaterialAdapter;
+import mc.euro.bukkitadapter.material.BattleMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,34 +38,30 @@ public class BASignListener implements Listener{
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         /// If this is an uninteresting block get out of here as quickly as we can
-        if (event.getClickedBlock() == null ||
-                !(event.getClickedBlock().getType().equals(MaterialAdapter.getMaterial("SIGN_POST")) ||
-                        event.getClickedBlock().getType().equals(Material.WALL_SIGN))) {
+        if (event.getClickedBlock() == null && !(event.getClickedBlock().getState() instanceof Sign)) {
             return;
         }
 
-        if (PermissionsUtil.isAdmin(event.getPlayer()) && (event.getAction() ==Action.LEFT_CLICK_BLOCK)){
+        if (PermissionsUtil.isAdmin(event.getPlayer()) && (event.getAction() == Action.LEFT_CLICK_BLOCK)){
             return;}
 
-        if (event.getClickedBlock().getState() instanceof Sign) {
-            String[] lines = ((Sign) event.getClickedBlock().getState()).getLines();
-            if (!lines[0].startsWith("&") && !lines[0].startsWith("[") && !lines[0].startsWith("§")) {
-                return;
-            }
-            ArenaCommandSign acs = signLocs.get(getKey(event.getClickedBlock().getLocation()));
-            if (acs == null) {
-                acs = SignUtil.getArenaCommandSign(((Sign) event.getClickedBlock().getState()),
-                        ((Sign) event.getClickedBlock().getState()).getLines());
-                if (acs != null){
-                    signLocs.put(getKey(event.getClickedBlock().getLocation()), acs);}
-            }
-            if (acs == null) {
-                return;
-            }
-            event.setCancelled(true);
-            sul.addSign(acs);
-            acs.performAction(PlayerController.toArenaPlayer(event.getPlayer()));
+        String[] lines = ((Sign) event.getClickedBlock().getState()).getLines();
+        if (!lines[0].startsWith("&") && !lines[0].startsWith("[") && !lines[0].startsWith("§")) {
+            return;
         }
+        ArenaCommandSign acs = signLocs.get(getKey(event.getClickedBlock().getLocation()));
+        if (acs == null) {
+            acs = SignUtil.getArenaCommandSign(((Sign) event.getClickedBlock().getState()),
+                    ((Sign) event.getClickedBlock().getState()).getLines());
+            if (acs != null){
+                signLocs.put(getKey(event.getClickedBlock().getLocation()), acs);}
+        }
+        if (acs == null) {
+            return;
+        }
+        event.setCancelled(true);
+        sul.addSign(acs);
+        acs.performAction(PlayerController.toArenaPlayer(event.getPlayer()));
     }
 
     @EventHandler
@@ -72,9 +69,8 @@ public class BASignListener implements Listener{
         // System.out.println("SignChangeEvent called");
         if (Defaults.DEBUG_TRACE) System.out.println("onSignChange Event");
         final Block block = event.getBlock();
-        final Material type = block.getType();
 
-        if (!(type.equals(Material.SIGN) || type.equals(MaterialAdapter.getMaterial("SIGN_POST")) || type.equals(Material.WALL_SIGN))) {
+        if (!(block.getState() instanceof Sign)) {
             // System.out.println("SignChangeEvent exiting for " + type.toString());
             return;}
 
@@ -203,6 +199,6 @@ public class BASignListener implements Listener{
     public static void cancelSignPlace(SignChangeEvent event, Block block){
         event.setCancelled(true);
         block.setType(Material.AIR);
-        block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SIGN, 1));
+        block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(BattleMaterial.OAK_SIGN.parseMaterial(), 1));
     }
 }

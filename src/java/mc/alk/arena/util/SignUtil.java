@@ -67,14 +67,14 @@ public class SignUtil {
 	public static Sign getSign(World w, int x, int y, int z) {
 		Block b = w.getBlockAt(x, y, z);
 		Material t = b.getType();
-		return t == Material.SIGN || t == MaterialAdapter.getMaterial("SIGN_POST") || t==Material.WALL_SIGN ? (Sign)b.getState(): null;
+		return t.name().contains("SIGN") ? (Sign)b.getState(): null;
 	}
 
 	public static Sign getSign(Location l) {
 		if (l == null)
 			return null;
 		Material t = l.getBlock().getType();
-		return t == Material.SIGN || t == MaterialAdapter.getMaterial("SIGN_POST") || t==Material.WALL_SIGN ? (Sign)l.getBlock().getState(): null;
+		return t.name().contains("SIGN") ? (Sign)l.getBlock().getState(): null;
 	}
 
 }

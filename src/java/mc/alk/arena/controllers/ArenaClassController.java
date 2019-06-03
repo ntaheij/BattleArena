@@ -14,13 +14,13 @@ import mc.alk.arena.objects.MatchState;
 import mc.alk.arena.objects.options.TransitionOption;
 import mc.alk.arena.objects.spawns.SpawnInstance;
 import mc.alk.arena.objects.teams.ArenaTeam;
-import mc.alk.arena.util.EffectUtil;
-import mc.alk.arena.util.InventoryUtil;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.arena.util.TeamUtil;
 import mc.alk.arena.util.TimeUtil;
+import mc.alk.battlebukkitlib.EffectUtil;
+import mc.alk.battlebukkitlib.InventoryUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -141,7 +141,7 @@ public class ArenaClassController {
         /// check to see if they have a team head
         ArenaTeam at = ap.getTeam();
         boolean woolTeams = ((at != null && at.getIndex() != -1) && p.getInventory().getHelmet() != null &&
-                InventoryUtil.sameItem(at.getHeadItem(), p.getInventory().getHelmet()));
+                InventoryUtil.isSameItem(at.getHeadItem(), p.getInventory().getHelmet()));
 
 //        boolean woolTeams = mp.hasAnyOption(TransitionOption.WOOLTEAMS);
         /// Have They have already selected a class this match, have they changed their inventory since then?
@@ -154,7 +154,7 @@ public class ArenaClassController {
                     mp.getGiveItems(MatchState.ONSPAWN) != null){
                 items.addAll(mp.getGiveItems(MatchState.ONSPAWN));
             }
-            if (Defaults.NEED_SAME_ITEMS_TO_CHANGE_CLASS && !InventoryUtil.sameItems(items, p.getInventory(), woolTeams)){
+            if (Defaults.NEED_SAME_ITEMS_TO_CHANGE_CLASS && !InventoryUtil.isSameItems(items, p.getInventory(), woolTeams)){
                 MessageUtil.sendSystemMessage(p, "class_cant_switch_after_items");
                 return false;
             }

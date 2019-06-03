@@ -385,16 +385,13 @@ public class ArenaMatch extends Match {
     }
 
     private void playerInteract(PlayerInteractEvent event) {
-        if (event.getClickedBlock() == null
-                || !(event.getClickedBlock().getType().equals(Material.SIGN)
-                || event.getClickedBlock().getType().equals(Material.WALL_SIGN)
-                || event.getClickedBlock().getType().equals(Defaults.READY_BLOCK))) {
+        if (event.getClickedBlock() == null || !(event.getClickedBlock().getState() instanceof Sign)
+                || event.getClickedBlock().getType().equals(Defaults.READY_BLOCK)) {
             return;
         }
 
         /// Check to see if it's a sign
-        if (event.getClickedBlock().getType().equals(Material.SIGN)
-                || event.getClickedBlock().getType().equals(Material.WALL_SIGN)) { /// Only checking for signs
+        if (event.getClickedBlock().getState() instanceof Sign) { /// Only checking for signs
             //			signClick(event,this);
         } else { /// its a ready block
             if (respawnTimer.containsKey(PlayerUtil.getID(event.getPlayer()))) {

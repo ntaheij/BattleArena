@@ -19,6 +19,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+// TODO: Move this into BattleBukkitLib
 public class PlayerUtil {
     static IPlayerHelper handler = null;
 

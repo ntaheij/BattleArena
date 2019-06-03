@@ -32,6 +32,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @deprecated As of BattleArena v3.9.12.0
+ * Instead, use {@link mc.alk.battlebukkitlib.InventoryUtil}
+ */
+@Deprecated
 @SuppressWarnings("deprecation")
 public class InventoryUtil {
 	static final String version = "BA InventoryUtil 2.1.7";
@@ -40,6 +45,7 @@ public class InventoryUtil {
 
 	static {
 		Class<?>[] args = {};
+
 		try {
 			final String pkg = Bukkit.getServer().getClass().getPackage().getName();
 			String version = pkg.substring(pkg.lastIndexOf('.') + 1);

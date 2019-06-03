@@ -1,10 +1,9 @@
 package mc.alk.arena.objects.spawns;
 
-import mc.alk.arena.util.InventoryUtil;
+import mc.alk.battlebukkitlib.InventoryUtil;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
-
 
 public class ItemSpawn extends SpawnInstance{
     final ItemStack is;
@@ -35,8 +34,6 @@ public class ItemSpawn extends SpawnInstance{
 
 	@Override
 	public String toString(){
-		return "[IS "+InventoryUtil.getItemString(is)+"]";
+		return "[IS "+ InventoryUtil.getItemString(is)+"]";
 	}
-
-
 }

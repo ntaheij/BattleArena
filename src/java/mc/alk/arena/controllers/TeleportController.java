@@ -14,11 +14,11 @@ import mc.alk.arena.controllers.plugins.EssentialsController;
 import mc.alk.arena.controllers.plugins.VanishNoPacketInterface;
 import mc.alk.arena.listeners.BAPlayerListener;
 import mc.alk.arena.objects.ArenaPlayer;
-import mc.alk.arena.util.InventoryUtil;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.arena.util.plugins.CombatTagUtil;
+import mc.alk.battlebukkitlib.InventoryUtil;
 import mc.euro.bukkitinterface.BukkitInterface;
 
 import org.bukkit.Bukkit;

@@ -84,6 +84,6 @@ public class ArenaStatusSign implements ConfigurationSerializable{
 		if (b == null)
 			return null;
 		Material m = b.getType();
-		return  m == Material.SIGN || m==Material.WALL_SIGN ? (Sign)b : null;
+		return m.name().contains("SIGN") ? (Sign)b : null;
 	}
 }

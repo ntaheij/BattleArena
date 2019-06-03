@@ -3,10 +3,10 @@ package mc.alk.arena.serializers;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.objects.exceptions.ConfigException;
 import mc.alk.arena.objects.teams.TeamAppearance;
-import mc.alk.arena.util.InventoryUtil;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.TeamUtil;
+import mc.alk.battlebukkitlib.InventoryUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 

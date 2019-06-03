@@ -18,6 +18,10 @@ import org.bukkit.entity.Player;
  *
  * The forms you see in the functions are simplifications of the above
  */
+/**
+ * @deprecated As of BattleArena v3.9.12.0
+ * Instead, use {@link mc.alk.battlebukkitlib.ExpUtil}
+ */
 public class ExpUtil {
 
     /**

@@ -8,10 +8,10 @@ import mc.alk.arena.listeners.BAPlayerListener;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.PlayerSave;
 import mc.alk.arena.objects.regions.WorldGuardRegion;
-import mc.alk.arena.util.EffectUtil;
-import mc.alk.arena.util.InventoryUtil;
-import mc.alk.arena.util.InventoryUtil.PInv;
 import mc.alk.arena.util.Log;
+import mc.alk.battlebukkitlib.EffectUtil;
+import mc.alk.battlebukkitlib.InventoryUtil;
+import mc.alk.battlebukkitlib.InventoryUtil.PInv;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -278,7 +278,7 @@ public class PlayerStoreController {
 
     public static void removeItem(ArenaPlayer p, ItemStack is) {
         if (p.isOnline()){
-            InventoryUtil.removeItems(p.getInventory(),is);
+            InventoryUtil.removeItem(p.getInventory(),is);
         } else {
             BAPlayerListener.removeItemOnEnter(p,is);
         }
@@ -286,7 +286,7 @@ public class PlayerStoreController {
 
     public static void removeItems(ArenaPlayer p, List<ItemStack> items) {
         if (p.isOnline()){
-            InventoryUtil.removeItems(p.getInventory(),items);
+            InventoryUtil.removeItems(p.getPlayer(),items);
         } else {
             BAPlayerListener.removeItemsOnEnter(p,items);
         }

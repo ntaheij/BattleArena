@@ -31,10 +31,10 @@ DeathMatch:
             - bow: 1
             - tnt: 3
             - arrow: 32
-            - leather_helm: 1
-            - leather_chest: 1
+            - leather_helmet: 1
+            - leather_chestplate: 1
             - leather_leggings: 1
-            - leather_boot: 1
+            - leather_boots: 1
             - bread: 5
         enchants:
             - speed:1

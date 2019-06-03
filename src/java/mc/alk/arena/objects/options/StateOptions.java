@@ -12,10 +12,10 @@ import mc.alk.arena.objects.PVPState;
 import mc.alk.arena.objects.StateGraph;
 import mc.alk.arena.objects.StateOption;
 import mc.alk.arena.objects.exceptions.InvalidOptionException;
-import mc.alk.arena.util.EffectUtil;
-import mc.alk.arena.util.InventoryUtil;
-import mc.alk.arena.util.InventoryUtil.ArmorLevel;
 import mc.alk.arena.util.MinMax;
+import mc.alk.battlebukkitlib.EffectUtil;
+import mc.alk.battlebukkitlib.InventoryUtil;
+import mc.alk.battlebukkitlib.InventoryUtil.ArmorLevel;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -339,7 +339,7 @@ public class StateOptions {
                 sb.append("&5 - &a").append(lvl.toString()).append(" ARMOR");
             }
             for (ItemStack is : items){
-                if (lvl != null && InventoryUtil.sameMaterial(lvl,is))
+                if (lvl != null && InventoryUtil.isSameMaterial(lvl,is))
                     continue;
                 String enchanted = !is.getEnchantments().isEmpty() ? " &4Enchanted ": "";
                 sb.append("&5 - &a").append(is.getAmount()).append(enchanted).append(is.getType().toString());

@@ -13,8 +13,7 @@ import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.arena.util.Util;
-import mc.euro.bukkitadapter.MaterialAdapter;
-import org.bukkit.Material;
+import org.bukkit.block.Sign;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Collection;
@@ -62,8 +61,7 @@ public class AreaContainer extends AbstractAreaContainer{
         if (event.isCancelled() || event.getClickedBlock() == null)
             return;
         /// Check to see if it's a sign
-        if (event.getClickedBlock().getType().equals(MaterialAdapter.getMaterial("SIGN_POST"))||
-                event.getClickedBlock().getType().equals(Material.WALL_SIGN)){ /// Only checking for signs
+        if (event.getClickedBlock().getState() instanceof Sign) { /// Only checking for signs
             ArenaMatch.signClick(event,this);
         } else if (event.getClickedBlock().getType().equals(Defaults.READY_BLOCK)) {
             if (respawnTimer == null)

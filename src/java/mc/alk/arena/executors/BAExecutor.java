@@ -69,8 +69,6 @@ import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.objects.teams.FormingTeam;
 import mc.alk.arena.objects.teams.TeamFactory;
 import mc.alk.arena.objects.teams.TeamIndex;
-import mc.alk.arena.util.InventoryUtil;
-import mc.alk.arena.util.InventoryUtil.PInv;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.MinMax;
@@ -78,6 +76,8 @@ import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.ServerUtil;
 import mc.alk.arena.util.TeamUtil;
 import mc.alk.arena.util.TimeUtil;
+import mc.alk.battlebukkitlib.InventoryUtil;
+import mc.alk.battlebukkitlib.InventoryUtil.PInv;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -1683,7 +1683,7 @@ public class BAExecutor extends CustomCommandExecutor {
             if (fee != null) {
                 for (ArenaPlayer player : t.getPlayers()) {
                     getOrCreateJoinReqs(player).setItems(new PInv(fee));
-                    InventoryUtil.removeItems(player.getInventory(), fee);
+                    InventoryUtil.removeItems(player.getPlayer(), fee);
                 }
             }
         }

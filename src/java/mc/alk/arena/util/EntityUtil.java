@@ -8,6 +8,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Wolf;
 
+// TODO: Move this into BattleBukkitLib
 public class EntityUtil {
 
 	static final String TAMED = "tamed_";

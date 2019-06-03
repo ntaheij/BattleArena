@@ -8,6 +8,10 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Collection;
 import java.util.HashMap;
 
+/**
+ * @deprecated As of BattleArena v3.9.12.0
+ * Instead, use {@link mc.alk.battlebukkitlib.EffectUtil}
+ */
 public class EffectUtil {
 
     static final String version = "2.1.2";

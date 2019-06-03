@@ -8,8 +8,8 @@ classes:
             - diamond_sword: sharp:1 1
             - bow: 1
             - arrow: 32
-            - diamond_helm: 1
-            - diamond_chest: 1
+            - diamond_helmet: 1
+            - diamond_chestplate: 1
             - diamond_leggings: 1
             - diamond_boots: 1
             - potion: effects="heal:2" displayName="Potion of Healing" 1 # potion of healing 2
@@ -24,8 +24,8 @@ classes:
             - iron_sword: sharp:1 1
             - bow: flame:2 power:3 punch:2 1
             - arrow: 32
-            - leather_helm: 1
-            - iron_chest: prot:3 1
+            - leather_helmet: 1
+            - iron_chestplate: prot:3 1
             - leather_leggings: 1
             - leather_boots: 1
             - potion: effects="heal:2" displayName="Potion of Healing" 1 # potion of healing 2
@@ -34,8 +34,8 @@ classes:
     monk:
         displayName: "&fMonk" ### Used for signs
         items:
-            - leather_helm: 1
-            - leather_chest: 1
+            - leather_helmet: 1
+            - leather_chestplate: 1
             - leather_leggings: 1
             - leather_boots: 1
             - potion: effects="heal:2" displayName="Potion of Healing" 1 # potion of healing 2

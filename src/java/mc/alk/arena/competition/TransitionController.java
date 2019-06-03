@@ -23,13 +23,13 @@ import mc.alk.arena.objects.options.StateOptions;
 import mc.alk.arena.objects.options.TransitionOption;
 import mc.alk.arena.objects.regions.WorldGuardRegion;
 import mc.alk.arena.objects.teams.ArenaTeam;
-import mc.alk.arena.util.EffectUtil;
-import mc.alk.arena.util.ExpUtil;
-import mc.alk.arena.util.InventoryUtil;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.arena.util.TeamUtil;
+import mc.alk.battlebukkitlib.EffectUtil;
+import mc.alk.battlebukkitlib.ExpUtil;
+import mc.alk.battlebukkitlib.InventoryUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionAttachment;
@@ -170,8 +170,9 @@ public class TransitionController {
             if (storeAll || mo.hasOption(TransitionOption.STOREGAMEMODE)){psc.storeGodmode(player);}
             if (storeAll || mo.hasOption(TransitionOption.STOREFLIGHT)){psc.storeFlight(player);}
             if (storeAll || mo.hasOption(TransitionOption.STOREENCHANTS)){psc.storeEffects(player);}
-            if (wipeInventory){InventoryUtil.clearInventory(p);}
-            if (mo.hasOption(TransitionOption.CLEAREXPERIENCE)){ ExpUtil.clearExperience(p);}
+            if (wipeInventory){
+                InventoryUtil.clearInventory(p);}
+            if (mo.hasOption(TransitionOption.CLEAREXPERIENCE)){ ExpUtil.setTotalExperience(p, 0);}
             if (mo.hasOption(TransitionOption.HEALTH)) { PlayerUtil.setHealth(p, mo.getHealth());}
             if (mo.hasOption(TransitionOption.HEALTHP)) { PlayerUtil.setHealthP(p, mo.getHealthP());}
             if (mo.hasOption(TransitionOption.MAGIC)) { setMagicLevel(p, mo.getMagic()); }
