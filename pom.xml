@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.11.10</version>
+    <version>3.9.11.11</version>
     <name>BattleArena</name>
     <url>https://github.com/BattlePlugins/BattleArena</url>
     <properties>
@@ -98,7 +98,7 @@
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>WorldEditUtil</artifactId>
-            <version>1.2.1</version>
+            <version>1.2.2</version>
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
