@@ -38,7 +38,7 @@ public class BASignListener implements Listener{
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         /// If this is an uninteresting block get out of here as quickly as we can
-        if (event.getClickedBlock() == null && !(event.getClickedBlock().getState() instanceof Sign)) {
+        if (event.getClickedBlock() == null || !(event.getClickedBlock().getState() instanceof Sign)) {
             return;
         }
 
