@@ -1,11 +1,11 @@
 package mc.alk.arena.util;
 
 import mc.alk.arena.Defaults;
-import mc.alk.arena.util.compat.IInventoryHelper;
+import mc.alk.battlebukkitlib.factory.InventoryHandlerFactory;
+import mc.alk.battlebukkitlib.handlers.IInventoryHandler;
 import mc.euro.bukkitadapter.EnchantAdapter;
 import mc.euro.bukkitadapter.MaterialAdapter;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -39,36 +39,10 @@ import java.util.regex.Pattern;
 @Deprecated
 @SuppressWarnings("deprecation")
 public class InventoryUtil {
+
 	static final String version = "BA InventoryUtil 2.1.7";
 	static final boolean DEBUG = false;
-	static IInventoryHelper handler = null;
-
-	static {
-		Class<?>[] args = {};
-
-		try {
-			final String pkg = Bukkit.getServer().getClass().getPackage().getName();
-			String version = pkg.substring(pkg.lastIndexOf('.') + 1);
-			final Class<?> clazz;
-			if (version.equalsIgnoreCase("craftbukkit")){
-				clazz = Class.forName("mc.alk.arena.util.compat.pre.InventoryHelper");
-			} else{
-				clazz = Class.forName("mc.alk.arena.util.compat.v1_4_5.InventoryHelper");
-			}
-
-			handler = (IInventoryHelper) clazz.getConstructor(args).newInstance((Object[])args);
-		} catch (Exception e) {
-			try{
-				final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.pre.InventoryHelper");
-				handler = (IInventoryHelper) clazz.getConstructor(args).newInstance((Object[])args);
-			} catch (Exception e2){
-				//noinspection PointlessBooleanExpression,ConstantConditions
-				if (!Defaults.TESTSERVER && !Defaults.TESTSERVER_DEBUG) Log.printStackTrace(e2);
-			}
-			//noinspection PointlessBooleanExpression,ConstantConditions
-			if (!Defaults.TESTSERVER && !Defaults.TESTSERVER_DEBUG) Log.printStackTrace(e);
-		}
-	}
+	static IInventoryHandler handler = InventoryHandlerFactory.getNewInstance();
 
 	public static class Armor{
 		final public ArmorLevel level;
@@ -111,65 +85,11 @@ public class InventoryUtil {
 	public enum ArmorType{BOOTS,LEGGINGS,CHEST,HELM}
 
 	public static Enchantment getEnchantmentByCommonName(String iname){
-		iname = iname.toLowerCase();
-		if (iname.contains("smite")) return Enchantment.DAMAGE_UNDEAD;
-		if (iname.contains("sharp")) return Enchantment.DAMAGE_ALL;
-		if (iname.contains("sharp")) return Enchantment.DAMAGE_ARTHROPODS;
-		if (iname.contains("fire") && iname.contains("prot")) return Enchantment.PROTECTION_FIRE;
-		if (iname.contains("fire")) return Enchantment.FIRE_ASPECT;
-		if (iname.contains("exp") && iname.contains("prot")) return Enchantment.PROTECTION_EXPLOSIONS;
-		if (iname.contains("blast") && iname.contains("prot")) return Enchantment.PROTECTION_EXPLOSIONS;
-		if (iname.contains("arrow") && iname.contains("prot")) return Enchantment.PROTECTION_PROJECTILE;
-		if (iname.contains("proj") && iname.contains("prot")) return Enchantment.PROTECTION_PROJECTILE;
-		if (iname.contains("respiration")) return Enchantment.OXYGEN;
-		if (iname.contains("fall")) return Enchantment.PROTECTION_FALL;
-		if (iname.contains("prot")) return Enchantment.PROTECTION_ENVIRONMENTAL;
-		if (iname.contains("respiration")) return Enchantment.OXYGEN;
-		if (iname.contains("oxygen")) return Enchantment.OXYGEN;
-		if (iname.contains("aqua")) return Enchantment.WATER_WORKER;
-		if (iname.contains("arth")) return Enchantment.DAMAGE_ARTHROPODS;
-		if (iname.contains("knockback")) return Enchantment.KNOCKBACK;
-		if (iname.contains("loot")) return Enchantment.LOOT_BONUS_MOBS;
-		if (iname.contains("lootmobs")) return Enchantment.LOOT_BONUS_MOBS;
-		if (iname.contains("fortune")) return Enchantment.LOOT_BONUS_BLOCKS;
-		if (iname.contains("lootblocks")) return Enchantment.LOOT_BONUS_BLOCKS;
-		if (iname.contains("dig")) return Enchantment.DIG_SPEED;
-		if (iname.contains("eff")) return Enchantment.DIG_SPEED;
-		if (iname.contains("silk")) return Enchantment.SILK_TOUCH;
-		if (iname.contains("flame")) return Enchantment.ARROW_FIRE;
-		if (iname.contains("power")) return Enchantment.ARROW_DAMAGE;
-		if (iname.contains("punch")) return Enchantment.ARROW_KNOCKBACK;
-		if (iname.contains("inf")) return Enchantment.ARROW_INFINITE;
-		if (iname.contains("unbreaking")) return Enchantment.DURABILITY;
-		if (iname.contains("dura")) return Enchantment.DURABILITY;
-		if (iname.contains("strider")) return Enchantment.DEPTH_STRIDER;
-		return handler.getEnchantmentByCommonName(iname);
+		return mc.alk.battlebukkitlib.InventoryUtil.getEnchantmentByCommonName(iname);
 	}
 
 	public static String getCommonNameByEnchantment(Enchantment enc){
-		if (enc.equals(Enchantment.PROTECTION_ENVIRONMENTAL)){return "Protection";}
-		else if (enc.equals(Enchantment.PROTECTION_FIRE)){return "Fire Protection";}
-		else if (enc.equals(Enchantment.PROTECTION_FALL)){return "Fall Protection";}
-		else if (enc.equals(Enchantment.PROTECTION_EXPLOSIONS)){return "Blast Protection";}
-		else if (enc.equals(Enchantment.PROTECTION_PROJECTILE)){return "Projectile Protection";}
-		else if (enc.equals(Enchantment.OXYGEN)){return "Respiration";}
-		else if (enc.equals(Enchantment.WATER_WORKER)){return "Aqua Affinity";}
-		else if (enc.equals(Enchantment.DAMAGE_ALL)){return "Sharp";}
-		else if (enc.equals(Enchantment.DAMAGE_UNDEAD)){return "Smite";}
-		else if (enc.equals(Enchantment.DAMAGE_ARTHROPODS)){return "Bane of Arthropods";}
-		else if (enc.equals(Enchantment.KNOCKBACK)){return "Knockback";}
-		else if (enc.equals(Enchantment.FIRE_ASPECT)){return "Fire Aspect";}
-		else if (enc.equals(Enchantment.LOOT_BONUS_MOBS)){return "Looting";}
-		else if (enc.equals(Enchantment.DIG_SPEED)){return "Efficiency";}
-		else if (enc.equals(Enchantment.SILK_TOUCH)){return "Silk Touch";}
-		else if (enc.equals(Enchantment.DURABILITY)){return "Unbreaking";}
-		else if (enc.equals(Enchantment.LOOT_BONUS_BLOCKS)){return "Fortune";}
-		else if (enc.equals(Enchantment.ARROW_DAMAGE)){return "Power";}
-		else if (enc.equals(Enchantment.ARROW_KNOCKBACK)){return "Punch";}
-		else if (enc.equals(Enchantment.ARROW_FIRE)){return "Flame";}
-		else if (enc.equals(Enchantment.ARROW_INFINITE)){return "Infinity";}
-		else if (enc.equals(Enchantment.DEPTH_STRIDER)){return "Depth Strider";}
-		else return (handler.getCommonNameByEnchantment(enc));
+		return mc.alk.battlebukkitlib.InventoryUtil.getCommonNameByEnchantment(enc);
 	}
 
 	static final Map<Material,Armor> armor;
@@ -215,7 +135,7 @@ public class InventoryUtil {
 	 * @return whether its an ender chest
 	 */
 	public static boolean isEnderChest(InventoryType type) {
-		return handler.isEnderChest(type);
+		return mc.alk.battlebukkitlib.InventoryUtil.isEnderChest(type);
 	}
 
 	public static int getItemAmountFromInventory(Inventory inv, ItemStack is) {

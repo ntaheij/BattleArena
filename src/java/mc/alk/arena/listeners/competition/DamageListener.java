@@ -12,11 +12,7 @@ import mc.alk.arena.objects.events.EventPriority;
 import mc.alk.arena.objects.options.StateOptions;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.util.DmgDeathUtil;
-import mc.alk.arena.util.Log;
-import mc.alk.arena.util.compat.IEventHelper;
-import mc.alk.arena.util.plugins.HeroesUtil;
-import mc.euro.version.Version;
-import mc.euro.version.VersionFactory;
+import mc.alk.battlebukkitlib.EventUtil;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -27,23 +23,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 public class DamageListener implements ArenaListener{
 	StateGraph transitionOptions;
 	PlayerHolder holder;
-    static IEventHelper handler;
-
-    static {
-        Class<?>[] args = {};
-        try {
-            Version version = VersionFactory.getServerVersion();
-            if (version.isGreaterThanOrEqualTo("1.6")){
-                final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.v1_6_R1.EventHelper");
-                handler = (IEventHelper) clazz.getConstructor(args).newInstance((Object[])args);
-            } else {
-                final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.pre.EventHelper");
-                handler = (IEventHelper) clazz.getConstructor(args).newInstance((Object[])args);
-            }
-        } catch (Exception e) {
-            Log.printStackTrace(e);
-        }
-    }
 
     public DamageListener(PlayerHolder holder){
 		this.transitionOptions = holder.getParams().getStateGraph();
@@ -93,7 +72,7 @@ public class DamageListener implements ArenaListener{
 		if (pvp == PVPState.INVINCIBLE){
 			/// all damage is cancelled
 			target.setFireTicks(0);
-            handler.setDamage(event,0);
+            EventUtil.setDamage(event,0);
 			event.setCancelled(true);
 			return;
 		}
@@ -119,7 +98,7 @@ public class DamageListener implements ArenaListener{
 			break;
 		case OFF:
 			if (damager != null){ /// damage done from a player
-                handler.setDamage(event,0);
+                EventUtil.setDamage(event,0);
 				event.setCancelled(true);
 			}
 			break;

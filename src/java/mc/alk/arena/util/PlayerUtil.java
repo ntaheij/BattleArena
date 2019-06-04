@@ -1,6 +1,5 @@
 package mc.alk.arena.util;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,9 +8,6 @@ import mc.alk.arena.controllers.plugins.EssentialsController;
 import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.CommandLineString;
-import mc.alk.arena.util.compat.IPlayerHelper;
-import mc.euro.version.Version;
-import mc.euro.version.VersionFactory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
