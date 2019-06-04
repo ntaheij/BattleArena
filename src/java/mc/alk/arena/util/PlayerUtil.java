@@ -19,39 +19,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-// TODO: Move this into BattleBukkitLib
 public class PlayerUtil {
-    static IPlayerHelper handler = null;
-
-    /**
-     * 1.7.8 -> v1_7_R3
-     */
-    static {
-        Class<?>[] args = {};
-        try {
-            Method m = Player.class.getMethod("getHealth");
-            Version version = VersionFactory.getServerVersion();
-            if (version.isGreaterThanOrEqualTo("1.7.8")) {
-                final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.v1_7_R3.PlayerHelper");
-                handler = (IPlayerHelper) clazz.getConstructor(args).newInstance((Object[]) args);
-            } else if (m.getReturnType() == double.class || version.isGreaterThanOrEqualTo("1.6")){
-                final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.v1_6_R1.PlayerHelper");
-                handler = (IPlayerHelper) clazz.getConstructor(args).newInstance((Object[])args);
-            } else {
-                final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.pre.PlayerHelper");
-                handler = (IPlayerHelper) clazz.getConstructor(args).newInstance((Object[])args);
-            }
-        } catch (Exception e) {
-            Log.printStackTrace(e);
-            try {
-                final Class<?> clazz = Class.forName("mc.alk.arena.util.compat.pre.PlayerHelper");
-                handler = (IPlayerHelper) clazz.getConstructor(args).newInstance((Object[])args);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        }
-    }
-
 
     public static int getHunger(final Player player) {
         return player.getFoodLevel();
@@ -79,7 +47,12 @@ public class PlayerUtil {
     }
 
     public static void setHealth(final Player player, final Double health, boolean skipHeroes) {
-        handler.setHealth(player,health,skipHeroes);
+        if (!skipHeroes && HeroesController.enabled()){
+            HeroesController.setHealth(player,health);
+            return;
+        }
+
+        mc.alk.battlebukkitlib.PlayerUtil.setHealth(player, health);
     }
 
     public static Double getHealth(Player player) {
@@ -88,7 +61,7 @@ public class PlayerUtil {
 
     public static Double getHealth(Player player, boolean skipHeroes) {
         return !skipHeroes && HeroesController.enabled() ?
-                HeroesController.getHealth(player) : handler.getHealth(player);
+                HeroesController.getHealth(player) : mc.alk.battlebukkitlib.PlayerUtil.getHealth(player);
     }
 
     public static void setInvulnerable(Player player, Integer invulnerableTime) {
@@ -146,31 +119,31 @@ public class PlayerUtil {
 
 
     public static Object getScoreboard(Player player) {
-        return handler.getScoreboard(player);
+        return mc.alk.battlebukkitlib.PlayerUtil.getScoreboard(player);
     }
 
     public static void setScoreboard(Player player, Object scoreboard) {
-        handler.setScoreboard(player, scoreboard);
+        mc.alk.battlebukkitlib.PlayerUtil.setScoreboard(player, scoreboard);
     }
 
     public static UUID getID(ArenaPlayer player) {
-        return handler.getID(player.getPlayer());
+        return mc.alk.battlebukkitlib.PlayerUtil.getID(player.getPlayer());
     }
 
     public static UUID getID(OfflinePlayer player) {
-        return handler.getID(player);
+        return mc.alk.battlebukkitlib.PlayerUtil.getID(player);
     }
 
     public static UUID getID(Player player) {
-        return handler.getID(player);
+        return mc.alk.battlebukkitlib.PlayerUtil.getID(player);
     }
 
     public static UUID getID(CommandSender sender)
     {
         if (sender instanceof ArenaPlayer){
-            return handler.getID(((ArenaPlayer)sender).getPlayer());
+            return mc.alk.battlebukkitlib.PlayerUtil.getID(((ArenaPlayer)sender).getPlayer());
         } else if (sender instanceof Player){
-            return handler.getID((Player) sender);
+            return mc.alk.battlebukkitlib.PlayerUtil.getID((Player) sender);
         } else {
             return new UUID(0, sender.getName().hashCode());
         }
