@@ -19,7 +19,7 @@ import mc.alk.arena.objects.options.EventOpenOptions;
 import mc.alk.arena.objects.pairs.EventPair;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
-import mc.alk.arena.util.TimeUtil;
+import mc.alk.v1r9.util.TimeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

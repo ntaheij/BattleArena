@@ -35,7 +35,7 @@ import mc.alk.arena.objects.stats.ArenaStat;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
-import mc.alk.arena.util.TimeUtil;
+import mc.alk.v1r9.util.TimeUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -206,7 +206,7 @@ public class TournamentEvent extends Event implements Listener, ArenaListener {
         aliveTeams.removeAll(nmr.getLosers());
 
         if (incompleteMatchups.isEmpty()){
-            TimeUtil.testClock();
+            TimeUtil.testClock(BattleArena.getSelf());
             if (Defaults.DEBUG) Log.info("ROUND FINISHED !!!!!   " + aliveTeams);
 
             if (curRound +1 == nrounds || isFinished()){

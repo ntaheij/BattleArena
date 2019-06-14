@@ -8,6 +8,7 @@ import java.io.File;
  */
 public class BaseConfig extends mc.alk.v1r9.serializers.BaseConfig {
 
+	public BaseConfig() {};
 	public BaseConfig(File file) {
 		this.setConfig(file);
 	}

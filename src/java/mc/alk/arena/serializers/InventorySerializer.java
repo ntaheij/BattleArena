@@ -36,12 +36,12 @@ public class InventorySerializer {
         if (serializer == null)
             return null;
         PriorityQueue<Long> dates = new PriorityQueue<Long>(Defaults.NUM_INV_SAVES, Collections.reverseOrder());
-        Set<String> keys = serializer.config.getKeys(false);
+        Set<String> keys = serializer.getConfig().getKeys(false);
 
         DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
 
         for (String key : keys) {
-            ConfigurationSection cs = serializer.config.getConfigurationSection(key);
+            ConfigurationSection cs = serializer.getConfig().getConfigurationSection(key);
             if (cs == null)
                 continue;
             String strdate = cs.getString("storedDate");
@@ -75,12 +75,12 @@ public class InventorySerializer {
 						return arg1.key.compareTo(arg0.key);
 					}
 				});
-		Set<String> keys = serializer.config.getKeys(false);
+		Set<String> keys = serializer.getConfig().getKeys(false);
 
 		DateFormat format = DateFormat.getDateTimeInstance( DateFormat.LONG, DateFormat.LONG);
 
 		for (String key: keys){
-			ConfigurationSection cs = serializer.config.getConfigurationSection(key);
+			ConfigurationSection cs = serializer.getConfig().getConfigurationSection(key);
 			if (cs == null)
 				continue;
 			String strdate = cs.getString("storedDate");
@@ -113,9 +113,9 @@ public class InventorySerializer {
 					return;
 				Date now = new Date();
 				String date = DateFormat.getDateTimeInstance( DateFormat.LONG, DateFormat.LONG).format(now);
-				int curSection = serializer.config.getInt("curSection", 0);
-				serializer.config.set("curSection", (curSection +1) % Defaults.NUM_INV_SAVES);
-				ConfigurationSection pcs = serializer.config.createSection(curSection+"");
+				int curSection = serializer.getInt("curSection", 0);
+				serializer.getConfig().set("curSection", (curSection +1) % Defaults.NUM_INV_SAVES);
+				ConfigurationSection pcs = serializer.getConfig().createSection(curSection+"");
 				pcs.set("storedDate", date);
 				List<String> stritems = new ArrayList<String>();
 				for (ItemStack is : pinv.armor){

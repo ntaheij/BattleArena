@@ -10,7 +10,7 @@ import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.serializers.MessageSerializer;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
-import mc.alk.arena.util.TimeUtil;
+import mc.alk.v1r9.util.TimeUtil;
 
 import java.text.DecimalFormat;
 import java.util.Collection;

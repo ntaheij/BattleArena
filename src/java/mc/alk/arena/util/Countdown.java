@@ -1,5 +1,6 @@
 package mc.alk.arena.util;
 
+import mc.alk.arena.BattleArena;
 import mc.alk.arena.controllers.Scheduler;
 import org.bukkit.plugin.Plugin;
 
@@ -61,7 +62,7 @@ public class Countdown implements Runnable{
         timerId = null;
         if (!continueOn)
             return;
-        TimeUtil.testClock();
+        TimeUtil.testClock(BattleArena.getSelf());
         if (!stop && (seconds > 0 || !cancelOnExpire)){
             timerId  = Scheduler.scheduleSynchronousTask(plugin, this,
                     interval * 20L);

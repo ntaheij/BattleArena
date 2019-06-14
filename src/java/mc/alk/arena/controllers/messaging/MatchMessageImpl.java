@@ -1,5 +1,6 @@
 package mc.alk.arena.controllers.messaging;
 
+import mc.alk.arena.BattleArena;
 import mc.alk.arena.competition.match.Match;
 import mc.alk.arena.controllers.ParamController;
 import mc.alk.arena.events.matches.MatchMessageEvent;
@@ -18,7 +19,7 @@ import mc.alk.arena.objects.victoryconditions.interfaces.DefinesLeaderRanking;
 import mc.alk.arena.serializers.MessageSerializer;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.TeamUtil;
-import mc.alk.arena.util.TimeUtil;
+import mc.alk.v1r9.util.TimeUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -151,7 +152,7 @@ public class MatchMessageImpl extends MessageSerializer implements MatchMessageH
 	}
 
 	public void sendOnIntervalMsg(Channel serverChannel, Collection<ArenaTeam> currentLeaders, int remaining) {
-		TimeUtil.testClock();
+		TimeUtil.testClock(BattleArena.getSelf());
 		String msg;
 		Message message = getNodeMessage("match.interval_update");
 		Set<MessageOption> ops = message.getOptions();

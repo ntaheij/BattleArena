@@ -46,7 +46,7 @@ import mc.alk.arena.util.Countdown.CountdownCallback;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PermissionsUtil;
-import mc.alk.arena.util.TimeUtil;
+import mc.alk.v1r9.util.TimeUtil;
 import mc.euro.bukkitinterface.BukkitInterface;
 
 import org.bukkit.entity.Player;
@@ -99,7 +99,7 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
 
     public void autoEvent(){
         openEvent();
-        TimeUtil.testClock();
+        TimeUtil.testClock(BattleArena.getSelf());
         mc.sendCountdownTillEvent(eventParams.getSecondsTillStart());
         timer = new Countdown(BattleArena.getSelf(),(long)eventParams.getSecondsTillStart(),
                 (long)eventParams.getAnnouncementInterval(), this);

@@ -1,7 +1,5 @@
 package mc.alk.arena.util;
 
-import org.bukkit.entity.Player;
-
 /**
  * Never use player.getTotalExperience() because it can return an incorrect
  * value because Bukkit does not update experience after spending it on
@@ -22,99 +20,6 @@ import org.bukkit.entity.Player;
  * @deprecated As of BattleArena v3.9.12.0
  * Instead, use {@link mc.alk.battlebukkitlib.ExpUtil}
  */
-public class ExpUtil {
+public class ExpUtil extends mc.alk.battlebukkitlib.ExpUtil {
 
-    /**
-     * Never use player.getTotalExperience(), use this method instead.
-     * player.getTotalExperience() shows XP that has been spent on enchants.
-     * 
-     * player.getExp() is the percentage toward the next level (between 0 & 1).
-     */
-    public static int getTotalExperience(final Player player) {
-        int exp = (int) Math.round(getExpAtLevel(player.getLevel()) * player.getExp());
-        int currentLevel = player.getLevel();
-
-        while (currentLevel > 0) {
-            currentLevel--;
-            exp += getExpAtLevel(currentLevel);
-        }
-        if (exp < 0) {
-            exp = Integer.MAX_VALUE;
-        }
-        return exp;
-    }
-
-    /**
-     * New XP math for Minecraft 1.8 Credits go to andrewkm for the 1.8 code
-     */
-    public static int getExpAtLevel(final int level) {
-        if (level > 30) {
-            return (9 * level) - 158;
-        } else if (level > 15) {
-            return (5 * level) - 38;
-        }
-        return (2 * level) + 7;
-//        if (level <= 15) {
-//            return (2 * level) + 7;
-//        }
-//        if ((level >= 16) && (level <= 30)) {
-//            return (5 * level) - 38;
-//        }
-//        return (9 * level) - 158;
-    }
-
-    /**
-     * Set the total amount of experience for a player
-     *
-     * @param player
-     * @param exp
-     */
-    public static void clearExperience(Player player) {
-        setTotalExperience(player, 0);
-    }
-
-    /**
-     * Set the total amount of experience for a player
-     *
-     * @param player
-     * @param exp
-     */
-    public static void setTotalExperience(Player player, int exp) {
-        player.setTotalExperience(0);
-        player.setLevel(0);
-        player.setExp(0);
-        if (exp > 0) {
-            player.giveExp(exp);
-        }
-    }
-
-    /**
-     * Set the level of a player
-     *
-     * @param player
-     * @param level
-     */
-    public static void setLevel(Player player, int level) {
-        player.setTotalExperience(0);
-        player.setLevel(0);
-        player.setExp(0);
-        player.setLevel(level);
-    }
-
-    /**
-     * Give experience to a player
-     *
-     * @param player
-     * @param exp
-     */
-    public static void giveExperience(Player player, int exp) {
-        final int currentExp = getTotalExperience(player);
-        player.setTotalExperience(0);
-        player.setLevel(0);
-        player.setExp(0);
-        final int newexp = currentExp + exp;
-        if (newexp > 0) {
-            player.giveExp(newexp);
-        }
-    }
 }
