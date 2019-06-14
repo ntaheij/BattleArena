@@ -61,6 +61,7 @@ import mc.alk.arena.serializers.BAConfigSerializer;
 import mc.alk.arena.serializers.BaseConfig;
 import mc.alk.arena.serializers.EventScheduleSerializer;
 import mc.alk.arena.serializers.MessageSerializer;
+import mc.alk.arena.serializers.SQLInstance;
 import mc.alk.arena.serializers.SignSerializer;
 import mc.alk.arena.serializers.SpawnSerializer;
 import mc.alk.arena.serializers.StateFlagSerializer;
@@ -75,6 +76,7 @@ import mc.alk.battlepluginupdater.FileUpdater;
 import mc.alk.battlepluginupdater.PluginUpdater;
 import mc.alk.battlewebapi.BattlePluginsAPI;
 import mc.alk.v1r9.core.MCPlugin;
+import mc.alk.v1r9.serializers.SQLSerializerConfig;
 import mc.euro.bukkitinterface.BukkitInterface;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -111,6 +113,8 @@ public class BattleArena extends MCPlugin {
     private static final SignSerializer signSerializer = new SignSerializer();
     private static final int bukkitId = 85347; // https://api.curseforge.com/servermods/projects?search=battlearena
     public BattlePluginsAPI bpapi;
+
+    private SQLInstance sql;
 
     /**
      * enable the BattleArena plugin
@@ -213,6 +217,12 @@ public class BattleArena extends MCPlugin {
         }
 
         baConfigSerializer.loadDefaults(); /// Load our defaults for BattleArena, has to happen before classes are loaded
+
+        // Load MySQL for BungeeCord
+        if (Defaults.MYSQL_ENABLED) {
+            sql = new SQLInstance();
+            baConfigSerializer.setupSQL(sql);
+        }
 
         classesSerializer.setConfig(FileUtil.load(clazz, dir.getPath() + "/classes.yml", "/default_files/classes.yml")); /// Load classes
         classesSerializer.loadAll();
@@ -768,7 +778,7 @@ public class BattleArena extends MCPlugin {
     public ArenaEditorExecutor getArenaEditorExecutor() {
         return arenaEditorExecutor;
     }
-    
+
     public static Collection<? extends Player> getOnlinePlayers() {
         return BukkitInterface.getOnlinePlayers();
     }

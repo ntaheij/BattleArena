@@ -218,6 +218,31 @@ public class YamlFileUpdater {
                         "useSignPerms: false");
                 try {version = fu.update();} catch (IOException e) {Log.printStackTrace(e);}
             }
+            newVersion = new Version("2.5.0");
+            if (version.isLessThan(newVersion)) {
+                FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
+                fu.replace("configVersion.*", "configVersion: " + newVersion);
+                fu.addAfter(".*announceUpdate.*", "",
+                        "## Sets if BungeeCord support should be enabled",
+                        "# MySQL MUST be set up for this to work!",
+                        "enableBungeeSupport: false", "",
+                        "## Enables if match or events should be broadcasted to MySQL",
+                        "# This option MUST be enabled if you're looking to use BungeeCord with BattleArena",
+                        "# But if you don't want to use BungeeCord, you can still enable this for other usages such as using a website to retrieve information",
+                        "SQLOptions:",
+                        "    enabled: false",
+                        "    db: arena",
+                        "    url: \"localhost\"",
+                        "    port: \"3306\"",
+                        "    username: \"root\"",
+                        "    password: \"\"");
+
+                try {
+                    version = fu.update();
+                } catch (IOException e) {
+                    Log.printStackTrace(e);
+                }
+            }
         } catch (IOException e){
             Log.printStackTrace(e);
         }

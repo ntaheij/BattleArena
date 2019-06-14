@@ -14,6 +14,9 @@ public class Defaults {
     public static UpdateOption AUTO_UPDATE = UpdateOption.RELEASE;
     public static AnnounceUpdateOption ANNOUNCE_UPDATE = AnnounceUpdateOption.CONSOLE;
 
+    public static boolean BUNGEECORD_SUPPORT = false;
+    public static boolean MYSQL_ENABLED = false;
+
     public static boolean REPORT_ERRORS = false;
 
     public static String MONEY_STR = "Gold";
