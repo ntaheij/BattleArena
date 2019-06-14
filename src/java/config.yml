@@ -16,7 +16,6 @@ autoUpdate: release
 # ops (announce to ops on join, will only show this message once per server start)
 announceUpdate: console
 
-
 ## Sets if BungeeCord support should be enabled
 # MySQL MUST be set up for this to work!
 enableBungeeSupport: false
