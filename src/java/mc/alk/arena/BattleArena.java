@@ -218,7 +218,7 @@ public class BattleArena extends MCPlugin {
 
         baConfigSerializer.loadDefaults(); /// Load our defaults for BattleArena, has to happen before classes are loaded
 
-        // Load MySQL for BungeeCord
+        // Load MySQL
         if (Defaults.MYSQL_ENABLED) {
             sql = new SQLInstance();
             baConfigSerializer.setupSQL(sql);
