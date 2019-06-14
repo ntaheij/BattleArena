@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 
-public class TournamentExecutor extends EventExecutor implements CommandExecutor {
+public class TournamentExecutor extends EventExecutor {
 
     public TournamentExecutor() {
         super();

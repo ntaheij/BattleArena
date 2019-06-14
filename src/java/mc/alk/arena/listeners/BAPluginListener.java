@@ -2,7 +2,6 @@ package mc.alk.arena.listeners;
 
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
-import mc.alk.arena.controllers.MoneyController;
 import mc.alk.arena.controllers.plugins.DisguiseInterface;
 import mc.alk.arena.controllers.plugins.EssentialsController;
 import mc.alk.arena.controllers.plugins.FactionsController;
@@ -22,6 +21,7 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.plugins.CombatTagUtil;
 
+import mc.alk.v1r9.controllers.MoneyController;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 
@@ -313,7 +313,8 @@ public class BAPluginListener implements Listener {
                         Log.warn(BattleArena.getPluginName() + " found no economy plugin. Attempts to use money in arenas might result in errors.");
                         return;
                     } else {
-                        MoneyController.setEconomy(provider.getProvider());
+                        // MoneyController.setEconomy(provider.getProvider());
+                        MoneyController.setup(BattleArena.getSelf());
                         Log.info(BattleArena.getPluginName() + " found economy plugin Vault. [Default]");
                     }
                 } catch (Error e) {

@@ -1,7 +1,6 @@
 package mc.alk.arena.objects;
 
 import mc.alk.arena.Defaults;
-import mc.alk.arena.controllers.MoneyController;
 import mc.alk.arena.controllers.plugins.EssentialsController;
 import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.listeners.BAPlayerListener;
@@ -13,6 +12,7 @@ import mc.alk.battlebukkitlib.EffectUtil;
 import mc.alk.battlebukkitlib.ExpUtil;
 import mc.alk.battlebukkitlib.InventoryUtil;
 import mc.alk.battlebukkitlib.InventoryUtil.PInv;
+import mc.alk.v1r9.controllers.MoneyController;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

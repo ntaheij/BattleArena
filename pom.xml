@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.12.3</version>
+    <version>3.10.0.0-SNAPSHOT</version>
     <name>BattleArena</name>
     <url>https://github.com/BattlePlugins/BattleArena</url>
     <properties>
@@ -80,6 +80,12 @@
             <version>1.2.7</version>
             <scope>compile</scope>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>mc.alk</groupId>
+            <artifactId>BattleCore</artifactId>
+            <version>1.9.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>mc.euro</groupId>
@@ -328,6 +334,7 @@
                                     <include>mc.euro:BukkitAdapter</include>
                                     <include>mc.euro:BukkitInterface</include>
                                     <include>mc.alk:BattleBukkitLib</include>
+                                    <include>mc.alk:BattleCore</include>
                                     <include>mc.alk:BattlePluginUpdater</include>
                                     <include>mc.alk:BattleScoreboardAPI</include>
                                     <include>mc.alk:BattleWebAPI</include>
@@ -344,6 +351,10 @@
                                 <relocation>
                                     <pattern>mc.euro.bukkitadapter</pattern>
                                     <shadedPattern>mc.alk.arena.alib.bukkitadapter</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>mc.alk.v1r9</pattern>
+                                    <shadedPattern>mc.alk.arena.alib.battlecore</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>mc.euro.bukkitinterface</pattern>

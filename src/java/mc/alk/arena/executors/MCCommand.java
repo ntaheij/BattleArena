@@ -3,6 +3,10 @@ package mc.alk.arena.executors;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+/**
+ * @deprecated As of BattleArena v3.10.0.0
+ * Instead, use {@link mc.alk.v1r9.executors.CustomCommandExecutor.MCCommand}
+ */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MCCommand {
 	/// the cmd and all its aliases, can be blank if you want to do something when they just type

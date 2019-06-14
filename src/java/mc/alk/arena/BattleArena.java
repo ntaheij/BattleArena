@@ -74,6 +74,7 @@ import mc.alk.arena.util.PlayerUtil;
 import mc.alk.battlepluginupdater.FileUpdater;
 import mc.alk.battlepluginupdater.PluginUpdater;
 import mc.alk.battlewebapi.BattlePluginsAPI;
+import mc.alk.v1r9.core.MCPlugin;
 import mc.euro.bukkitinterface.BukkitInterface;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -83,7 +84,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class BattleArena extends JavaPlugin {
+public class BattleArena extends MCPlugin {
 
     static private String pluginname;
     static private String version;
@@ -120,6 +121,7 @@ public class BattleArena extends JavaPlugin {
         PluginDescriptionFile pdfFile = this.getDescription();
         BattleArena.pluginname = pdfFile.getName();
         BattleArena.version = pdfFile.getVersion();
+
         Log.setLogger(getLogger());
         Class<?> clazz = this.getClass();
         ConsoleCommandSender sender = Bukkit.getConsoleSender();
@@ -278,6 +280,9 @@ public class BattleArena extends JavaPlugin {
                 Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
         Log.info("&4[" + pluginname + "] &6v" + BattleArena.version + "&f enabled!");
 
+        // For BattleCore
+        super.onEnable();
+
         new Metrics(this);
     }
 
@@ -298,6 +303,9 @@ public class BattleArena extends JavaPlugin {
                 RoomController.getLobbies(),
                 arenaController.getArenas());
         FileLogger.saveAll();
+
+        // For BattleCore
+        super.onDisable();
     }
 
     /**

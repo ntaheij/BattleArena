@@ -34,7 +34,7 @@ import org.bukkit.entity.Player;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class CustomCommandExecutor extends BaseExecutor{
+public abstract class CustomCommandExecutor extends mc.alk.v1r9.executors.CustomCommandExecutor {
 
     protected final BattleArenaController ac;
     protected final EventController ec;

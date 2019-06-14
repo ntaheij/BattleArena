@@ -1,9 +1,9 @@
 package mc.alk.arena.objects.victoryconditions;
 
 import mc.alk.arena.competition.match.Match;
-import mc.alk.arena.serializers.BaseConfig;
 import mc.alk.arena.util.CaseInsensitiveMap;
 import mc.alk.arena.util.Log;
+import mc.alk.v1r9.serializers.BaseConfig;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 

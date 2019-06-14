@@ -4,6 +4,11 @@ import mc.alk.arena.Defaults;
 import mc.alk.arena.util.Log;
 import net.milkbowl.vault.economy.Economy;
 
+/**
+ * @deprecated As of BattleArena v3.10.0.0
+ * Instead, use {@link mc.alk.v1r9.controllers.MoneyController}
+ */
+@Deprecated
 public class MoneyController {
 	static boolean initialized = false;
 	public static Economy economy = null;

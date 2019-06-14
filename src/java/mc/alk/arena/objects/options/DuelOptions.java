@@ -3,7 +3,6 @@ package mc.alk.arena.objects.options;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.Permissions;
-import mc.alk.arena.controllers.MoneyController;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.MatchParams;
 import mc.alk.arena.objects.MatchState;
@@ -12,6 +11,7 @@ import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.ServerUtil;
+import mc.alk.v1r9.controllers.MoneyController;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
