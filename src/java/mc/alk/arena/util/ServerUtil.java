@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import mc.alk.arena.Defaults;
-import mc.alk.virtualPlayer.VirtualPlayers;
+import mc.alk.virtualplayers.api.Vps;
 import mc.euro.bukkitinterface.BukkitInterface;
 
 import org.bukkit.Bukkit;
@@ -36,7 +36,7 @@ public class ServerUtil {
                 return player;
             }
             if (Defaults.DEBUG_VIRTUAL) {
-                return VirtualPlayers.getPlayer(id);
+                return Vps.getApi().getPlayer(id);
             }
         } catch (Throwable e) {
             /* do nothing, craftbukkit version is not great enough */
@@ -56,7 +56,7 @@ public class ServerUtil {
             return player;
         }
         if (Defaults.DEBUG_VIRTUAL) {
-            return VirtualPlayers.getPlayer(name);
+            return Vps.getApi().getPlayer(name);
         }
         return null;
     }
@@ -71,7 +71,7 @@ public class ServerUtil {
             return foundPlayer;
         }
         if (Defaults.DEBUG_VIRTUAL) {
-            foundPlayer = VirtualPlayers.getPlayer(name);
+            foundPlayer = Vps.getApi().getPlayer(name);
         }
         if (foundPlayer != null) {
             return foundPlayer;
@@ -117,7 +117,7 @@ public class ServerUtil {
 
     public static Player[] getOnlinePlayers() {
         if (Defaults.DEBUG_VIRTUAL) {
-            return VirtualPlayers.getOnlinePlayers();
+            return Vps.getApi().getOnlinePlayersArray();
         } else {
             return BukkitInterface.getOnlinePlayers().toArray(new Player[BukkitInterface.getOnlinePlayers().size()]);
         }
