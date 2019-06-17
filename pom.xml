@@ -11,6 +11,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
         <doclint>none</doclint>
+        <source>https://github.com/BattlePlugins/BattleArena/</source>
+        <download>https://www.spigotmc.org/resources/2164/</download>
+        <documentation>https://docs.battleplugins.org/docs/ba/</documentation>
         <maven.test.skip>true</maven.test.skip>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -19,8 +22,12 @@
     </properties>
     <repositories>
         <repository>
-            <id>rainbowcraft-repo</id>
-            <url>http://rainbowcraft.sytes.net/maven/repository/</url>
+            <id>battleplugins-repo</id>
+            <url>https://repo.battleplugins.org/artifactory/libs-release</url>
+        </repository>
+        <repository>
+            <id>kitteh-public</id>
+            <url>http://repo.kitteh.org/content/groups/public/</url>
         </repository>
         <repository>
             <id>spigot-public</id>
@@ -97,14 +104,14 @@
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleBukkitLib</artifactId>
-            <version>4.3.5</version>
+            <version>4.3.6</version>
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>WorldEditUtil</artifactId>
-            <version>1.2.2</version>
+            <version>1.2.5</version>
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
@@ -166,7 +173,7 @@
         <dependency>
             <groupId>org.kitteh</groupId>
             <artifactId>tagapi</artifactId>
-            <version>3.0-SNAPSHOT</version>
+            <version>3.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -184,7 +191,7 @@
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>VirtualPlayers</artifactId>
-            <version>1.6.3</version>
+            <version>1.14.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -413,8 +420,14 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>rainbowcraft-repo</id>
-            <url>scp://rainbowcraft.sytes.net/var/www/maven/repository</url>
+            <id>central</id>
+            <name>BattlePlugins Maven Server-releases</name>
+            <url>https://repo.battleplugins.org/artifactory/libs-release-local</url>
         </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>BattlePlugins Maven Server-snapshots</name>
+            <url>https://repo.battleplugins.org/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
     </distributionManagement>
 </project>
