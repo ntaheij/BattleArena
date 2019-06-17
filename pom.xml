@@ -13,7 +13,7 @@
         <doclint>none</doclint>
         <source>https://github.com/BattlePlugins/BattleArena/</source>
         <download>https://www.spigotmc.org/resources/2164/</download>
-        <documentation>https://docs.battleplugins.org/docs/ba/</ducmentation>
+        <documentation>https://docs.battleplugins.org/docs/ba/</documentation>
         <maven.test.skip>true</maven.test.skip>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
