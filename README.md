@@ -41,7 +41,7 @@ Default Event Types:
 ---------
 * Free For All : last player/team left standing wins 
 * DeathMatch : 2 minute event where if you die you respawn. Highest kills wins
-* Tournament : ( bracket tournament for any number of teams )
+* Tournament : (bracket tournament for any number of teams)
 
 Adding to BattleArena
 ------------
@@ -63,8 +63,8 @@ Battle Tracker Links:
 * [Spigot Page](http://spigotmc.org/resources/battletracker.2165/) (BattleTracker on Spigot!)
 
 Other Links:
-* [BattleWiki](http://wiki.battleplugins.org) (Support Wiki)
-* ~~[Ci Server] (Jenkins Build Server)~~ *Not currently in use
+* [BattleDocs](http://docs.battleplugins.org) (BattlePlugins Documentation)
+* [Ci Server](http://ci.battleplugins.org/job/BattlePlugins/job/BattleArena/) (Jenkins Build Server)
 * [Battle Plugin Donations] (Donation link, coming soon)
 * [JavaDocs](http://rainbowcraft.sytes.net/javadocs/battlearena/apidocs/)
 
