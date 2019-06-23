@@ -6,27 +6,47 @@ import mc.alk.arena.objects.pairs.JoinResult;
 import mc.alk.arena.objects.joining.TeamJoinObject;
 import mc.alk.arena.objects.teams.ArenaTeam;
 
-public class ArenaPlayerEnterQueueEvent extends ArenaPlayerEvent{
-	final ArenaTeam team;
-	final JoinResult result;
-	final TeamJoinObject tqo;
+/**
+ * Event that is called when a player enters a queue
+ *
+ */
+public class ArenaPlayerEnterQueueEvent extends ArenaPlayerEvent {
 
-	public ArenaPlayerEnterQueueEvent(ArenaPlayer player, ArenaTeam team, TeamJoinObject tqo, JoinResult queueResult) {
-		super(player);
-		this.team = team;
-		this.result = queueResult;
-		this.tqo = tqo;
-	}
+    final ArenaTeam team;
+    final JoinResult result;
+    final TeamJoinObject tqo;
 
-	public ArenaTeam getTeam() {
-		return team;
-	}
+    public ArenaPlayerEnterQueueEvent(ArenaPlayer player, ArenaTeam team, TeamJoinObject tqo, JoinResult queueResult) {
+        super(player);
+        this.team = team;
+        this.result = queueResult;
+        this.tqo = tqo;
+    }
 
-	public JoinResult getQueueResult(){
-		return result;
-	}
+    /**
+     * Returns the player's team
+     *
+     * @return The player's team
+     */
+    public ArenaTeam getTeam() {
+        return team;
+    }
 
-	public Arena getArena(){
-		return tqo.getJoinOptions().getArena();
-	}
+    /**
+     * Returns the queue result
+     *
+     * @return The queue result
+     */
+    public JoinResult getQueueResult(){
+        return result;
+    }
+
+    /**
+     * Returns the arena the player is joining
+     *
+     * @return The arena the player is joining
+     */
+    public Arena getArena(){
+        return tqo.getJoinOptions().getArena();
+    }
 }

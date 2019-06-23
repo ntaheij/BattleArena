@@ -10,7 +10,12 @@ import org.bukkit.plugin.Plugin;
  * @author Nikolai
  */
 public class CombatTagFactory {
-    
+
+    /**
+     * Creates a new CombatTag instance
+     *
+     * @return A new CombatTagInterface instance
+     */
     public static CombatTagInterface newInstance() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin("CombatTag");
         if (plugin != null) {

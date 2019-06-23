@@ -112,7 +112,7 @@ public class BattleArena extends JavaPlugin {
     public BattlePluginsAPI bpapi;
 
     /**
-     * enable the BattleArena plugin
+     * Enable the BattleArena plugin
      */
     @Override
     public void onEnable() {
@@ -318,7 +318,7 @@ public class BattleArena extends JavaPlugin {
 
     /**
      * Return the BattlePluginsAPI that is used by BattleArena
-     *@return BattlePluginsAPI
+     * @return BattlePluginsAPI
      */
     public BattlePluginsAPI getBattlePluginsAPI() {
         return bpapi;
@@ -652,7 +652,13 @@ public class BattleArena extends JavaPlugin {
     public static Arena getArena(String arenaName) {
         return BattleArena.getBAController().getArena(arenaName);
     }
-    
+
+    /**
+     * Create an arena factory instance for an arena
+     *
+     * @param arenaClass The java class of the arena
+     * @return A new ArenaFactory instance for your arena
+     */
     public static ArenaFactory createArenaFactory(final Class<? extends Arena> arenaClass) {
         if (arenaClass == null) return null;
         return new ArenaFactory() {
@@ -760,7 +766,11 @@ public class BattleArena extends JavaPlugin {
     public ArenaEditorExecutor getArenaEditorExecutor() {
         return arenaEditorExecutor;
     }
-    
+
+    /**
+     * Return the online players on the server without having to worry about version errors
+     * @return Online players
+     */
     public static Collection<? extends Player> getOnlinePlayers() {
         return BukkitInterface.getOnlinePlayers();
     }

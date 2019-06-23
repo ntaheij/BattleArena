@@ -7,43 +7,78 @@ import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.teams.ArenaTeam;
 
 /**
- * Signifies that the player has typed the command to leave the competition
+ * Event that is called when a player leaves an arena
+ *
+ * Signifies that the player has typed the command to Join the competition
  */
-public class ArenaPlayerLeaveEvent extends ArenaPlayerEvent{
-	public enum QuitReason{
-		QUITCOMMAND, QUITMC, KICKED, OTHER
-	}
-	final ArenaTeam team;
-	final QuitReason reason;
-	boolean handledQuit = false;
-	List<String> messages = null;
+public class ArenaPlayerLeaveEvent extends ArenaPlayerEvent {
 
-	public ArenaPlayerLeaveEvent(ArenaPlayer arenaPlayer, ArenaTeam team, QuitReason reason) {
-		super(arenaPlayer);
-		this.team = team;
-		this.reason = reason;
-	}
+    /**
+     * The quit reasons
+     */
+    public enum QuitReason{
+        QUITCOMMAND,
+        QUITMC,
+        KICKED,
+        OTHER;
+    }
 
-	public ArenaTeam getTeam() {
-		return team;
-	}
+    final ArenaTeam team;
+    final QuitReason reason;
+    boolean handledQuit = false;
+    List<String> messages = null;
 
-	public boolean isHandledQuit() {
-		return handledQuit;
-	}
+    public ArenaPlayerLeaveEvent(ArenaPlayer arenaPlayer, ArenaTeam team, QuitReason reason) {
+        super(arenaPlayer);
+        this.team = team;
+        this.reason = reason;
+    }
 
-	public void setHandledQuit(boolean handledQuit) {
-		this.handledQuit = handledQuit;
-	}
+    /**
+     * Returns the team the player who died is on
+     *
+     * @return The team the player who died is on
+     */
+    public ArenaTeam getTeam() {
+        return team;
+    }
 
-	public List<String> getMessages() {
-		return messages;
-	}
+    /**
+     * Returns if the quit is handled
+     *
+     * @return If the quit is handled
+     */
+    public boolean isHandledQuit() {
+        return handledQuit;
+    }
 
-	public void addMessage(String str) {
-		if (messages == null){
-			messages = new ArrayList<String>();}
-		if (!messages.contains(str))
-			messages.add(str);
-	}
+    /**
+     * Sets if the quit is handled
+     *
+     * @param handledQuit Sets if you want to handle the quit
+     */
+    public void setHandledQuit(boolean handledQuit) {
+        this.handledQuit = handledQuit;
+    }
+
+    /**
+     * Returns the quit messages
+     *
+     * @return The quit messages
+     */
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    /**
+     * Adds quit messages
+     *
+     * @param str The quit message you want to add
+     */
+    public void addMessage(String str) {
+        if (messages == null){
+            messages = new ArrayList<String>();}
+        if (!messages.contains(str))
+            messages.add(str);
+    }
 }

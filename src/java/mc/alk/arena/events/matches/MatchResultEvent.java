@@ -6,6 +6,10 @@ import mc.alk.arena.objects.MatchResult;
 
 import org.bukkit.event.Cancellable;
 
+/**
+ * Event that is called when a BattleArena match result is set
+ *
+ */
 public class MatchResultEvent extends MatchEvent implements Cancellable {
 
     Match match;
@@ -20,6 +24,11 @@ public class MatchResultEvent extends MatchEvent implements Cancellable {
         matchEnding = !match.alwaysOpen();
     }
 
+    /**
+     * Returns the current match result
+     *
+     * @return The current match result
+     */
     public CompetitionResult getMatchResult() {
         return matchResult;
     }
@@ -46,6 +55,11 @@ public class MatchResultEvent extends MatchEvent implements Cancellable {
         this.cancelled = cancelled;
     }
 
+    /**
+     * Returns if the match is ending
+     *
+     * @return If the match is ending
+     */
     public boolean isMatchEnding() {
         return matchEnding && !cancelled;
     }

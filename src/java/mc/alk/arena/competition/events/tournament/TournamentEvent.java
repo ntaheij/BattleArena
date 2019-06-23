@@ -57,18 +57,24 @@ import java.util.Set;
 import java.util.TreeMap;
 
 public class TournamentEvent extends Event implements Listener, ArenaListener {
+
     public long timeBetweenRounds;
 
     int curRound = -1;
     int nrounds = -1;
+
     boolean preliminary_round = false;
+
     ArrayList<ArenaTeam> aliveTeams = new ArrayList<ArenaTeam>();
     ArrayList<ArenaTeam> competingTeams = new ArrayList<ArenaTeam>();
+
     final EventParams singleGameParms; /// Our original default tourney params from the config
+
     Random rand = new Random();
     Integer curTimer = null;
     Map<Match, Matchup> matchups = Collections.synchronizedMap(new HashMap<Match,Matchup>());
     Set<Matchup> incompleteMatchups = new HashSet<Matchup>();
+
     final ArrayList<Round> rounds = new ArrayList<Round>(); /// The list of matchups for each round
 
     public TournamentEvent(EventParams params, EventOpenOptions eoo) throws NeverWouldJoinException {

@@ -100,7 +100,7 @@ import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 
-/// TODO once I have GameLogic, split this into two matches, one for always open, one for normal
+/// TODO: once I have GameLogic, split this into two matches, one for always open, one for normal
 public abstract class Match extends Competition implements Runnable, ArenaController {
 
     public enum PlayerState {

@@ -5,37 +5,73 @@ import mc.alk.arena.objects.teams.ArenaTeam;
 
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class ArenaPlayerDeathEvent extends ArenaPlayerEvent{
-	final ArenaTeam team;
-	PlayerDeathEvent event;
-	boolean exiting = false;
+/**
+ * Event that is called when a player dies in an arena
+ *
+ */
+public class ArenaPlayerDeathEvent extends ArenaPlayerEvent {
 
-	public ArenaPlayerDeathEvent(ArenaPlayer arenaPlayer, ArenaTeam team) {
-		super(arenaPlayer);
-		this.team = team;
-	}
+    final ArenaTeam team;
+    PlayerDeathEvent event;
+    boolean exiting = false;
 
-	public ArenaTeam getTeam() {
-		return team;
-	}
+    public ArenaPlayerDeathEvent(ArenaPlayer arenaPlayer, ArenaTeam team) {
+        super(arenaPlayer);
+        this.team = team;
+    }
 
-	public void setPlayerDeathEvent(PlayerDeathEvent event){
-		this.event = event;
-	}
-	public PlayerDeathEvent getPlayerDeathEvent() {
-		return event;
-	}
+    /**
+     * Returns the team the player who died is on
+     *
+     * @return The team the player who died is on
+     */
+    public ArenaTeam getTeam() {
+        return team;
+    }
 
-	public boolean isTrueDeath() {
-		return event != null;
-	}
+    /**
+     * Sets the bukkit PlayerDeathEvent
+     *
+     * @param event The PlayerDeathEvent you want to call this on
+     */
+    public void setPlayerDeathEvent(PlayerDeathEvent event){
+        this.event = event;
+    }
 
-	public boolean isExiting() {
-		return exiting;
-	}
+    /**
+     * Returns the bukkit PlayerDeathEvent
+     *
+     * @return The bukkit PlayerDeathEvent
+     */
+    public PlayerDeathEvent getPlayerDeathEvent() {
+        return event;
+    }
 
-	public void setExiting(boolean exiting) {
-		this.exiting = exiting;
-	}
+    /**
+     * Returns if the death is a true death
+     *
+     * @return If the death is a true death
+     */
+    public boolean isTrueDeath() {
+        return event != null;
+    }
+
+    /**
+     * Returns if the player is existing the arena
+     *
+     * @return If the player is existing the arena
+     */
+    public boolean isExiting() {
+        return exiting;
+    }
+
+    /**
+     * Sets if the player is existing the arena
+     *
+     * @param exiting Set the player to exist the arena
+     */
+    public void setExiting(boolean exiting) {
+        this.exiting = exiting;
+    }
 
 }

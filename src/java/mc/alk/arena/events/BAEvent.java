@@ -6,20 +6,27 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class BAEvent extends Event{
-	private static final HandlerList handlers = new HandlerList();
+/**
+ * Main event class for most all BattleArena events
+ *
+ */
+public class BAEvent extends Event {
 
-	public void callEvent(){
-		if (Defaults.TESTSERVER) return;
-		Bukkit.getServer().getPluginManager().callEvent(this);
-	}
+    private static final HandlerList handlers = new HandlerList();
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
+    public void callEvent(){
+        if (Defaults.TESTSERVER)
+            return;
 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+        Bukkit.getServer().getPluginManager().callEvent(this);
+    }
+
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 }
