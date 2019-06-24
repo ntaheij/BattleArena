@@ -31,10 +31,10 @@ public abstract class Competition implements JoinResponseHandler, PlayerHolder, 
 	/** Our teams */
 	protected List<ArenaTeam> teams = new CopyOnWriteArrayList<ArenaTeam>();
 
-//	/** Players that have left the match */
+	/** Players that have left the match */
 	protected final Set<UUID> leftPlayers = Collections.synchronizedSet(new HashSet<UUID>());
 
-	static int count =0;
+	static int count = 0;
 
 	final protected int id = count++;
 

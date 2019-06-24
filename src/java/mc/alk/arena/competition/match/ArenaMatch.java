@@ -57,6 +57,7 @@ import mc.alk.battlescoreboardapi.api.SEntry;
 public class ArenaMatch extends Match {
 
     static boolean disabledAllCommands;
+
     final static HashSet<String> disabledCommands = new HashSet<String>();
     final static HashSet<String> enabledCommands = new HashSet<String>();
 

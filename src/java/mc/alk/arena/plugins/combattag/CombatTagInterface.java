@@ -3,7 +3,8 @@ package mc.alk.arena.plugins.combattag;
 import org.bukkit.entity.Player;
 
 /**
- * 
+ * CombatTag interface
+ *
  * @author Europia79
  */
 public interface CombatTagInterface {

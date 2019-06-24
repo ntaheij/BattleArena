@@ -54,25 +54,27 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 
-
+/**
+ * Base class for events
+ *
+ */
 public abstract class Event extends Competition implements CountdownCallback, ArenaListener {
+
     final String name; /// Name of this event
 
     protected EventParams eventParams; /// The parameters for this event
 
     EventMessager mc; /// Our message handler
-
     Countdown timer; /// Timer till Event starts
 
     protected AbstractJoinHandler joinHandler; /// Specify how teams are allocated
-
     protected EventState state; /// The current state of this event
 
     /// When did each transition occur
     final Map<EventState, Long> times = new EnumMap<EventState,Long>(EventState.class);
 
     /**
-     * Create our event from the specified paramaters
+     * Create our event from the specified parameters
      * @param params EventParams
      */
     public Event(EventParams params) throws NeverWouldJoinException {

@@ -4,7 +4,8 @@ import com.trc202.CombatTagApi.CombatTagApi;
 import org.bukkit.entity.Player;
 
 /**
- * 
+ * CombatTag interface if a combat logging plugin is found
+ *
  * @author Nikolai
  */
 public class TagsOn implements CombatTagInterface {
