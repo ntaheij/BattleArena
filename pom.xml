@@ -26,6 +26,10 @@
             <url>https://repo.battleplugins.org/artifactory/libs-release</url>
         </repository>
         <repository>
+            <id>battleplugins-repo-snapshot</id>
+            <url>https://repo.battleplugins.org/artifactory/libs-snapshot-local</url>
+        </repository>
+        <repository>
             <id>kitteh-public</id>
             <url>http://repo.kitteh.org/content/groups/public/</url>
         </repository>
