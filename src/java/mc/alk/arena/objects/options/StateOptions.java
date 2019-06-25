@@ -16,6 +16,7 @@ import mc.alk.arena.util.MinMax;
 import mc.alk.battlebukkitlib.EffectUtil;
 import mc.alk.battlebukkitlib.InventoryUtil;
 import mc.alk.battlebukkitlib.InventoryUtil.ArmorLevel;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -341,8 +342,9 @@ public class StateOptions {
             for (ItemStack is : items){
                 if (lvl != null && InventoryUtil.isSameMaterial(lvl,is))
                     continue;
-                String enchanted = !is.getEnchantments().isEmpty() ? " &4Enchanted ": "";
-                sb.append("&5 - &a").append(is.getAmount()).append(enchanted).append(is.getType().toString());
+
+                String enchanted = !is.getEnchantments().isEmpty() ? " &4Enchanted": "";
+                sb.append("&5 - &a").append(is.getAmount()).append(enchanted).append(" " + WordUtils.capitalize(is.getType().toString().replace("_", " ")));
             }
         }
         if (hasEffects()){
