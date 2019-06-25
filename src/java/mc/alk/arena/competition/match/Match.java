@@ -658,10 +658,6 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
                         + params.getSecondsToLoot());
             }
 
-            if (params.isRated()) {
-                TrackerController sc = new TrackerController(params);
-                sc.addRecord(victors, losers, drawers, am.getResult().getResult(), params.isTeamRating());
-            }
             if (matchResult.hasVictor()) { /// We have a true winner
                 try {
                     mc.sendOnVictoryMsg(victors, losers);
@@ -680,6 +676,11 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
             am.performTransition(MatchState.ONVICTORY, teams, true);
             currentTimer = Scheduler.scheduleSynchronousTask(
                     new MatchCompleted(am), (int) (params.getSecondsToLoot() * 20L));
+
+            if (params.isRated()) {
+                TrackerController sc = new TrackerController(params);
+                sc.addRecord(victors, losers, drawers, am.getResult().getResult(), params.isTeamRating());
+            }
         }
     }
 
