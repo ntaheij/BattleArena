@@ -41,7 +41,6 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MinMax;
 import mc.alk.battlepluginupdater.PluginUpdater.AnnounceUpdateOption;
 import mc.alk.battlepluginupdater.PluginUpdater.UpdateOption;
-import mc.alk.v1r9.serializers.SQLSerializer;
 import mc.euro.bukkitadapter.MaterialAdapter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.GameMode;
@@ -99,35 +98,6 @@ public class BAConfigSerializer extends BaseConfig {
         }
         ModuleLoader ml = new ModuleLoader();
         ml.loadModules(BattleArena.getSelf().getModuleDirectory());
-    }
-
-    public void setupSQL(SQLInstance sql) {
-        try {
-            ConfigurationSection section = config.getConfigurationSection("SQLOptions");
-            // No SQLite since both spigot servers need to use the same database
-            // String type = section.getString("type");
-            String url = section.getString("url", "localhost");
-            String database = section.getString("db");
-            String port = section.getString("port", "3306");
-            String username = section.getString("username");
-            String password = section.getString("password");
-
-            sql.setDB(database);
-            sql.setType(SQLSerializer.SQLType.MYSQL);
-            sql.setURL(url);
-            sql.setPort(port);
-            sql.setUsername(username);
-            sql.setPassword(password);
-            sql.init();
-        } catch (Exception ex) {
-            // Catch exceptions so plugin continues loading
-
-            Log.err("Error configuring MySQL");
-            Log.err("Error message = " + ex.getMessage());
-            ex.printStackTrace();
-
-            Defaults.MYSQL_ENABLED = false;
-        }
     }
 
     public void loadCompetitions() {

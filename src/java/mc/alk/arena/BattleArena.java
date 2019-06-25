@@ -81,6 +81,7 @@ import mc.euro.bukkitinterface.BukkitInterface;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -113,8 +114,6 @@ public class BattleArena extends MCPlugin {
     private static final SignSerializer signSerializer = new SignSerializer();
     private static final int bukkitId = 85347; // https://api.curseforge.com/servermods/projects?search=battlearena
     public BattlePluginsAPI bpapi;
-
-    private SQLInstance sql;
 
     /**
      * Enable the BattleArena plugin
@@ -220,8 +219,20 @@ public class BattleArena extends MCPlugin {
 
         // Load MySQL
         if (Defaults.MYSQL_ENABLED) {
-            sql = new SQLInstance();
-            baConfigSerializer.setupSQL(sql);
+            ConfigurationSection section = baConfigSerializer.getConfig().getConfigurationSection("SQLOptions");
+            // No SQLite since both spigot servers need to use the same database
+            // String type = section.getString("type");
+            String url = section.getString("url", "localhost");
+            String database = section.getString("db");
+            String port = section.getString("port", "3306");
+            String username = section.getString("username");
+            String password = section.getString("password");
+
+            SQLInstance.DB = database;
+            SQLInstance.URL = url;
+            SQLInstance.PORT = port;
+            SQLInstance.USERNAME = username;
+            SQLInstance.PASSWORD = password;
         }
 
         classesSerializer.setConfig(FileUtil.load(clazz, dir.getPath() + "/classes.yml", "/default_files/classes.yml")); /// Load classes

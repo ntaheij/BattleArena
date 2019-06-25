@@ -86,6 +86,7 @@ import mc.alk.arena.objects.victoryconditions.interfaces.DefinesNumLivesPerPlaye
 import mc.alk.arena.objects.victoryconditions.interfaces.DefinesNumTeams;
 import mc.alk.arena.objects.victoryconditions.interfaces.DefinesTimeLimit;
 import mc.alk.arena.objects.victoryconditions.interfaces.ScoreTracker;
+import mc.alk.arena.serializers.SQLInstance;
 import mc.alk.arena.util.Countdown;
 import mc.alk.arena.util.Countdown.CountdownCallback;
 import mc.alk.arena.util.Log;
@@ -169,6 +170,8 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
     AbstractJoinHandler joinHandler;
     final ArenaObjective defaultObjective;
     ArenaPreviousState oldArenaState;
+
+    private SQLInstance sql;
 
     @SuppressWarnings("unchecked")
     public Match(Arena arena, MatchParams matchParams, Collection<ArenaListener> listeners) {
@@ -268,6 +271,11 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
                             "&cA match is already in progress in arena " + arena.getName()));
         }
         updateBukkitEvents(MatchState.ONCREATE);
+
+        if (Defaults.MYSQL_ENABLED) {
+            sql = new SQLInstance(matchParams.getName().toLowerCase(), "matches");
+            sql.init();
+        }
     }
 
     private void updateBukkitEvents(MatchState matchState) {

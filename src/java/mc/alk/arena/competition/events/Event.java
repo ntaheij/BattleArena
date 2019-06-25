@@ -41,6 +41,7 @@ import mc.alk.arena.objects.messaging.EventMessageHandler;
 import mc.alk.arena.objects.options.StateOptions;
 import mc.alk.arena.objects.pairs.JoinResult;
 import mc.alk.arena.objects.teams.ArenaTeam;
+import mc.alk.arena.serializers.SQLInstance;
 import mc.alk.arena.util.Countdown;
 import mc.alk.arena.util.Countdown.CountdownCallback;
 import mc.alk.arena.util.Log;
@@ -73,6 +74,8 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
     /// When did each transition occur
     final Map<EventState, Long> times = new EnumMap<EventState,Long>(EventState.class);
 
+    private SQLInstance sql;
+
     /**
      * Create our event from the specified parameters
      * @param params EventParams
@@ -85,6 +88,11 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
         if (mc == null)
             mc = new EventMessager(this);
         mc.setMessageHandler(new EventMessageImpl(this));
+
+        if (Defaults.MYSQL_ENABLED) {
+            sql = new SQLInstance(eventParams.getName().toLowerCase(), "events");
+            sql.init();
+        }
     }
 
     public void openEvent() {
