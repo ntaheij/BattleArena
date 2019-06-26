@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.12.10</version>
+    <version>3.9.12.11</version>
     <name>BattleArena</name>
     <url>https://github.com/BattlePlugins/BattleArena</url>
     <properties>

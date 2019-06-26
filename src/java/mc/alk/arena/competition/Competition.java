@@ -12,6 +12,7 @@ import mc.alk.arena.objects.arenas.ArenaListener;
 import mc.alk.arena.objects.joining.JoinResponseHandler;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.objects.teams.TeamHandler;
+import mc.alk.arena.util.Log;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -137,7 +138,7 @@ public abstract class Competition implements JoinResponseHandler, PlayerHolder, 
     }
 
     protected void performTransition(MatchState state, ArenaTeam team, boolean onlyInMatch){
-        TransitionController.transition(this, state, team, onlyInMatch);
+		TransitionController.transition(this, state, team, onlyInMatch);
     }
 
     protected void performTransition(MatchState state, Collection<ArenaTeam> teams, boolean onlyInMatch){
