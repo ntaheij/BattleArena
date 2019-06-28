@@ -1,5 +1,6 @@
 package mc.alk.arena.serializers;
 
+import mc.alk.arena.util.Log;
 import mc.alk.v1r9.serializers.SQLSerializer;
 
 public class SQLInstance extends SQLSerializer {
@@ -70,7 +71,7 @@ public class SQLInstance extends SQLSerializer {
         createTable = "CREATE TABLE IF NOT EXISTS " + activeTable
                 + " (" + SERVER + " VARCHAR(100), " + GAME + " VARCHAR(100),"
                 + ARENA + " VARCHAR(100), " + QUEUED_PLAYERS + " VARCHAR(40000), "
-                + STATE + "VARCHAR(100), " + PREREQUISITES + " VARCHAR(1000), "
+                + STATE + " VARCHAR(100), " + PREREQUISITES + " VARCHAR(1000), "
                 + MAX_PLAYERS + " VARCHAR(100), " + ENABLED + " VARCHAR(100))";
 
         insertTable = "INSERT INTO " + activeTable + " VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
@@ -89,6 +90,12 @@ public class SQLInstance extends SQLSerializer {
         getMaxPlayers = "SELECT * FROM " + activeTable + " WHERE " + MAX_PLAYERS + " = ?";
         getEnabled = "SELECT * FROM " + activeTable + " WHERE " + ENABLED + " = ?";
 
+        try {
+            createTable(activeTable, createTable);
+        } catch (Exception ex) {
+            Log.err("Could not create table for " + tableName + "! Please read the error log below!");
+            Log.printStackTrace(ex);
+        }
         return true;
     }
 }
