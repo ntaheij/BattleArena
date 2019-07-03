@@ -91,7 +91,7 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
         mc.setMessageHandler(new EventMessageImpl(this));
 
         if (Defaults.MYSQL_ENABLED) {
-            sql = new SQLInstance(eventParams.getName().toLowerCase(), "matches");
+            sql = new SQLInstance(eventParams.getName().toLowerCase(), "events");
             sql.init();
 
             StringBuilder builder = new StringBuilder();
