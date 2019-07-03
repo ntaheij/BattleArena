@@ -3,6 +3,10 @@ package mc.alk.arena.serializers;
 import mc.alk.arena.util.Log;
 import mc.alk.v1r9.serializers.SQLSerializer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class SQLInstance extends SQLSerializer {
 
     public static String URL = "localhost";
@@ -18,9 +22,8 @@ public class SQLInstance extends SQLSerializer {
     public static final String GAME = "Game"; // The game
     public static final String ARENA = "ArenaName"; // The arena name
     public static final String QUEUED_PLAYERS = "QueuedPlayers"; // The players queued
-    public static final String MAX_PLAYERS = "MaxPlayers"; // The maximum amount of players that can join
     public static final String STATE = "State"; // The state of the arena
-    public static final String PREREQUISITES = "Prerequisites"; // The prerequisites of the arena
+    public static final String MAX_PLAYERS = "MaxPlayers"; // The maximum amount of players that can join
     public static final String ENABLED = "Enabled"; // If the arena is enabled
 
     private String activeTable;
@@ -29,13 +32,13 @@ public class SQLInstance extends SQLSerializer {
 
     private String createTable;
     private String insertTable;
+    private String updateTable;
 
     private String getServer;
     private String getGame;
     private String getArena;
     private String getQueuedPlayers;
     private String getState;
-    private String getPrerequisites;
     private String getMaxPlayers;
     private String getEnabled;
 
@@ -71,22 +74,25 @@ public class SQLInstance extends SQLSerializer {
         createTable = "CREATE TABLE IF NOT EXISTS " + activeTable
                 + " (" + SERVER + " VARCHAR(100), " + GAME + " VARCHAR(100),"
                 + ARENA + " VARCHAR(100), " + QUEUED_PLAYERS + " VARCHAR(40000), "
-                + STATE + " VARCHAR(100), " + PREREQUISITES + " VARCHAR(1000), "
-                + MAX_PLAYERS + " VARCHAR(100), " + ENABLED + " VARCHAR(100))";
+                + STATE + " VARCHAR(100), " + MAX_PLAYERS + " VARCHAR(100), "
+                + ENABLED + " VARCHAR(100))";
 
-        insertTable = "INSERT INTO " + activeTable + " VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
+        insertTable = "INSERT INTO " + activeTable + " VALUES (?, ?, ?, ?, ?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE "
                 + SERVER + " = VALUES(" + SERVER + "), " + GAME + " = VALUES(" + GAME + "), "
                 + ARENA + " = VALUES(" + ARENA + "), " + QUEUED_PLAYERS + " = VALUES(" + QUEUED_PLAYERS + "), "
-                + STATE + " = VALUES(" + STATE + "), " + PREREQUISITES + " = VALUES(" + PREREQUISITES + "), "
-                + MAX_PLAYERS + " = VALUES(" + MAX_PLAYERS + "), " + ENABLED + " = VALUES(" + ENABLED + ")";
+                + STATE + " = VALUES(" + STATE + "), " + MAX_PLAYERS + " = VALUES(" + MAX_PLAYERS + "), "
+                + ENABLED + " = VALUES(" + ENABLED + ")";
+
+        updateTable = "UPDATE " + activeTable + " SET " + SERVER + " = ?, " + GAME + " = ?, "
+                + ARENA + " = ?, " + QUEUED_PLAYERS + " = ?, " + STATE + " = ?, "
+                + MAX_PLAYERS + " = ?," + ENABLED  + " = ? WHERE " + ARENA + " = ?";
 
         getServer = "SELECT * FROM " + activeTable + " WHERE " + SERVER + " = ?";
         getGame = "SELECT * FROM " + activeTable + " WHERE " + GAME + " = ?";
         getArena = "SELECT * FROM " + activeTable + " WHERE " + ARENA + " = ?";
         getQueuedPlayers = "SELECT * FROM " + activeTable + " WHERE " + QUEUED_PLAYERS + " = ?";
         getState = "SELECT * FROM " + activeTable + " WHERE " + STATE + " = ?";
-        getPrerequisites = "SELECT * FROM " + activeTable + " WHERE " + PREREQUISITES + " = ?";
         getMaxPlayers = "SELECT * FROM " + activeTable + " WHERE " + MAX_PLAYERS + " = ?";
         getEnabled = "SELECT * FROM " + activeTable + " WHERE " + ENABLED + " = ?";
 
@@ -97,5 +103,33 @@ public class SQLInstance extends SQLSerializer {
             Log.printStackTrace(ex);
         }
         return true;
+    }
+
+    // TODO: Find a way to break method parameters into its own object?
+    public void insertTable(String server, String arena, String queuedPlayers,
+                            String state, String maxPlayers, String enabled)  {
+
+        List<List<Object>> batch = new ArrayList<List<Object>>();
+        batch.add(Arrays.asList(new Object[] {server, tableName, arena, queuedPlayers, state, maxPlayers, enabled}));
+
+        try {
+            executeBatch(true, insertTable, batch);
+        } catch (Exception ex) {
+            Log.err("Failed to insert into table!");
+            Log.err("Tried to run insert: " + insertTable);
+            Log.err("Inserted batch: '" + server + ", " + tableName + ", " + arena + ", "
+                + queuedPlayers + ", " + state + ", "  + maxPlayers + ", " + enabled + "'");
+
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateTable(String server, String arena, String queuedPlayers,
+                            String state, String maxPlayers, String enabled) {
+
+        List<List<Object>> batch = new ArrayList<List<Object>>();
+        batch.add(Arrays.asList(new Object[] {server, tableName, arena, queuedPlayers, state, maxPlayers, enabled, arena}));
+
+        executeBatch(true, updateTable, batch);
     }
 }

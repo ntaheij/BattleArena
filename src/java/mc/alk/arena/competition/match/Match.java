@@ -275,6 +275,16 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         if (Defaults.MYSQL_ENABLED) {
             sql = new SQLInstance(matchParams.getName().toLowerCase(), "matches");
             sql.init();
+
+            StringBuilder builder = new StringBuilder();
+            for (ArenaPlayer player : getPlayers()) {
+                if (builder.length() > 0) {
+                    builder.append(",");
+                }
+
+                builder.append(player.getName());
+            }
+            sql.insertTable(Bukkit.getServer().getServerName(), arena.getName(), builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true");
         }
     }
 
@@ -1501,6 +1511,8 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
             addVictoryConditions();
         }
         times.put(this.state, System.currentTimeMillis());
+        if (params != null && sql != null)
+            updateSQL();
     }
 
     @SuppressWarnings("SuspiciousMethodCalls")
@@ -1913,4 +1925,20 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         return prizePoolMoney;
     }
 
+    public void updateSQL() {
+        if (!Defaults.MYSQL_ENABLED)
+            return;
+
+        StringBuilder builder = new StringBuilder();
+        for (ArenaPlayer player : getPlayers()) {
+            if (builder.length() > 0) {
+                builder.append(",");
+            }
+
+            builder.append(player.getName());
+        }
+
+        // TODO: Change Bukkit.getServer().getName() to bungee server if enabled
+        sql.updateTable(Bukkit.getServer().getServerName(), arena.getName(), builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true");
+    }
 }

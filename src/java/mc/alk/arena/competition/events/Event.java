@@ -50,6 +50,7 @@ import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.v1r9.util.TimeUtil;
 import mc.euro.bukkitinterface.BukkitInterface;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -158,6 +159,7 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
         transitionTo(EventState.RUNNING);
 
         callEvent(new EventStartEvent(this,teams));
+        updateSQL();
     }
 
     protected void setEventResult(CompetitionResult result, boolean announce) {
@@ -517,5 +519,22 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
     @Override
     public boolean hasOption(StateOption option) {
         return getParams().hasOptionAt(state, option);
+    }
+
+    public void updateSQL() {
+        if (!Defaults.MYSQL_ENABLED)
+            return;
+
+        StringBuilder builder = new StringBuilder();
+        for (ArenaPlayer player : getPlayers()) {
+            if (builder.length() > 0) {
+                builder.append(",");
+            }
+
+            builder.append(player.getName());
+        }
+
+        // TODO: Change Bukkit.getServer().getName() to bungee server if enabled
+        sql.insertTable(Bukkit.getServer().getServerName(), name, builder.toString(), getState().toString(), eventParams.getMaxPlayers().toString(), "true");
     }
 }
