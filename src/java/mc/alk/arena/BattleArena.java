@@ -72,8 +72,8 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.battlepluginupdater.FileUpdater;
+import mc.alk.battlepluginupdater.GitHubUpdater;
 import mc.alk.battlepluginupdater.PluginUpdater;
-import mc.alk.battlepluginupdater.SpigotUpdater;
 import mc.alk.battlewebapi.BattlePluginsAPI;
 import mc.euro.bukkitinterface.BukkitInterface;
 import org.bstats.bukkit.Metrics;
@@ -280,8 +280,11 @@ public class BattleArena extends JavaPlugin {
         //PluginUpdater.update(this, bukkitId, this.getFile(),
         //        Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
 
-        String githubLink = "https://github.com/BattlePlugins/" + pluginname + "/releases/download/%s/" + pluginname + ".jar";
-        SpigotUpdater updater = new SpigotUpdater(this, spigotId, githubLink);
+        //String githubLink = "https://github.com/BattlePlugins/" + pluginname + "/releases/download/%s/" + pluginname + ".jar";
+        //SpigotUpdater updater = new SpigotUpdater(this, spigotId, githubLink);
+        //updater.update();
+
+        GitHubUpdater updater = new GitHubUpdater(this, "BattlePlugins", pluginname);
         updater.update();
 
         Log.info("&4[" + pluginname + "] &6v" + BattleArena.version + "&f enabled!");
