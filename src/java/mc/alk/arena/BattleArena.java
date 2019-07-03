@@ -280,7 +280,7 @@ public class BattleArena extends JavaPlugin {
         //PluginUpdater.update(this, bukkitId, this.getFile(),
         //        Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
 
-        String githubLink = "https://github.com/BattlePlugins/" + pluginname + "/releases/download/" + version + "/" + pluginname + ".jar";
+        String githubLink = "https://github.com/BattlePlugins/" + pluginname + "/releases/download/%s/" + pluginname + ".jar";
         SpigotUpdater updater = new SpigotUpdater(this, spigotId, githubLink);
         updater.update();
 
