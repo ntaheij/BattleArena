@@ -12,7 +12,6 @@ import mc.alk.arena.objects.arenas.ArenaListener;
 import mc.alk.arena.objects.joining.JoinResponseHandler;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.objects.teams.TeamHandler;
-import org.bukkit.Bukkit;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -676,10 +676,6 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
                         + params.getSecondsToLoot());
             }
 
-            if (params.isRated()) {
-                TrackerController sc = new TrackerController(params);
-                sc.addRecord(victors, losers, drawers, am.getResult().getResult(), params.isTeamRating());
-            }
             if (matchResult.hasVictor()) { /// We have a true winner
                 try {
                     mc.sendOnVictoryMsg(victors, losers);
@@ -698,6 +694,11 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
             am.performTransition(MatchState.ONVICTORY, teams, true);
             currentTimer = Scheduler.scheduleSynchronousTask(
                     new MatchCompleted(am), (int) (params.getSecondsToLoot() * 20L));
+
+            if (params.isRated()) {
+                TrackerController sc = new TrackerController(params);
+                sc.addRecord(victors, losers, drawers, am.getResult().getResult(), params.isTeamRating());
+            }
         }
     }
 
@@ -824,13 +825,13 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
 
     private void nonEndingDeconstruct(List<ArenaTeam> teams) {
         for (ArenaTeam t : teams) {
-            performTransition(MatchState.ONFINISH, t, true);
             for (ArenaPlayer p : t.getPlayers()) {
                 p.removeCompetition(this);
                 if (joinHandler != null) {
                     joinHandler.leave(p);
                 }
             }
+            performTransition(MatchState.ONFINISH, t, true);
             individualTeamTimers.remove(t);
             scoreboard.removeTeam(t);
             TeamTimeLimit ttl = individualTeamTimeLimits.remove(t);
@@ -848,20 +849,20 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         callEvent(new MatchFinishedEvent(match));
         updateBukkitEvents(MatchState.ONFINISH);
         for (ArenaTeam t : teams) {
-            performTransition(MatchState.ONFINISH, t, true);
             for (ArenaPlayer p : t.getPlayers()) {
                 p.removeCompetition(this);
             }
+            performTransition(MatchState.ONFINISH, t, true);
             scoreboard.removeTeam(t);
         }
         /// For players that were in the process of joining when deconstruct happened
         for (Entry<ArenaTeam, Integer> entry : individualTeamTimers.entrySet()) {
             Scheduler.cancelTask(entry.getValue());
             if (!teams.contains(entry.getKey())) {
-                performTransition(MatchState.ONCANCEL, entry.getKey(), true);
                 for (ArenaPlayer p : entry.getKey().getPlayers()) {
                     p.removeCompetition(this);
                 }
+                performTransition(MatchState.ONCANCEL, entry.getKey(), true);
             }
         }
         if (oldArenaState != null) {
@@ -1258,11 +1259,11 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
             Log.trace(getID(), player.getName() + " -onPostQuit  t=" + player.getTeam());
         }
         ArenaTeam t = player.getTeam();
+        player.removeCompetition(this);
         performTransition(MatchState.ONLEAVEARENA, player, t, false);
         if (WorldGuardController.hasWorldGuard() && arena.hasRegion()) {
             psc.removeMember(player, arena.getWorldGuardRegion());
         }
-        player.removeCompetition(this);
         player.reset(); /// reset the players
         if (!params.getUseTrackerPvP()) {
             TrackerController.resumeTracking(player);
