@@ -73,6 +73,7 @@ import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.battlepluginupdater.FileUpdater;
 import mc.alk.battlepluginupdater.PluginUpdater;
+import mc.alk.battlepluginupdater.SpigotUpdater;
 import mc.alk.battlewebapi.BattlePluginsAPI;
 import mc.euro.bukkitinterface.BukkitInterface;
 import org.bstats.bukkit.Metrics;
@@ -109,6 +110,8 @@ public class BattleArena extends JavaPlugin {
     private static final EventScheduleSerializer eventSchedulerSerializer = new EventScheduleSerializer();
     private static final SignSerializer signSerializer = new SignSerializer();
     private static final int bukkitId = 85347; // https://api.curseforge.com/servermods/projects?search=battlearena
+    private static final int spigotId = 2164; // https://api.spiget.org/v2/resources/2164/versions?size=1&sort=-releaseDate
+
     public BattlePluginsAPI bpapi;
 
     /**
@@ -274,8 +277,13 @@ public class BattleArena extends JavaPlugin {
             }
         });
         bpapi = new BattlePluginsAPI();
-        PluginUpdater.update(this, bukkitId, this.getFile(),
-                Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
+        //PluginUpdater.update(this, bukkitId, this.getFile(),
+        //        Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
+
+        String githubLink = "https://github.com/BattlePlugins/" + pluginname + "/releases/download/" + version + "/" + pluginname + ".jar";
+        SpigotUpdater updater = new SpigotUpdater(this, spigotId, githubLink);
+        updater.update();
+
         Log.info("&4[" + pluginname + "] &6v" + BattleArena.version + "&f enabled!");
 
         new Metrics(this);
@@ -310,7 +318,10 @@ public class BattleArena extends JavaPlugin {
      * @param file File from the bukkit plugin, use this.getFile()
      * @param updateOption whether we should update the plugin or simply announce that there is a newer version
      * @param announceOption whether we should update the plugin or simply announce that there is a newer version
+     *
+     * @deprecated can cause problems with "empty" jars, use {@link mc.alk.battlepluginupdater.SpigotUpdater}
      */
+    @Deprecated
     public static void update(final Plugin plugin, final int bukkitId, final File file,
                               final UpdateOption updateOption, final AnnounceUpdateOption announceOption) {
         new APIRegistrationController().update(plugin, bukkitId, file, updateOption, announceOption);

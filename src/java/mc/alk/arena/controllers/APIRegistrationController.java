@@ -290,6 +290,10 @@ public class APIRegistrationController {
         }
     }
 
+    /**
+     * @deprecated can cause problems with "empty" jars, use {@link mc.alk.battlepluginupdater.SpigotUpdater}
+     */
+    @Deprecated
     public void update(Plugin plugin, int bukkitId, File file,
             UpdateOption updateOption, AnnounceUpdateOption announceOption) {
         if (updateOption == null) {
