@@ -91,8 +91,18 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
         mc.setMessageHandler(new EventMessageImpl(this));
 
         if (Defaults.MYSQL_ENABLED) {
-            sql = new SQLInstance(eventParams.getName().toLowerCase(), "events");
+            sql = new SQLInstance(eventParams.getName().toLowerCase(), "matches");
             sql.init();
+
+            StringBuilder builder = new StringBuilder();
+            for (ArenaPlayer player : getPlayers()) {
+                if (builder.length() > 0) {
+                    builder.append(",");
+                }
+
+                builder.append(player.getName());
+            }
+            sql.insertTable(Bukkit.getServer().getServerName(), name, builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true");
         }
     }
 
@@ -535,6 +545,6 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
         }
 
         // TODO: Change Bukkit.getServer().getName() to bungee server if enabled
-        sql.insertTable(Bukkit.getServer().getServerName(), name, builder.toString(), getState().toString(), eventParams.getMaxPlayers().toString(), "true");
+        sql.updateTable(Bukkit.getServer().getServerName(), name, builder.toString(), getState().toString(), eventParams.getMaxPlayers().toString(), "true");
     }
 }
