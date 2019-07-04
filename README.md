@@ -68,6 +68,8 @@ Other Links:
 * [Battle Plugin Donations] (Donation link, coming soon)
 * [JavaDocs](http://rainbowcraft.sytes.net/javadocs/battlearena/apidocs/)
 
-Minor Edit
+Stats
+------------
+![Plugin Stats](https://bstats.org/signatures/bukkit/BattleArena.svg "Plugin Stats")
 
 [![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/0)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/0)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/1)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/1)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/2)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/2)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/3)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/3)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/4)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/4)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/5)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/5)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/6)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/6)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/7)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/7)
