@@ -1,5 +1,6 @@
 package mc.alk.arena.serializers;
 
+import mc.alk.arena.controllers.Scheduler;
 import mc.alk.arena.util.Log;
 import mc.alk.v1r9.serializers.SQLSerializer;
 
@@ -33,6 +34,7 @@ public class SQLInstance extends SQLSerializer {
     private String createTable;
     private String insertTable;
     private String updateTable;
+    private String deleteTable;
 
     private String getServer;
     private String getGame;
@@ -88,6 +90,8 @@ public class SQLInstance extends SQLSerializer {
                 + ARENA + " = ?, " + QUEUED_PLAYERS + " = ?, " + STATE + " = ?, "
                 + MAX_PLAYERS + " = ?," + ENABLED  + " = ? WHERE " + ARENA + " = ?";
 
+        deleteTable = "DELETE FROM " + activeTable + " WHERE " + ARENA + " = ?";
+
         getServer = "SELECT * FROM " + activeTable + " WHERE " + SERVER + " = ?";
         getGame = "SELECT * FROM " + activeTable + " WHERE " + GAME + " = ?";
         getArena = "SELECT * FROM " + activeTable + " WHERE " + ARENA + " = ?";
@@ -106,16 +110,22 @@ public class SQLInstance extends SQLSerializer {
     }
 
     // TODO: Find a way to break method parameters into its own object?
-    public void insertTable(String server, String arena, String queuedPlayers,
-                            String state, String maxPlayers, String enabled)  {
+    public void insertColumn(String server, String arena, String queuedPlayers,
+                             String state, String maxPlayers, String enabled, boolean deleteExisting)  {
 
         List<List<Object>> batch = new ArrayList<List<Object>>();
         batch.add(Arrays.asList(new Object[] {server, tableName, arena, queuedPlayers, state, maxPlayers, enabled}));
 
         try {
-            executeBatch(true, insertTable, batch);
+            // Run these both asynchronously in the same task to prevent issues
+            Scheduler.scheduleAsynchronousTask(() -> {
+                if (deleteExisting) {
+                    executeUpdate(false, deleteTable, arena);
+                }
+                executeBatch(false, insertTable, batch);
+            });
         } catch (Exception ex) {
-            Log.err("Failed to insert into table!");
+            Log.err("Failed to insert new column!");
             Log.err("Tried to run insert: " + insertTable);
             Log.err("Inserted batch: '" + server + ", " + tableName + ", " + arena + ", "
                 + queuedPlayers + ", " + state + ", "  + maxPlayers + ", " + enabled + "'");
@@ -124,12 +134,33 @@ public class SQLInstance extends SQLSerializer {
         }
     }
 
-    public void updateTable(String server, String arena, String queuedPlayers,
-                            String state, String maxPlayers, String enabled) {
+    public void updateColumn(String server, String arena, String queuedPlayers,
+                             String state, String maxPlayers, String enabled) {
 
         List<List<Object>> batch = new ArrayList<List<Object>>();
         batch.add(Arrays.asList(new Object[] {server, tableName, arena, queuedPlayers, state, maxPlayers, enabled, arena}));
+        try {
 
-        executeBatch(true, updateTable, batch);
+            executeBatch(true, updateTable, batch);
+        } catch (Exception ex) {
+            Log.err("Failed to update column!");
+            Log.err("Tried to run update: " + insertTable);
+            Log.err("Updated batch: '" + server + ", " + tableName + ", " + arena + ", "
+                    + queuedPlayers + ", " + state + ", "  + maxPlayers + ", " + enabled + "'");
+
+            ex.printStackTrace();
+        }
+    }
+
+    public void deleteColumn(String arena) {
+        try {
+            executeUpdate(true, deleteTable, arena);
+        } catch (Exception ex) {
+            Log.err("Failed to delete column!");
+            Log.err("Tried to run update: " + insertTable);
+            Log.err("Deleted column: '" + arena + "'");
+
+            ex.printStackTrace();
+        }
     }
 }

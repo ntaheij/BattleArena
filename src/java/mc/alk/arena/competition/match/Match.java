@@ -284,7 +284,8 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
 
                 builder.append(player.getName());
             }
-            sql.insertTable(Bukkit.getServer().getServerName(), arena.getName(), builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true");
+
+            sql.insertColumn(Bukkit.getServer().getServerName(), arena.getName(), builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true", true);
         }
     }
 
@@ -775,6 +776,7 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
             if (Defaults.DEBUG) {
                 System.out.println("Match::MatchCompleted(): " + am.getResult());
             }
+            sql.deleteColumn(arena.getName());
             /// ONCOMPLETE can teleport people out of the arena,
             /// So the order of events is usually
             /// ONCOMPLETE(half of effects) -> ONLEAVE( and all effects) -> ONCOMPLETE( rest of effects)
@@ -1940,6 +1942,6 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         }
 
         // TODO: Change Bukkit.getServer().getName() to bungee server if enabled
-        sql.updateTable(Bukkit.getServer().getServerName(), arena.getName(), builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true");
+        sql.updateColumn(Bukkit.getServer().getServerName(), arena.getName(), builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true");
     }
 }

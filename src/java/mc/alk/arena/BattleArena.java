@@ -77,7 +77,6 @@ import mc.alk.battlepluginupdater.GitHubUpdater;
 import mc.alk.battlepluginupdater.PluginUpdater;
 import mc.alk.battlewebapi.BattlePluginsAPI;
 import mc.alk.v1r9.core.MCPlugin;
-import mc.alk.v1r9.serializers.SQLSerializerConfig;
 import mc.euro.bukkitinterface.BukkitInterface;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;

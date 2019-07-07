@@ -102,7 +102,7 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
 
                 builder.append(player.getName());
             }
-            sql.insertTable(Bukkit.getServer().getServerName(), name, builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true");
+            sql.insertColumn(Bukkit.getServer().getServerName(), name, builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true", true);
         }
     }
 
@@ -214,6 +214,7 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
         if (Defaults.DEBUG_TRACE) Log.info("BAEvent::endEvent");
         stopTimer();
 
+        sql.deleteColumn(name);
         removeAllTeams();
         teams.clear();
         joinHandler = null;
@@ -545,6 +546,6 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
         }
 
         // TODO: Change Bukkit.getServer().getName() to bungee server if enabled
-        sql.updateTable(Bukkit.getServer().getServerName(), name, builder.toString(), getState().toString(), eventParams.getMaxPlayers().toString(), "true");
+        sql.updateColumn(Bukkit.getServer().getServerName(), name, builder.toString(), getState().toString(), eventParams.getMaxPlayers().toString(), "true");
     }
 }
