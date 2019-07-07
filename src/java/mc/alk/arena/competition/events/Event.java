@@ -47,6 +47,7 @@ import mc.alk.arena.util.Countdown.CountdownCallback;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PermissionsUtil;
+import mc.alk.arena.util.Util;
 import mc.alk.v1r9.util.TimeUtil;
 import mc.euro.bukkitinterface.BukkitInterface;
 
@@ -94,15 +95,7 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
             sql = new SQLInstance(eventParams.getName().toLowerCase(), "events");
             sql.init();
 
-            StringBuilder builder = new StringBuilder();
-            for (ArenaPlayer player : getPlayers()) {
-                if (builder.length() > 0) {
-                    builder.append(",");
-                }
-
-                builder.append(player.getName());
-            }
-            sql.insertColumn(Bukkit.getServer().getServerName(), name, builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true", true);
+            sql.insertColumn(Bukkit.getServer().getServerName(), name, Util.getPlayerListStr(getAlivePlayers()), Util.getPlayerListStr(getDeadPlayers()), getState().toString(), params.getMaxPlayers().toString(), "true", true);
         }
     }
 
@@ -455,6 +448,28 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
         return players;
     }
 
+    public Set<ArenaPlayer> getAlivePlayers() {
+        HashSet<ArenaPlayer> players = new HashSet<ArenaPlayer>();
+        for (ArenaTeam t : teams) {
+            if (t.isDead()) {
+                continue;
+            }
+            players.addAll(t.getLivingPlayers());
+        }
+        return players;
+    }
+
+    public Set<ArenaPlayer> getDeadPlayers() {
+        HashSet<ArenaPlayer> players = new HashSet<ArenaPlayer>();
+        for (ArenaTeam t : teams) {
+            if (!t.isDead()) {
+                continue;
+            }
+            players.addAll(t.getDeadPlayers());
+        }
+        return players;
+    }
+
     public void setSilent(boolean silent) {
         mc.setSilent(silent);
     }
@@ -536,16 +551,7 @@ public abstract class Event extends Competition implements CountdownCallback, Ar
         if (!Defaults.MYSQL_ENABLED)
             return;
 
-        StringBuilder builder = new StringBuilder();
-        for (ArenaPlayer player : getPlayers()) {
-            if (builder.length() > 0) {
-                builder.append(",");
-            }
-
-            builder.append(player.getName());
-        }
-
         // TODO: Change Bukkit.getServer().getName() to bungee server if enabled
-        sql.updateColumn(Bukkit.getServer().getServerName(), name, builder.toString(), getState().toString(), eventParams.getMaxPlayers().toString(), "true");
+        sql.updateColumn(Bukkit.getServer().getServerName(), name, Util.getPlayerListStr(getAlivePlayers()), Util.getPlayerListStr(getDeadPlayers()), getState().toString(), eventParams.getMaxPlayers().toString(), "true");
     }
 }

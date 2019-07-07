@@ -93,6 +93,8 @@ public class ArenaMatch extends Match {
                 callEvent(new ArenaPlayerKillEvent(killer, killT, target));
             }
         }
+
+        arena.getMatch().updateSQL();
     }
 
     @ArenaEventHandler(bukkitPriority = org.bukkit.event.EventPriority.MONITOR)

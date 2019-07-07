@@ -22,7 +22,8 @@ public class SQLInstance extends SQLSerializer {
     public static final String SERVER = "Server"; // The server name
     public static final String GAME = "Game"; // The game
     public static final String ARENA = "ArenaName"; // The arena name
-    public static final String QUEUED_PLAYERS = "QueuedPlayers"; // The players queued
+    public static final String ALIVE_PLAYERS = "AlivePlayers"; // The players queued
+    public static final String DEAD_PLAYERS = "DeadPlayers";
     public static final String STATE = "State"; // The state of the arena
     public static final String MAX_PLAYERS = "MaxPlayers"; // The maximum amount of players that can join
     public static final String ENABLED = "Enabled"; // If the arena is enabled
@@ -39,7 +40,8 @@ public class SQLInstance extends SQLSerializer {
     private String getServer;
     private String getGame;
     private String getArena;
-    private String getQueuedPlayers;
+    private String getAlivePlayers;
+    private String getDeadPlayers;
     private String getState;
     private String getMaxPlayers;
     private String getEnabled;
@@ -75,27 +77,29 @@ public class SQLInstance extends SQLSerializer {
 
         createTable = "CREATE TABLE IF NOT EXISTS " + activeTable
                 + " (" + SERVER + " VARCHAR(100), " + GAME + " VARCHAR(100),"
-                + ARENA + " VARCHAR(100), " + QUEUED_PLAYERS + " VARCHAR(40000), "
-                + STATE + " VARCHAR(100), " + MAX_PLAYERS + " VARCHAR(100), "
-                + ENABLED + " VARCHAR(100))";
+                + ARENA + " VARCHAR(100), " + ALIVE_PLAYERS + " VARCHAR(20000), "
+                + DEAD_PLAYERS + " VARCHAR(20000), " + STATE + " VARCHAR(100), "
+                + MAX_PLAYERS + " VARCHAR(100), " + ENABLED + " VARCHAR(100))";
 
-        insertTable = "INSERT INTO " + activeTable + " VALUES (?, ?, ?, ?, ?, ?, ?) " +
+        insertTable = "INSERT INTO " + activeTable + " VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE "
                 + SERVER + " = VALUES(" + SERVER + "), " + GAME + " = VALUES(" + GAME + "), "
-                + ARENA + " = VALUES(" + ARENA + "), " + QUEUED_PLAYERS + " = VALUES(" + QUEUED_PLAYERS + "), "
-                + STATE + " = VALUES(" + STATE + "), " + MAX_PLAYERS + " = VALUES(" + MAX_PLAYERS + "), "
-                + ENABLED + " = VALUES(" + ENABLED + ")";
+                + ARENA + " = VALUES(" + ARENA + "), " + ALIVE_PLAYERS + " = VALUES(" + ALIVE_PLAYERS + "), "
+                + DEAD_PLAYERS + " = VALUES(" + DEAD_PLAYERS + "), " + STATE + " = VALUES(" + STATE + "), " + MAX_PLAYERS
+                + " = VALUES(" + MAX_PLAYERS + "), " + ENABLED + " = VALUES(" + ENABLED + ")";
 
         updateTable = "UPDATE " + activeTable + " SET " + SERVER + " = ?, " + GAME + " = ?, "
-                + ARENA + " = ?, " + QUEUED_PLAYERS + " = ?, " + STATE + " = ?, "
-                + MAX_PLAYERS + " = ?," + ENABLED  + " = ? WHERE " + ARENA + " = ?";
+                + ARENA + " = ?, " + ALIVE_PLAYERS + " = ?, " + DEAD_PLAYERS + " = ?, "
+                + STATE + " = ?, " + MAX_PLAYERS + " = ?," + ENABLED  + " = ? WHERE "
+                + ARENA + " = ?";
 
         deleteTable = "DELETE FROM " + activeTable + " WHERE " + ARENA + " = ?";
 
         getServer = "SELECT * FROM " + activeTable + " WHERE " + SERVER + " = ?";
         getGame = "SELECT * FROM " + activeTable + " WHERE " + GAME + " = ?";
         getArena = "SELECT * FROM " + activeTable + " WHERE " + ARENA + " = ?";
-        getQueuedPlayers = "SELECT * FROM " + activeTable + " WHERE " + QUEUED_PLAYERS + " = ?";
+        getAlivePlayers = "SELECT * FROM " + activeTable + " WHERE " + ALIVE_PLAYERS + " = ?";
+        getDeadPlayers = "SELECT * FROM " + activeTable + " WHERE " + DEAD_PLAYERS + " = ?";
         getState = "SELECT * FROM " + activeTable + " WHERE " + STATE + " = ?";
         getMaxPlayers = "SELECT * FROM " + activeTable + " WHERE " + MAX_PLAYERS + " = ?";
         getEnabled = "SELECT * FROM " + activeTable + " WHERE " + ENABLED + " = ?";
@@ -110,11 +114,11 @@ public class SQLInstance extends SQLSerializer {
     }
 
     // TODO: Find a way to break method parameters into its own object?
-    public void insertColumn(String server, String arena, String queuedPlayers,
+    public void insertColumn(String server, String arena, String alivePlayers, String deadPlayers,
                              String state, String maxPlayers, String enabled, boolean deleteExisting)  {
 
         List<List<Object>> batch = new ArrayList<List<Object>>();
-        batch.add(Arrays.asList(new Object[] {server, tableName, arena, queuedPlayers, state, maxPlayers, enabled}));
+        batch.add(Arrays.asList(new Object[] {server, tableName, arena, alivePlayers, deadPlayers, state, maxPlayers, enabled}));
 
         try {
             // Run these both asynchronously in the same task to prevent issues
@@ -128,17 +132,17 @@ public class SQLInstance extends SQLSerializer {
             Log.err("Failed to insert new column!");
             Log.err("Tried to run insert: " + insertTable);
             Log.err("Inserted batch: '" + server + ", " + tableName + ", " + arena + ", "
-                + queuedPlayers + ", " + state + ", "  + maxPlayers + ", " + enabled + "'");
+                + alivePlayers + ", " + deadPlayers + ", " + state + ", "  + maxPlayers + ", " + enabled + "'");
 
             ex.printStackTrace();
         }
     }
 
-    public void updateColumn(String server, String arena, String queuedPlayers,
-                             String state, String maxPlayers, String enabled) {
+    public void updateColumn(String server, String arena, String alivePlayers,
+                             String deadPlayers, String state, String maxPlayers, String enabled) {
 
         List<List<Object>> batch = new ArrayList<List<Object>>();
-        batch.add(Arrays.asList(new Object[] {server, tableName, arena, queuedPlayers, state, maxPlayers, enabled, arena}));
+        batch.add(Arrays.asList(new Object[] {server, tableName, arena, alivePlayers, deadPlayers, state, maxPlayers, enabled, arena}));
         try {
 
             executeBatch(true, updateTable, batch);
@@ -146,7 +150,7 @@ public class SQLInstance extends SQLSerializer {
             Log.err("Failed to update column!");
             Log.err("Tried to run update: " + insertTable);
             Log.err("Updated batch: '" + server + ", " + tableName + ", " + arena + ", "
-                    + queuedPlayers + ", " + state + ", "  + maxPlayers + ", " + enabled + "'");
+                    + alivePlayers + ", " + deadPlayers + ", " + state + ", "  + maxPlayers + ", " + enabled + "'");
 
             ex.printStackTrace();
         }

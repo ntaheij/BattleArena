@@ -92,6 +92,7 @@ import mc.alk.arena.util.Countdown.CountdownCallback;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.TeamUtil;
+import mc.alk.arena.util.Util;
 import mc.alk.battlebukkitlib.InventoryUtil;
 import mc.alk.battlescoreboardapi.api.SEntry;
 import mc.alk.battlescoreboardapi.api.SObjective;
@@ -276,16 +277,7 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
             sql = new SQLInstance(matchParams.getName().toLowerCase(), "matches");
             sql.init();
 
-            StringBuilder builder = new StringBuilder();
-            for (ArenaPlayer player : getPlayers()) {
-                if (builder.length() > 0) {
-                    builder.append(",");
-                }
-
-                builder.append(player.getName());
-            }
-
-            sql.insertColumn(Bukkit.getServer().getServerName(), arena.getName(), builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true", true);
+            sql.insertColumn(Bukkit.getServer().getServerName(), arena.getName(), Util.getPlayerListStr(getAlivePlayers()), Util.getPlayerListStr(getDeadPlayers()), getState().toString(), params.getMaxPlayers().toString(), "true", true);
         }
     }
 
@@ -823,6 +815,8 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         callEvent(new MatchCancelledEvent(this));
         updateBukkitEvents(MatchState.ONCANCEL);
         deconstruct();
+
+        sql.deleteColumn(arena.getName());
     }
 
     private void nonEndingDeconstruct(List<ArenaTeam> teams) {
@@ -1556,6 +1550,17 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         return players;
     }
 
+    public Set<ArenaPlayer> getDeadPlayers() {
+        HashSet<ArenaPlayer> players = new HashSet<ArenaPlayer>();
+        for (ArenaTeam t : teams) {
+            if (!t.isDead()) {
+                continue;
+            }
+            players.addAll(t.getDeadPlayers());
+        }
+        return players;
+    }
+
     public SpawnLocation getTeamSpawn(ArenaTeam team, boolean random) {
         return random ? arena.getSpawn(-1, true) : arena.getSpawn(team.getIndex(), false);
     }
@@ -1932,16 +1937,7 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         if (!Defaults.MYSQL_ENABLED)
             return;
 
-        StringBuilder builder = new StringBuilder();
-        for (ArenaPlayer player : getPlayers()) {
-            if (builder.length() > 0) {
-                builder.append(",");
-            }
-
-            builder.append(player.getName());
-        }
-
         // TODO: Change Bukkit.getServer().getName() to bungee server if enabled
-        sql.updateColumn(Bukkit.getServer().getServerName(), arena.getName(), builder.toString(), getState().toString(), params.getMaxPlayers().toString(), "true");
+        sql.updateColumn(Bukkit.getServer().getServerName(), arena.getName(), Util.getPlayerListStr(getAlivePlayers()), Util.getPlayerListStr(getDeadPlayers()), getState().toString(), params.getMaxPlayers().toString(), "true");
     }
 }

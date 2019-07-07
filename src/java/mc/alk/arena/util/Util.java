@@ -1,8 +1,10 @@
 package mc.alk.arena.util;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import mc.alk.arena.Defaults;
+import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.spawns.SpawnLocation;
 
 import org.bukkit.Location;
@@ -46,4 +48,24 @@ public class Util {
         }
     }
 
+    /**
+     * Returns a string of the arena players, separated by commas
+     *
+     * @param players the collection of ArenaPlayers
+     * @return a string of the arena players
+     */
+    public static String getPlayerListStr(Collection<ArenaPlayer> players) {
+        StringBuilder builder = new StringBuilder();
+
+        for (ArenaPlayer player : players) {
+            if (builder.length() > 0) {
+                builder.append(",");
+
+            }
+
+            builder.append(player.getName());
+        }
+
+        return builder.toString();
+    }
 }
