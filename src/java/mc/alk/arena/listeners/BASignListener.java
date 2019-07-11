@@ -147,7 +147,7 @@ public class BASignListener implements Listener{
                 str = MessageUtil.colorChat( "["+
                         acs.getMatchParams().getColor()+match+"&0]");
             }
-            if (str.length()>15){
+            if (ChatColor.stripColor(str).length()>15){
                 str = MessageUtil.colorChat( "["+
                         acs.getMatchParams().getColor()+acs.getMatchParams().getCommand().toLowerCase()+"&0]");
             }
