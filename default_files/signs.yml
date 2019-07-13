@@ -18,11 +18,11 @@ signs:
   leave:
     open:
       1: "{signprefix}"
-      2: "&ajoin" # Must contain 'join' somewhere in the sign
+      2: "&aleave" # Must contain 'leave' somewhere in the sign
       3: "{arena}" # Optional
       4: "{state} &6{queuedplayers}/{maxplayers}"
     active:
       1: "{signprefix}"
-      2: "&ajoin" # Must contain 'join' somewhere in the sign
+      2: "&aleave" # Must contain 'leave' somewhere in the sign
       3: "{arena}" # Optional
       4: "{state} &6{players}/{maxplayers}"
