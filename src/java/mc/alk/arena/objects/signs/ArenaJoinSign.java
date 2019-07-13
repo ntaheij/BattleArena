@@ -13,12 +13,14 @@ import org.bukkit.Location;
 /**
  * @author alkarin
  */
-class ArenaJoinSign extends ArenaCommandSign{
+public class ArenaJoinSign extends ArenaCommandSign{
+
     final JoinOptions joinOptions;
 
-    ArenaJoinSign(Location location, MatchParams mp, String[] op1, String[] op2) throws InvalidOptionException {
-        super(location, mp, op1, op2);
-        joinOptions = JoinOptions.parseOptions(mp, null, op1);
+    public ArenaJoinSign(Location location, MatchParams mp, JoinOptions joinOptions) throws InvalidOptionException {
+        super(location, mp, joinOptions);
+
+        this.joinOptions = joinOptions;
     }
 
     @Override

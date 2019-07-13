@@ -14,76 +14,77 @@ import org.bukkit.block.Sign;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 public class ArenaStatusSign implements ConfigurationSerializable{
-	public static enum StatusUpdate{
-		STATUS
-	}
 
-	String arenaType;
+    public static enum StatusUpdate{
+        STATUS
+    }
 
-	StatusUpdate update = StatusUpdate.STATUS;
-	Location location;
-	MatchParams params;
+    String arenaType;
 
-	public ArenaStatusSign(MatchParams mp) {
-		this.arenaType = mp.getType().getName();
-		this.params = mp;
-	}
+    StatusUpdate update = StatusUpdate.STATUS;
+    Location location;
+    MatchParams params;
 
-	public ArenaStatusSign(String arenaType, StatusUpdate update, Location location, MatchParams params) {
-		this.arenaType = arenaType;
-		this.update = update;
-		this.location = location;
-		this.params = params;
-	}
+    public ArenaStatusSign(MatchParams mp) {
+        this.arenaType = mp.getType().getName();
+        this.params = mp;
+    }
 
-	public Location getLocation() {
-		return location;
-	}
+    public ArenaStatusSign(String arenaType, StatusUpdate update, Location location, MatchParams params) {
+        this.arenaType = arenaType;
+        this.update = update;
+        this.location = location;
+        this.params = params;
+    }
 
-	public void setLocation(Location location) {
-		this.location = location;
-	}
+    public Location getLocation() {
+        return location;
+    }
 
-	public String getType() {
-		return arenaType;
-	}
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
-	@Override
-	public Map<String, Object> serialize() {
-		HashMap<String,Object> map = new HashMap<String,Object>();
-		map.put("arenaType", arenaType);
-		map.put("updateType", update.toString());
-		map.put("location", SerializerUtil.getBlockLocString(location));
-		return map;
-	}
+    public String getType() {
+        return arenaType;
+    }
 
-	public static ArenaStatusSign deserialize(Map<String, Object> map) {
-		String arenaType = (String) map.get("arenaType");
-		StatusUpdate update = StatusUpdate.valueOf((String) map.get("updateType"));
-		Location location = SerializerUtil.getLocation((String) map.get("location"));
-		if (arenaType == null || update == null || location == null)
-			return null;
-		MatchParams mp = ParamController.getMatchParamCopy(arenaType);
+    @Override
+    public Map<String, Object> serialize() {
+        HashMap<String,Object> map = new HashMap<String,Object>();
+        map.put("arenaType", arenaType);
+        map.put("updateType", update.toString());
+        map.put("location", SerializerUtil.getBlockLocString(location));
+        return map;
+    }
 
-		return new ArenaStatusSign(arenaType, update, location,mp);
-	}
+    public static ArenaStatusSign deserialize(Map<String, Object> map) {
+        String arenaType = (String) map.get("arenaType");
+        StatusUpdate update = StatusUpdate.valueOf((String) map.get("updateType"));
+        Location location = SerializerUtil.getLocation((String) map.get("location"));
+        if (arenaType == null || update == null || location == null)
+            return null;
+        MatchParams mp = ParamController.getMatchParamCopy(arenaType);
 
-	public MatchParams getMatchParams() {
-		return params;
-	}
+        return new ArenaStatusSign(arenaType, update, location,mp);
+    }
 
-	public void setQ(int i, int j) {
-		Sign s = getSign();
-		if (s == null)
-			return;
-		s.setLine(3, i +"/" +j);
-	}
+    public MatchParams getMatchParams() {
+        return params;
+    }
 
-	private Sign getSign() {
-		Block b = location.getBlock();
-		if (b == null)
-			return null;
-		Material m = b.getType();
-		return m.name().contains("SIGN") ? (Sign)b : null;
-	}
+    public void setQ(int i, int j) {
+        Sign s = getSign();
+        if (s == null)
+            return;
+        s.setLine(3, i +"/" +j);
+    }
+
+    private Sign getSign() {
+        Block b = location.getBlock();
+        if (b == null)
+            return null;
+        Material m = b.getType();
+        return m.name().contains("SIGN") ? (Sign)b : null;
+    }
 }

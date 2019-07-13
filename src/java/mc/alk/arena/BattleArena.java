@@ -58,6 +58,7 @@ import mc.alk.arena.serializers.ArenaControllerSerializer;
 import mc.alk.arena.serializers.ArenaSerializer;
 import mc.alk.arena.serializers.BAClassesSerializer;
 import mc.alk.arena.serializers.BAConfigSerializer;
+import mc.alk.arena.serializers.BASignSerializer;
 import mc.alk.arena.serializers.BaseConfig;
 import mc.alk.arena.serializers.EventScheduleSerializer;
 import mc.alk.arena.serializers.MessageSerializer;
@@ -106,6 +107,7 @@ public class BattleArena extends JavaPlugin {
 
     private ArenaControllerSerializer arenaControllerSerializer;
     private static final BAConfigSerializer baConfigSerializer = new BAConfigSerializer();
+    private static final BASignSerializer baSignSerializer = new BASignSerializer();
     private static final BAClassesSerializer classesSerializer = new BAClassesSerializer();
     private static final EventScheduleSerializer eventSchedulerSerializer = new EventScheduleSerializer();
     private static final SignSerializer signSerializer = new SignSerializer();
@@ -214,6 +216,9 @@ public class BattleArena extends JavaPlugin {
         }
 
         baConfigSerializer.loadDefaults(); /// Load our defaults for BattleArena, has to happen before classes are loaded
+
+        baSignSerializer.setConfig(FileUtil.load(clazz, dir.getPath() + "/signs.yml", "/default_files/signs.yml"));
+        baSignSerializer.load();
 
         classesSerializer.setConfig(FileUtil.load(clazz, dir.getPath() + "/classes.yml", "/default_files/classes.yml")); /// Load classes
         classesSerializer.loadAll();
@@ -549,6 +554,14 @@ public class BattleArena extends JavaPlugin {
         return baConfigSerializer;
     }
 
+    /**
+     * The main serializer for the signs.yml
+     *
+     * @return BASignSerializer
+     */
+    public BASignSerializer getBASignSerializer() {
+        return baSignSerializer;
+    }
     /**
      * Reload our competitions
      */

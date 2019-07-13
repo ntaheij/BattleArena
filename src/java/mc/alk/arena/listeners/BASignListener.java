@@ -1,6 +1,8 @@
 package mc.alk.arena.listeners;
 
+import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
+import mc.alk.arena.competition.match.Match;
 import mc.alk.arena.controllers.PlayerController;
 import mc.alk.arena.objects.ArenaClass;
 import mc.alk.arena.objects.signs.ArenaCommandSign;
@@ -9,7 +11,6 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.SignUtil;
-import mc.euro.bukkitadapter.MaterialAdapter;
 import mc.euro.bukkitadapter.material.BattleMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -43,12 +44,9 @@ public class BASignListener implements Listener{
         }
 
         if (PermissionsUtil.isAdmin(event.getPlayer()) && (event.getAction() == Action.LEFT_CLICK_BLOCK)){
-            return;}
-
-        String[] lines = ((Sign) event.getClickedBlock().getState()).getLines();
-        if (!lines[0].startsWith("&") && !lines[0].startsWith("[") && !lines[0].startsWith("§")) {
             return;
         }
+
         ArenaCommandSign acs = signLocs.get(getKey(event.getClickedBlock().getLocation()));
         if (acs == null) {
             acs = SignUtil.getArenaCommandSign(((Sign) event.getClickedBlock().getState()),
@@ -137,24 +135,25 @@ public class BASignListener implements Listener{
                 return;
         }
 
-        try{
-            String match = acs.getMatchParams().getName().toLowerCase();
-            match = Character.toUpperCase(match.charAt(0)) + match.substring(1);
-            String str;
-            if (acs.getMatchParams().getSignDisplayName() != null) {
-                str = MessageUtil.colorChat(acs.getMatchParams().getSignDisplayName());
-            } else {
-                str = MessageUtil.colorChat( "["+
-                        acs.getMatchParams().getColor()+match+"&0]");
+        try {
+            String arenaName = "";
+            if (acs.getArena() != null)
+                arenaName = acs.getArena().getName();
+
+            if (SignUtil.isJoinSign(lines)) {
+                String[] formattedLines = SignUtil.getFormattedLines(acs.getMatchParams(), "Open", arenaName, BattleArena.getSelf().getBASignSerializer().getJoinSignFormat("open"));
+                for (int i = 0; i < formattedLines.length; i++) {
+                    event.setLine(i, formattedLines[i]);
+                }
             }
-            if (ChatColor.stripColor(str).length()>15){
-                str = MessageUtil.colorChat( "["+
-                        acs.getMatchParams().getColor()+acs.getMatchParams().getCommand().toLowerCase()+"&0]");
+
+            if (SignUtil.isLeaveSign(lines)) {
+                String[] formattedLines = SignUtil.getFormattedLines(acs.getMatchParams(), "Open", arenaName, BattleArena.getSelf().getBASignSerializer().getLeaveSignFormat("open"));
+                for (int i = 0; i < formattedLines.length; i++) {
+                    event.setLine(i, formattedLines[i]);
+                }
             }
-            event.setLine(0, str);
-            String cmd = acs.getCommand();
-            cmd = Character.toUpperCase(cmd.charAt(0)) + cmd.substring(1);
-            event.setLine(1, MessageUtil.colorChat(ChatColor.GREEN+cmd.toLowerCase()) );
+
             MessageUtil.sendMessage(event.getPlayer(), "&2Arena command sign created");
             sul.addSign(acs);
             signLocs.put(getKey(acs.getLocation()), acs);

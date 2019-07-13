@@ -1,14 +1,14 @@
 package mc.alk.arena.listeners;
 
+import mc.alk.arena.BattleArena;
 import mc.alk.arena.events.matches.MatchFinishedEvent;
 import mc.alk.arena.events.matches.MatchStartEvent;
 import mc.alk.arena.events.players.ArenaPlayerEnterQueueEvent;
 import mc.alk.arena.events.players.ArenaPlayerLeaveQueueEvent;
-import mc.alk.arena.objects.ArenaSize;
 import mc.alk.arena.objects.arenas.Arena;
 import mc.alk.arena.objects.signs.ArenaCommandSign;
 import mc.alk.arena.util.MapOfTreeSet;
-import mc.alk.arena.util.MessageUtil;
+import mc.alk.arena.util.SignUtil;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,109 +16,90 @@ import org.bukkit.event.Listener;
 
 import java.util.Comparator;
 
-public class SignUpdateListener implements Listener{
+public class SignUpdateListener implements Listener {
+
     MapOfTreeSet<String,ArenaCommandSign> arenaSigns =
-            new MapOfTreeSet<String, ArenaCommandSign>(ArenaCommandSign.class, new Comparator<ArenaCommandSign>(){
+            new MapOfTreeSet<String, ArenaCommandSign>(ArenaCommandSign.class, new Comparator<ArenaCommandSign>() {
                 @Override
                 public int compare(ArenaCommandSign o1, ArenaCommandSign o2) {
                     return o1.hashCode() - o2.hashCode();
                 }
             });
 
-
-    private String getMatchState(String str){
-        if (str != null && (str.startsWith("\\d") || str.indexOf(' ') > 0 )){
-            int index = str.indexOf(' ');
-            return index != -1 ? str.substring(0, index) : str;
-        } else {
-            return "Open";
+    public void updateAllSigns() {
+        for (String str : BattleArena.getBAController().getArenas().keySet()) {
+            Arena arena = BattleArena.getBAController().getArenas().get(str);
+            updateSign(arena, "Open");
         }
     }
 
-    private String getQCount(String str){
-        if (str != null && (str.startsWith("\\d") || str.indexOf(' ') > 0 )){
-            int index = str.indexOf(' ');
-            return index != -1 ? str.substring(index+1, str.length()) : str;
-        } else {
-            return "";
-        }
-    }
-
-    private void setPeopleInQueue(Arena arena, int playersInQueue,
-                                  int neededPlayers, int maxPlayers) {
-        ArenaCommandSign[] signLocs = arenaSigns.getSafe(arena.getName());
-        if (signLocs == null || signLocs.length == 0){
+    public void updateSign(Arena arena, String state) {
+        ArenaCommandSign[] commandSigns = arenaSigns.getSafe(arena.getName());
+        if (commandSigns == null || commandSigns.length == 0)
             return;
-        }
-        final String strcount;
-        if (neededPlayers == maxPlayers){
-            strcount = (neededPlayers == ArenaSize.MAX) ?
-                    playersInQueue +"&6/\u221E" : playersInQueue+"&6/"+neededPlayers;
-        } else {
-            strcount =(maxPlayers == ArenaSize.MAX) ?
-                    playersInQueue +"&6/"+neededPlayers+"/\u221E" : playersInQueue+"&6/"+neededPlayers+"/"+maxPlayers;
-        }
-        for (ArenaCommandSign l : signLocs){
-            Sign s = l.getSign();
-            if (s == null)
-                continue;
-            s.setLine(3, MessageUtil.colorChat(getMatchState(s.getLine(3))+" " + strcount));
-            s.update();
-        }
-    }
 
-    private void setMatchState(Arena arena, String state) {
-        ArenaCommandSign[] signLocs = arenaSigns.getSafe(arena.getName());
-        if (signLocs == null || signLocs.length==0){
-            return;
-        }
-        for (ArenaCommandSign l : signLocs){
-            Sign s = l.getSign();
-            if (s == null)
+        for (ArenaCommandSign commandSign : commandSigns) {
+            Sign sign = commandSign.getSign();
+
+            // There is potential the sign was destroyed, so lets check
+            if (sign == null)
                 continue;
-            s.setLine(3, MessageUtil.colorChat(state + " "+ getQCount(s.getLine(3))));
-            s.update();
+
+            String[] lines = sign.getLines();
+            if (SignUtil.isJoinSign(lines)) {
+                String[] formattedLines = SignUtil.getFormattedLines(commandSign.getMatchParams(), state, arena.getName(), BattleArena.getSelf().getBASignSerializer().getJoinSignFormat(state.toLowerCase()));
+                for (int i = 0; i < formattedLines.length; i++) {
+                    sign.setLine(i, formattedLines[i]);
+                }
+            }
+
+            if (SignUtil.isLeaveSign(lines)) {
+                String[] formattedLines = SignUtil.getFormattedLines(commandSign.getMatchParams(), state, arena.getName(), BattleArena.getSelf().getBASignSerializer().getLeaveSignFormat(state.toLowerCase()));
+                for (int i = 0; i < formattedLines.length; i++) {
+                    sign.setLine(i, formattedLines[i]);
+                }
+            }
+
+            sign.update();
         }
     }
 
     @EventHandler(priority=EventPriority.MONITOR)
-    public void onMatchStartEvent(MatchStartEvent event){
-        setMatchState(event.getMatch().getArena(), "Active");
+    public void onMatchStartEvent(MatchStartEvent event) {
+        updateSign(event.getMatch().getArena(), "Active");
     }
 
     @EventHandler(priority=EventPriority.MONITOR)
     public void onMatchFinishedEvent(MatchFinishedEvent event){
-        setMatchState(event.getMatch().getArena(), "Open");
+        updateSign(event.getMatch().getArena(), "Open");
     }
 
     @EventHandler
     public void onArenaPlayerEnterQueueEvent(ArenaPlayerEnterQueueEvent event){
-        if (event.getArena() == null) return;
-        int size = event.getQueueResult().playersInQueue;
-        setPeopleInQueue(event.getArena(), size,
-                event.getQueueResult().params.getMinPlayers(),
-                event.getQueueResult().maxPlayers);
+        if (event.getArena() == null)
+            return;
+
+        updateSign(event.getArena(), "Open");
     }
 
     @EventHandler(priority=EventPriority.MONITOR)
     public void onArenaPlayerLeaveQueueEvent(ArenaPlayerLeaveQueueEvent event){
-        if (event.getArena() == null) return;
-        int size = event.getPlayersInArenaQueue(event.getArena());
-        setPeopleInQueue(event.getArena(), size,
-                event.getParams().getMinPlayers(),
-                event.getParams().getMaxPlayers());
+        if (event.getArena() == null)
+            return;
+
+        updateSign(event.getArena(), "Open");
     }
 
     public void addSign(ArenaCommandSign acs) {
-        if (acs.getSign() == null || acs.getOption1() == null){
-            return;}
+        if (acs.getSign() == null || acs.getJoinOptions() == null){
+            return;
+        }
+
         Arena a = acs.getArena();
         if (a == null)
             return;
-        arenaSigns.add(a.getName(), acs);
-    }
 
-    public void updateAllSigns() {
+        arenaSigns.add(a.getName(), acs);
     }
 
     public MapOfTreeSet<String, ArenaCommandSign> getStatusSigns() {

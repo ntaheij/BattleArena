@@ -1,0 +1,28 @@
+# -----------------
+# BattleArena Sign Main Config
+#
+# Sign Tutorial: https://docs.battleplugins.org/docs/ba/customization/signs
+# -----------------
+signs:
+  join:
+    open:
+      1: "{signprefix}"
+      2: "&ajoin" # Must contain 'join' somewhere in the sign
+      3: "{arena}" # Optional
+      4: "{state} &6{queuedplayers}/{maxplayers}"
+    active:
+      1: "{signprefix}"
+      2: "&ajoin" # Must contain 'join' somewhere in the sign
+      3: "{arena}" # Optional
+      4: "{state} &6{players}/{maxplayers}"
+  leave:
+    open:
+      1: "{signprefix}"
+      2: "&ajoin" # Must contain 'join' somewhere in the sign
+      3: "{arena}" # Optional
+      4: "{state} &6{queuedplayers}/{maxplayers}"
+    active:
+      1: "{signprefix}"
+      2: "&ajoin" # Must contain 'join' somewhere in the sign
+      3: "{arena}" # Optional
+      4: "{state} &6{players}/{maxplayers}"
