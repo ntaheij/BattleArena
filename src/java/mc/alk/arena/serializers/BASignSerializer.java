@@ -14,11 +14,11 @@ public class BASignSerializer extends BaseConfig {
     }
 
     public String[] getJoinSignFormat(String state) {
-        return getSignFormat("join." + state);
+        return getSignFormat("join." + state + ".lines");
     }
 
     public String[] getLeaveSignFormat(String state) {
-        return getSignFormat("leave." + state);
+        return getSignFormat("leave." + state + ".lines");
     }
 
     public String[] getSignFormat(String path) {
