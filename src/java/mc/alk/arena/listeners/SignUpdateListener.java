@@ -9,6 +9,10 @@ import mc.alk.arena.objects.arenas.Arena;
 import mc.alk.arena.objects.signs.ArenaCommandSign;
 import mc.alk.arena.util.MapOfTreeSet;
 import mc.alk.arena.util.SignUtil;
+import mc.euro.bukkitadapter.material.BattleMaterial;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -51,6 +55,8 @@ public class SignUpdateListener implements Listener {
                 for (int i = 0; i < formattedLines.length; i++) {
                     sign.setLine(i, formattedLines[i]);
                 }
+
+                updateAttachedBlock(sign, "join", state.toLowerCase());
             }
 
             if (SignUtil.isLeaveSign(lines)) {
@@ -58,10 +64,27 @@ public class SignUpdateListener implements Listener {
                 for (int i = 0; i < formattedLines.length; i++) {
                     sign.setLine(i, formattedLines[i]);
                 }
+
+                updateAttachedBlock(sign, "leave", state.toLowerCase());
             }
 
             sign.update();
         }
+    }
+
+    public void updateAttachedBlock(Sign sign, String type, String state) {
+        BattleMaterial material = BattleArena.getSelf().getBASignSerializer().getAttachedBlock(type, state);
+        if (material == null)
+            return;
+
+        Block attachedBlock = mc.alk.battlebukkitlib.SignUtil.getAttatchedBlock(sign);
+        if (attachedBlock == null || attachedBlock.getType() == Material.AIR)
+            return;
+
+        BlockState blockState = attachedBlock.getState();
+        attachedBlock.setType(material.parseMaterial());
+        blockState.setRawData((byte) material.getData());
+        blockState.update();
     }
 
     @EventHandler(priority=EventPriority.MONITOR)
@@ -79,7 +102,10 @@ public class SignUpdateListener implements Listener {
         if (event.getArena() == null)
             return;
 
-        updateSign(event.getArena(), "Open");
+        // Check if the match is null or has no players so the sign doesn't show that the arena is open when it's not
+        if (event.getArena().getMatch() == null || event.getArena().getMatch().getPlayers().size() == 0) {
+            updateSign(event.getArena(), "Open");
+        }
     }
 
     @EventHandler(priority=EventPriority.MONITOR)
@@ -87,7 +113,10 @@ public class SignUpdateListener implements Listener {
         if (event.getArena() == null)
             return;
 
-        updateSign(event.getArena(), "Open");
+        // Check if the match is null or has no players so the sign doesn't show that the arena is open when it's not
+        if (event.getArena().getMatch() == null || event.getArena().getMatch().getPlayers().size() == 0) {
+            updateSign(event.getArena(), "Open");
+        }
     }
 
     public void addSign(ArenaCommandSign acs) {
