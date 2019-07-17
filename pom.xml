@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.13.2</version>
+    <version>3.9.13.3</version>
     <name>BattleArena</name>
     <url>https://github.com/BattlePlugins/BattleArena</url>
     <properties>
@@ -52,6 +52,10 @@
         <repository>
             <id>codemc-repo</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
+        </repository>
+        <repository>
+            <id>placeholderapi-repo</id>
+            <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
     </repositories>
     <dependencies>
@@ -182,6 +186,12 @@
             <groupId>mc.alk</groupId>
             <artifactId>VirtualPlayers</artifactId>
             <version>1.14.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.9.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
