@@ -1,10 +1,8 @@
 package mc.alk.arena.controllers;
 
-import com.sk89q.worldedit.regions.Region;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.containers.RoomContainer;
-import mc.alk.arena.controllers.plugins.PylamoController;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.CompetitionState;
 import mc.alk.arena.objects.LocationType;
@@ -24,9 +22,10 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.TeamUtil;
 import mc.alk.arena.util.Util;
-import mc.alk.arena.util.plugins.WorldEditUtil;
-import mc.alk.worldeditutil.controllers.WorldGuardController;
-import mc.alk.worldeditutil.math.BlockSelection;
+import org.battleplugins.arenaregenutil.ArenaRegenController;
+import org.battleplugins.arenaregenutil.RegenPlugin;
+import org.battleplugins.arenaregenutil.region.ArenaSelection;
+import org.battleplugins.worldguardutil.controllers.WorldGuardController;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -207,33 +206,35 @@ public class ArenaAlterController {
     }
 
     private static boolean addPylamoRegion(Player sender, Arena arena) {
-        if (!WorldGuardController.hasWorldEdit()){
-            sendMessage(sender,"&cYou need world edit to use this command");
-            return false;}
-        if (!PylamoController.enabled()){
-            sendMessage(sender,"&cYou need PylamoRestorationSystem to use this command");
-            return false;}
-
-        Region weRegion = WorldGuardController.getWorldEditRegion(sender);
-        BlockSelection sel = WorldGuardController.getBlockSelection(weRegion);
-        if (weRegion == null){
-            sendMessage(sender,"&cYou need to select a region to use this command.");
+        if (!ArenaRegenController.hasRegenPlugin(RegenPlugin.PYLAMO_RESTORATION)) {
+            sendMessage(sender, "&cYou need PylamoRestorationSystem to use this command");
             return false;
         }
+
+        if (!ArenaRegenController.hasRegenPlugin(RegenPlugin.WORLDEDIT)) {
+            sendMessage(sender, "&cYou need WorldEdit to use this command");
+            return false;
+        }
+
+        ArenaSelection selection = ArenaRegenController.getSelection(sender);
+        if (selection == null) {
+            sendMessage(sender, "&cYou need to make a region first to use this command.");
+            return false;
+        }
+
         String id = makeRegionName(arena);
-        PylamoController.createRegion(id, sel.getMinimumPoint(), sel.getMaximumPoint());
+        ArenaRegenController.saveSchematic(sender, id);
         PylamoRegion region = new PylamoRegion(id);
-        region.setID(id);
         arena.setPylamoRegion(region);
         return true;
     }
 
     private static boolean addWorldGuardRegion(Player sender, Arena arena) {
         if (!checkWorldGuard(sender)){
-            return false;}
-        Region weRegion = WorldGuardController.getWorldEditRegion(sender);
-        BlockSelection sel = WorldGuardController.getBlockSelection(weRegion);
+            return false;
+        }
 
+        ArenaSelection sel = ArenaRegenController.getSelection(sender);
         if (sel == null){
             sendMessage(sender,"&cYou need to select a region to use this command.");
             return false;
@@ -245,9 +246,14 @@ public class ArenaAlterController {
             String id = makeRegionName(arena);
             if (region != null){
                 WorldGuardController.updateProtectedRegion(sender,id);
-                sendMessage(sender,"&2Region updated! ");
+                sendMessage(sender,"&2Region updated!");
             } else {
-                region = WorldGuardController.createProtectedRegion(sender, id);
+                WorldGuardController.createProtectedRegion(sender, id);
+                // Check if the region exists, since an exception can be thrown
+                if (WorldGuardController.hasRegion(sender.getWorld(), id)) {
+                    region = new WorldGuardRegion(id, sender.getWorld());
+                }
+
                 if (region != null) {
                     sendMessage(sender,"&2Region "+region.getID()+" added! ");
                 } else {
@@ -268,7 +274,9 @@ public class ArenaAlterController {
             }
 
             arena.setWorldGuardRegion(region);
-            WorldGuardController.saveSchematic(sender, id);
+            // Since we're using WorldGuard here, save as a WorldEdit schematic
+            ArenaRegenController.saveSchematic(RegenPlugin.WORLDEDIT, sender, id);
+
             MatchParams mp = ParamController.getMatchParams(arena.getArenaType().getName());
             if (mp != null && mp.getThisStateGraph().hasAnyOption(TransitionOption.WGNOENTER)){
                 WorldGuardController.trackRegion(w.getName(), id);

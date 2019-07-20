@@ -27,6 +27,7 @@ import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.serializers.Persist;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.Util;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -374,7 +375,7 @@ public class Arena extends AreaContainer {
      * @param regionName region name
      */
     public void setWorldGuardRegion(String regionWorld, String regionName) {
-        wgRegion = new WorldGuardRegion(regionWorld, regionName);
+        wgRegion = new WorldGuardRegion(regionName, Bukkit.getWorld(regionName));
     }
 
     /**
@@ -390,7 +391,7 @@ public class Arena extends AreaContainer {
      * @return true or false if region is found and valid
      */
     public boolean hasRegion() {
-        return wgRegion != null && wgRegion.valid();
+        return wgRegion != null && wgRegion.isValid();
     }
 
     /**

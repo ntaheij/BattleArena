@@ -1,12 +1,12 @@
 package mc.alk.arena.listeners.competition;
 
-import mc.alk.arena.controllers.plugins.WorldGuardController;
 import mc.alk.arena.listeners.PlayerHolder;
 import mc.alk.arena.objects.arenas.ArenaListener;
 import mc.alk.arena.objects.events.ArenaEventHandler;
 import mc.alk.arena.objects.events.EventPriority;
 import mc.alk.arena.objects.options.TransitionOption;
-import mc.alk.arena.objects.regions.ArenaRegion;
+import org.battleplugins.arenaregenutil.region.ArenaRegion;
+import org.battleplugins.worldguardutil.controllers.WorldGuardController;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -18,7 +18,7 @@ public class PlayerMoveListener implements ArenaListener{
 	public PlayerMoveListener(PlayerHolder holder, ArenaRegion region){
 		this.holder = holder;
         this.region = region;
-        this.w = Bukkit.getWorld(region.getWorldName());
+        this.w = Bukkit.getWorld(region.getWorld().getName());
     }
 
     @ArenaEventHandler(priority=EventPriority.HIGH)

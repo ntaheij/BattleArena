@@ -6,13 +6,13 @@ import mc.alk.arena.controllers.BattleArenaController;
 import mc.alk.arena.controllers.PlayerController;
 import mc.alk.arena.controllers.PlayerRestoreController;
 import mc.alk.arena.controllers.plugins.EssentialsController;
-import mc.alk.arena.controllers.plugins.WorldGuardController;
 import mc.alk.arena.events.players.ArenaPlayerLeaveEvent;
 import mc.alk.arena.objects.ArenaPlayer;
-import mc.alk.arena.objects.regions.WorldGuardRegion;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PlayerUtil;
 import mc.alk.battlebukkitlib.InventoryUtil.PInv;
+import org.battleplugins.worldguardutil.controllers.WorldGuardController;
+import org.battleplugins.worldguardutil.region.ProtectedArenaRegion;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -107,7 +107,8 @@ public class BAPlayerListener implements Listener  {
 				WorldGuardController.regionCount() == 0 ||
 				event.getPlayer().hasPermission(Permissions.TELEPORT_BYPASS_PERM))
 			return;
-		WorldGuardRegion region = WorldGuardController.getContainingRegion(event.getTo());
+
+		ProtectedArenaRegion region = WorldGuardController.getContainingRegion(event.getTo());
 		if (region != null && !WorldGuardController.hasPlayer(event.getPlayer().getName(), region)){
 			MessageUtil.sendMessage(event.getPlayer(), "&cYou can't enter the arena through teleports");
 			event.setCancelled(true);

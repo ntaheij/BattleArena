@@ -8,7 +8,6 @@ import mc.alk.arena.controllers.RoomController;
 import mc.alk.arena.controllers.Scheduler;
 import mc.alk.arena.controllers.containers.AreaContainer;
 import mc.alk.arena.controllers.containers.RoomContainer;
-import mc.alk.arena.controllers.plugins.WorldGuardController;
 import mc.alk.arena.objects.ArenaParams;
 import mc.alk.arena.objects.LocationType;
 import mc.alk.arena.objects.MatchParams;
@@ -17,7 +16,6 @@ import mc.alk.arena.objects.arenas.Arena;
 import mc.alk.arena.objects.arenas.ArenaControllerInterface;
 import mc.alk.arena.objects.arenas.ArenaType;
 import mc.alk.arena.objects.arenas.Persistable;
-import mc.alk.arena.objects.exceptions.RegionNotFound;
 import mc.alk.arena.objects.options.EventOpenOptions;
 import mc.alk.arena.objects.options.TransitionOption;
 import mc.alk.arena.objects.spawns.BlockSpawn;
@@ -35,6 +33,8 @@ import mc.alk.arena.util.SerializerUtil;
 import mc.alk.battlebukkitlib.InventoryUtil;
 import mc.euro.bukkitadapter.MaterialAdapter;
 import org.apache.commons.lang.StringUtils;
+import org.battleplugins.worldguardutil.controllers.WorldGuardController;
+import org.battleplugins.worldguardutil.exception.RegionNotFoundException;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -334,7 +334,7 @@ public class ArenaSerializer extends BaseConfig{
             return;
         if (!arena.hasRegion())
             return;
-        if (!WorldGuardController.hasRegion(arena.getWorldGuardRegion())){
+        if (!WorldGuardController.hasRegion(arena.getWorldGuardRegion().getWorld(), arena.getWorldGuardRegion().getID())){
             Log.err("Arena " + arena.getName() +" has a world guard region defined but it no longer exists inside of WorldGuard."+
                     "You will have to remake the region.  /arena alter <arena name> addregion");}
         MatchParams mp = ParamController.getMatchParamCopy(arena.getArenaType().getName());
@@ -346,7 +346,7 @@ public class ArenaSerializer extends BaseConfig{
         WorldGuardController.setFlag(arena.getWorldGuardRegion(), "entry", !trans.hasAnyOption(TransitionOption.WGNOENTER));
         try {
             WorldGuardController.trackRegion(arena.getWorldGuardRegion());
-        } catch (RegionNotFound e) {
+        } catch (RegionNotFoundException e) {
             Log.printStackTrace(e);
         }
     }

@@ -13,7 +13,6 @@ import mc.alk.arena.controllers.plugins.PylamoController;
 import mc.alk.arena.controllers.plugins.TagAPIController;
 import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.controllers.plugins.VanishNoPacketInterface;
-import mc.alk.arena.controllers.plugins.WorldGuardController;
 import mc.alk.arena.objects.messaging.AnnouncementOptions;
 import mc.alk.arena.objects.messaging.plugins.HerochatPlugin;
 import mc.alk.arena.plugins.combattag.TagsOff;
@@ -25,6 +24,9 @@ import mc.alk.arena.util.plugins.CombatTagUtil;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 
+import org.battleplugins.arenaregenutil.ArenaRegenController;
+import org.battleplugins.arenaregenutil.RegenPlugin;
+import org.battleplugins.worldguardutil.controllers.WorldGuardController;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -260,13 +262,12 @@ public class BAPluginListener implements Listener {
     }
 
     public void loadWorldEdit() {
-        if (!WorldGuardController.hasWorldEdit()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("WorldEdit");
-            if (plugin != null) {
-                if (WorldGuardController.setWorldEdit(plugin)) {
-                    Log.info("[BattleArena] WorldEdit detected.");
-                }
-            }
+        ArenaRegenController.setPlugin(BattleArena.getSelf());
+        ArenaRegenController.initialize();
+
+        if (!ArenaRegenController.hasRegenPlugin(RegenPlugin.WORLDEDIT)) {
+            ArenaRegenController.setDefaultRegenPlugin(RegenPlugin.WORLDEDIT);
+            Log.info("[BattleArena] WorldEdit detected.");
         }
     }
 

@@ -1,7 +1,6 @@
 package mc.alk.arena.controllers;
 
 import mc.alk.arena.BattleArena;
-import mc.alk.arena.controllers.plugins.WorldGuardController;
 import mc.alk.arena.objects.ArenaClass;
 import mc.alk.arena.objects.CommandLineString;
 import mc.alk.arena.objects.CompetitionState;
@@ -19,6 +18,7 @@ import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.MinMax;
 import mc.alk.battlebukkitlib.InventoryUtil;
+import org.battleplugins.worldguardutil.controllers.WorldGuardController;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;

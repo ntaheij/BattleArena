@@ -3,7 +3,6 @@ package mc.alk.arena.controllers;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.plugins.HeroesController;
-import mc.alk.arena.controllers.plugins.WorldGuardController;
 import mc.alk.arena.listeners.BAPlayerListener;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.PlayerSave;
@@ -12,6 +11,7 @@ import mc.alk.arena.util.Log;
 import mc.alk.battlebukkitlib.EffectUtil;
 import mc.alk.battlebukkitlib.InventoryUtil;
 import mc.alk.battlebukkitlib.InventoryUtil.PInv;
+import org.battleplugins.worldguardutil.controllers.WorldGuardController;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
