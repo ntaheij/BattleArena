@@ -274,8 +274,7 @@ public class ArenaAlterController {
             }
 
             arena.setWorldGuardRegion(region);
-            // Since we're using WorldGuard here, save as a WorldEdit schematic
-            ArenaRegenController.saveSchematic(RegenPlugin.WORLDEDIT, sender, id);
+            ArenaRegenController.saveSchematic(sender, id);
 
             MatchParams mp = ParamController.getMatchParams(arena.getArenaType().getName());
             if (mp != null && mp.getThisStateGraph().hasAnyOption(TransitionOption.WGNOENTER)){
