@@ -223,7 +223,7 @@ public class ArenaAlterController {
         }
 
         String id = makeRegionName(arena);
-        ArenaRegenController.saveSchematic(sender, id);
+        ArenaRegenController.saveSchematic(RegenPlugin.PYLAMO_RESTORATION, sender, id);
         PylamoRegion region = new PylamoRegion(id);
         arena.setPylamoRegion(region);
         return true;

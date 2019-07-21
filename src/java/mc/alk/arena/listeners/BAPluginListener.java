@@ -9,7 +9,6 @@ import mc.alk.arena.controllers.plugins.FactionsController;
 import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.controllers.plugins.McMMOController;
 import mc.alk.arena.controllers.plugins.MobArenaInterface;
-import mc.alk.arena.controllers.plugins.PylamoController;
 import mc.alk.arena.controllers.plugins.TagAPIController;
 import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.controllers.plugins.VanishNoPacketInterface;
@@ -69,8 +68,6 @@ public class BAPluginListener implements Listener {
             loadMultiverseCore();
         } else if (event.getPlugin().getName().equalsIgnoreCase("Multiverse-Inventories")) {
             loadMultiverseInventory();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("PylamoRestorationSystem")) {
-            loadPylamoRestoration();
         } else if (event.getPlugin().getName().equalsIgnoreCase("TagAPI")) {
             loadTagAPI();
         } else if (event.getPlugin().getName().equalsIgnoreCase("WorldEdit")) {
@@ -100,7 +97,6 @@ public class BAPluginListener implements Listener {
         loadMultiInv();
         loadMultiverseCore();
         loadMultiverseInventory();
-        loadPylamoRestoration();
         loadTagAPI();
         loadWorldEdit();
         loadWorldGuard();
@@ -251,21 +247,11 @@ public class BAPluginListener implements Listener {
         }
     }
 
-    public void loadPylamoRestoration() {
-        if (!PylamoController.enabled()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("PylamoRestorationSystem");
-            if (plugin != null) {
-                PylamoController.setPlugin(plugin);
-                Log.info(BattleArena.getPluginName() + " found PylamoRestorationSystem");
-            }
-        }
-    }
-
     public void loadWorldEdit() {
         ArenaRegenController.setPlugin(BattleArena.getSelf());
         ArenaRegenController.initialize();
 
-        if (!ArenaRegenController.hasRegenPlugin(RegenPlugin.WORLDEDIT)) {
+        if (ArenaRegenController.hasRegenPlugin(RegenPlugin.WORLDEDIT)) {
             ArenaRegenController.setDefaultRegenPlugin(RegenPlugin.WORLDEDIT);
             Log.info("[BattleArena] WorldEdit detected.");
         }

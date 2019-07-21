@@ -87,6 +87,7 @@ public class TransitionController {
                         if (ArenaRegenController.hasRegenPlugin(RegenPlugin.PYLAMO_RESTORATION)) {
                             ArenaRegenController.pasteSchematic(RegenPlugin.PYLAMO_RESTORATION, ac.getArena().getPylamoRegion(), null);
                         } else {
+                            // TODO: Move this to ArenaRegenUtil
                             BlockSelection worldGuardSel = WorldGuardController.getBlockSelection(region);
 
                             ArenaRegenController.pasteSchematic(ac.getArena().getWorldGuardRegion(), worldGuardSel.getMinimumPoint());

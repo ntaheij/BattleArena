@@ -246,12 +246,6 @@
             <version>2.2</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>unknown.plugins</groupId>
-            <artifactId>PylamoRestorationSystem</artifactId>
-            <version>0.4</version>
-            <scope>provided</scope>
-        </dependency>
         <!-- test dependencies -->
         <dependency>
             <groupId>junit</groupId>
