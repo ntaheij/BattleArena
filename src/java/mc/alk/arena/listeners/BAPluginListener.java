@@ -14,6 +14,7 @@ import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.controllers.plugins.VanishNoPacketInterface;
 import mc.alk.arena.objects.messaging.AnnouncementOptions;
 import mc.alk.arena.objects.messaging.plugins.HerochatPlugin;
+import mc.alk.arena.plugins.BAPlaceholderExtension;
 import mc.alk.arena.plugins.combattag.TagsOff;
 import mc.alk.arena.plugins.combattag.TagsOn;
 import mc.alk.arena.util.Log;
@@ -42,6 +43,7 @@ public class BAPluginListener implements Listener {
 
     @EventHandler
     public void onPluginEnable(PluginEnableEvent event) {
+        // TODO: Clean this up
         if (event.getPlugin().getName().equalsIgnoreCase("BattleTracker")) {
             loadBattleTracker();
         } else if (event.getPlugin().getName().equalsIgnoreCase("CombatTag")) {
@@ -68,6 +70,8 @@ public class BAPluginListener implements Listener {
             loadMultiverseCore();
         } else if (event.getPlugin().getName().equalsIgnoreCase("Multiverse-Inventories")) {
             loadMultiverseInventory();
+        } else if (event.getPlugin().getName().equalsIgnoreCase("PlaceholderAPI")) {
+            loadPlaceholderAPI();
         } else if (event.getPlugin().getName().equalsIgnoreCase("TagAPI")) {
             loadTagAPI();
         } else if (event.getPlugin().getName().equalsIgnoreCase("WorldEdit")) {
@@ -97,6 +101,7 @@ public class BAPluginListener implements Listener {
         loadMultiInv();
         loadMultiverseCore();
         loadMultiverseInventory();
+        loadPlaceholderAPI();
         loadTagAPI();
         loadWorldEdit();
         loadWorldGuard();
@@ -244,6 +249,14 @@ public class BAPluginListener implements Listener {
                 Defaults.PLUGIN_MULITVERSE_INV = true;
                 Log.info("[BattleArena] Multiverse-Inventories detected. Implementing teleport/gamemode workarounds");
             }
+        }
+    }
+
+    public void loadPlaceholderAPI() {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
+        if (plugin != null) {
+            new BAPlaceholderExtension().register();
+            Log.info(BattleArena.getPluginName() + " PlaceholderAPI detected. Implementing placeholder hook.");
         }
     }
 

@@ -11,6 +11,7 @@ import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.objects.options.JoinOptions;
 import mc.alk.arena.objects.signs.ArenaCommandSign;
 import mc.alk.arena.objects.signs.ArenaStatusSign;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -58,7 +59,11 @@ public class SignUtil {
 
         for (int i = 0; i < formattedLines.length; i++) {
             String line = lines[i];
-            line = line.replace("{signprefix}", mp.getSignDisplayName());
+            String signPrefix = "&0[" + ChatColor.RED + mp.getName() + "&0]";
+            if (mp.getSignDisplayName() != null && !mp.getSignDisplayName().isEmpty())
+                signPrefix = mp.getSignDisplayName();
+
+            line = line.replace("{signprefix}", signPrefix);
             line = line.replace("{minplayers}", String.valueOf(mp.getMinPlayers()));
             line = line.replace("{maxplayers}", String.valueOf(mp.getMaxPlayers()));
             line = line.replace("{state}", state);

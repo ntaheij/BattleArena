@@ -1621,6 +1621,10 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         return matchResult;
     }
 
+    public Countdown getMatchCountdown() {
+        return matchCountdown;
+    }
+
     public Set<ArenaTeam> getVictors() {
         return matchResult.getVictors();
     }
