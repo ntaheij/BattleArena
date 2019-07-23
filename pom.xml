@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.13.3</version>
+    <version>3.9.13.4</version>
     <name>BattleArena</name>
     <url>https://github.com/BattlePlugins/BattleArena</url>
     <properties>
@@ -84,7 +84,7 @@
         <dependency>
             <groupId>mc.euro</groupId>
             <artifactId>BukkitAdapter</artifactId>
-            <version>1.2.7</version>
+            <version>1.2.8</version>
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
