@@ -229,25 +229,29 @@ public class StateOptions {
             List<ItemStack> items = getNeedItems();
             hasSomething = true;
             for (ItemStack is : items){
-                sb.append("&5 - &6").append(is.getAmount()).append(" ").append(is.getData());
+                sb.append("\n").append("&5 - &6").append(is.getAmount()).append(" ").append(is.getData());
             }
         }
         if (options.containsKey(NOINVENTORY)){
             hasSomething = true;
-            sb.append("&5 - &6Clear Inventory");
+            sb.append("\n").append("&5 - &6Clear Inventory");
         }
         if (options.containsKey(GAMEMODE)){
             hasSomething = true;
             GameMode gm = getGameMode();
-            sb.append("&5 - &6GameMode=").append(gm.toString());
+            sb.append("\n").append("&5 - &6Game Mode: &e").append(gm.toString());
+        }
+        if (options.containsKey(MONEY)) {
+            hasSomething = true;
+            sb.append("\n").append("&5 - &6" + Defaults.MONEY_STR).append(": &e").append(getMoney());
         }
         if (needsArmor()){
             hasSomething = true;
-            sb.append("&5 - &6Armor");
+            sb.append("\n").append("&5 - &2Armor");
         }
         if (options.containsKey(LEVELRANGE)){
             MinMax mm = (MinMax) options.get(LEVELRANGE);
-            sb.append("&a - lvl=").append(mm.toString());
+            sb.append("\n").append("&5 - &aLevel: ").append(mm.toString());
         }
         return hasSomething ? sb.toString() : null;
     }
@@ -262,7 +266,7 @@ public class StateOptions {
                 int amountInInventory =InventoryUtil.getItemAmountFromInventory(inv, is);
                 if (amountInInventory < is.getAmount()){
                     int needed = amountInInventory - is.getAmount();
-                    sb.append("&5 - &e").append(needed).append(" ").append(is.getType()).append("\n");
+                    sb.append("\n").append("&5 - &e").append(needed).append(" ").append(is.getType()).append("\n");
                     isReady = false;
                 }
             }
@@ -270,26 +274,26 @@ public class StateOptions {
         if (options.containsKey(GAMEMODE)){
             GameMode gm = getGameMode();
             if (p.getPlayer().getGameMode() != gm){
-                sb.append("&5 -&e a &6You need to be in &c").append(gm).append("&e mode \n");
+                sb.append("\n").append("&5 -&e a &6You need to be in &c").append(gm).append("&e mode \n");
                 isReady = false;
             }
         }
         if (options.containsKey(NOINVENTORY)){
             if (InventoryUtil.hasAnyItem(p.getPlayer())){
-                sb.append("&5 -&e a &6Clear Inventory\n");
+                sb.append("\n").append("&5 -&e a &6Clear Inventory\n");
                 isReady = false;
             }
         }
         if (options.containsKey(SAMEWORLD) && w!=null){
             if (p.getLocation().getWorld().getUID() != w.getUID()){
-                sb.append("&5 -&c Not in same world\n");
+                sb.append("\n").append("&5 -&c Not in same world\n");
                 isReady = false;
             }
         }
         /// Inside MobArena?
         if (MobArenaInterface.hasMobArena() && MobArenaInterface.insideMobArena(p)){
             isReady = false;
-            sb.append("&5 - &4You are Inside Mob Arena");
+            sb.append("\n").append("&5 - &4You are Inside Mob Arena");
         }
 
         if (needsArmor()){
@@ -302,7 +306,7 @@ public class StateOptions {
         if (options.containsKey(LEVELRANGE)){
             MinMax mm = (MinMax) options.get(LEVELRANGE);
             if (!mm.contains(p.getLevel())){
-                sb.append("&a - lvl=").append(mm.toString());
+                sb.append("\n").append("&5 - &aLevel:").append(mm.toString());
                 isReady = false;
             }
         }
@@ -321,15 +325,15 @@ public class StateOptions {
         }
         if (hasExperience()){
             hasSomething = true;
-            sb.append("&5 - &2").append(getExperience()).append(" experience");
+            sb.append("\n").append("&5 - &2").append(getExperience()).append(" experience");
         }
         if (hasMoney()){
             hasSomething = true;
-            sb.append("&5 - &6").append(getMoney()).append(" ").append(Defaults.MONEY_STR);
+            sb.append("\n").append("&5 - &6").append(getMoney()).append(" ").append(Defaults.MONEY_STR);
         }
         if (poolMoney != null){
             hasSomething = true;
-            sb.append("&5 - &6").append(poolMoney).append(" ").append(Defaults.MONEY_STR);
+            sb.append("\n").append("&5 - &6").append(poolMoney).append(" ").append(Defaults.MONEY_STR);
         }
 
         if (getGiveItems() != null){
@@ -337,21 +341,21 @@ public class StateOptions {
             List<ItemStack> items = getGiveItems();
             ArmorLevel lvl = InventoryUtil.hasArmorSet(items);
             if (lvl != null){
-                sb.append("&5 - &a").append(lvl.toString()).append(" ARMOR");
+                sb.append("\n").append("&5 - &a").append(lvl.toString()).append(" Armor");
             }
             for (ItemStack is : items){
                 if (lvl != null && InventoryUtil.isSameMaterial(lvl,is))
                     continue;
 
-                String enchanted = !is.getEnchantments().isEmpty() ? " &4Enchanted": "";
-                sb.append("&5 - &a").append(is.getAmount()).append(enchanted).append(" " + WordUtils.capitalize(is.getType().toString().replace("_", " ")));
+                String enchanted = !is.getEnchantments().isEmpty() ? " &bEnchanted&a": "";
+                sb.append("\n").append("&5 - &a").append(is.getAmount()).append(enchanted).append(" " + WordUtils.capitalize(is.getType().toString().toLowerCase().replace("_", " ")));
             }
         }
         if (hasEffects()){
             hasSomething = true;
             for (PotionEffect ewa : getEffects()){
                 if (ewa != null)
-                    sb.append("&5 - &b").append(EffectUtil.getCommonName(ewa));
+                    sb.append("\n").append("&5 - &b").append(WordUtils.capitalize(EffectUtil.getCommonName(ewa).toLowerCase()));
             }
         }
 
@@ -448,7 +452,7 @@ public class StateOptions {
         String teamSizes = ArenaSize.rangeString(mp.getMinTeamSize(), mp.getMaxTeamSize());
         sb.append("&eThis is ").append(rated ? "a &4Rated" : "an &aUnrated").
                 append("&e ").append(name).append(". ");
-        sb.append("&eTeam size=&6").append(teamSizes);
+        sb.append("&eTeam Size: &6").append(teamSizes);
         sb.append("\n&eRequirements to Join:");
         sb.append(required==null? "&aNone" : required);
         if (prestart != null || start !=null || onspawn != null){
