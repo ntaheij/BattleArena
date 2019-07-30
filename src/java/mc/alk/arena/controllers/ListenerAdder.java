@@ -21,8 +21,8 @@ import mc.alk.arena.objects.MatchState;
 import mc.alk.arena.objects.StateGraph;
 import mc.alk.arena.objects.arenas.Arena;
 import mc.alk.arena.objects.options.TransitionOption;
-import mc.alk.arena.objects.regions.ArenaRegion;
 import mc.alk.arena.objects.scoreboard.ScoreboardFactory;
+import org.battleplugins.arenaregenutil.region.ArenaRegion;
 
 public class ListenerAdder {
 
@@ -61,7 +61,7 @@ public class ListenerAdder {
             } else if (holder instanceof Arena) {
                 region = ((Arena) holder).getWorldGuardRegion();
             }
-            if (region != null && region.valid())
+            if (region != null && region.isValid())
                 holder.addArenaListener(new PlayerMoveListener(holder,region));
         }
         if (!ScoreboardFactory.hasBukkitScoreboard() &&

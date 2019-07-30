@@ -4,7 +4,7 @@
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.13.5</version>
+    <version>3.9.14.0</version>
     <name>BattleArena</name>
     <url>https://github.com/BattlePlugins/BattleArena</url>
     <properties>
@@ -104,13 +104,6 @@
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
-            <artifactId>WorldEditUtil</artifactId>
-            <version>1.2.5</version>
-            <scope>compile</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>mc.alk</groupId>
             <artifactId>BattlePluginUpdater</artifactId>
             <version>2.2.0</version>
             <scope>compile</scope>
@@ -127,6 +120,20 @@
             <groupId>mc.alk</groupId>
             <artifactId>BattleWebAPI</artifactId>
             <version>2.0</version>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.battleplugins.arenaregenutil</groupId>
+            <artifactId>ArenaRegenUtil</artifactId>
+            <version>1.0.1</version>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.battleplugins.worldguardutil</groupId>
+            <artifactId>WorldGuardUtil</artifactId>
+            <version>1.1.2</version>
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
@@ -255,12 +262,6 @@
             <version>2.2</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>unknown.plugins</groupId>
-            <artifactId>PylamoRestorationSystem</artifactId>
-            <version>0.4</version>
-            <scope>provided</scope>
-        </dependency>
         <!-- test dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -344,7 +345,8 @@
                                     <include>mc.alk:BattlePluginUpdater</include>
                                     <include>mc.alk:BattleScoreboardAPI</include>
                                     <include>mc.alk:BattleWebAPI</include>
-                                    <include>mc.alk:WorldEditUtil</include>
+                                    <include>org.battleplugins.worldguardutil:WorldGuardUtil</include>
+                                    <include>org.battleplugins.arenaregenutil:ArenaRegenUtil</include>
                                     <include>org.bstats:bstats-bukkit</include>
                                 </includes>
                             </artifactSet>
@@ -379,8 +381,12 @@
                                     <shadedPattern>mc.alk.arena.alib.battlewebsapi</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>mc.alk.worldeditutil</pattern>
-                                    <shadedPattern>mc.alk.arena.alib.worldeditutil</shadedPattern>
+                                    <pattern>org.battleplugins.arenaregenutil</pattern>
+                                    <shadedPattern>mc.alk.arena.alib.arenaregenutil</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.battleplugins.worldguardutil</pattern>
+                                    <shadedPattern>mc.alk.arena.alib.worldguardutil</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.bstats.bukkit</pattern>

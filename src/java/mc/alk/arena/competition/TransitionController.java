@@ -10,8 +10,6 @@ import mc.alk.arena.controllers.PlayerStoreController;
 import mc.alk.arena.controllers.TeleportLocationController;
 import mc.alk.arena.controllers.plugins.DisguiseInterface;
 import mc.alk.arena.controllers.plugins.HeroesController;
-import mc.alk.arena.controllers.plugins.PylamoController;
-import mc.alk.arena.controllers.plugins.WorldGuardController;
 import mc.alk.arena.listeners.PlayerHolder;
 import mc.alk.arena.objects.ArenaClass;
 import mc.alk.arena.objects.ArenaPlayer;
@@ -30,6 +28,10 @@ import mc.alk.arena.util.TeamUtil;
 import mc.alk.battlebukkitlib.EffectUtil;
 import mc.alk.battlebukkitlib.ExpUtil;
 import mc.alk.battlebukkitlib.InventoryUtil;
+import org.battleplugins.arenaregenutil.ArenaRegenController;
+import org.battleplugins.arenaregenutil.RegenPlugin;
+import org.battleplugins.worldguardutil.controllers.WorldGuardController;
+import org.battleplugins.worldguardutil.math.BlockSelection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionAttachment;
@@ -40,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 
 public class TransitionController {
 
@@ -83,10 +84,13 @@ public class TransitionController {
                     }
 
                     if (mo.hasOption(TransitionOption.WGRESETREGION)) {
-                        if (PylamoController.enabled() && ac.getArena().getPylamoRegion() != null) {
-                            PylamoController.resetRegion(ac.getArena().getPylamoRegion());
+                        if (ArenaRegenController.hasRegenPlugin(RegenPlugin.PYLAMO_RESTORATION)) {
+                            ArenaRegenController.pasteSchematic(RegenPlugin.PYLAMO_RESTORATION, ac.getArena().getPylamoRegion(), null);
                         } else {
-                            WorldGuardController.pasteSchematic(region);
+                            // TODO: Move this to ArenaRegenUtil
+                            BlockSelection worldGuardSel = WorldGuardController.getBlockSelection(region);
+
+                            ArenaRegenController.pasteSchematic(ac.getArena().getWorldGuardRegion(), worldGuardSel.getMinimumPoint());
                         }
                     }
                 }

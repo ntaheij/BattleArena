@@ -1,45 +1,47 @@
 package mc.alk.arena.objects.regions;
 
-import mc.alk.arena.controllers.plugins.PylamoController;
+import mc.alk.arena.objects.YamlSerializable;
+import org.battleplugins.arenaregenutil.ArenaRegenController;
+import org.battleplugins.arenaregenutil.RegenPlugin;
+import org.battleplugins.arenaregenutil.region.ArenaRegion;
+import org.bukkit.World;
 
 import java.util.Map;
 
-public class PylamoRegion implements ArenaRegion{
-	String regionName;
+public class PylamoRegion implements ArenaRegion, YamlSerializable {
 
-	public PylamoRegion(){}
+    private String id;
 
-	public PylamoRegion(String regionName){
-		this.regionName = regionName;
-	}
+    public PylamoRegion() {}
 
-	@Override
-	public Object yamlToObject(Map<String,Object> map, String value) {
-		regionName = value;
-		return new PylamoRegion(regionName);
-	}
-
-	@Override
-	public Object objectToYaml() {
-		return regionName;
-	}
-
-	public void setID(String id) {
-		regionName = id;
-	}
-
-	@Override
-    public String getID() {
-		return regionName;
-	}
+    public PylamoRegion(String id){
+        this.id = id;
+    }
 
     @Override
-    public String getWorldName() {
+    public Object yamlToObject(Map<String,Object> map, String value) {
+        id = value;
+        return new PylamoRegion(id);
+    }
+
+    @Override
+    public Object objectToYaml() {
+        return id;
+    }
+
+    @Override
+    public String getID() {
+        return id;
+    }
+
+    // Pylamo doesn't need a world to paste
+    @Override
+    public World getWorld() {
         return null;
     }
 
     @Override
-    public boolean valid(){
-		return regionName != null && PylamoController.enabled();
-	}
+    public boolean isValid(){
+        return id != null && ArenaRegenController.hasRegenPlugin(RegenPlugin.PYLAMO_RESTORATION);
+    }
 }
