@@ -55,21 +55,21 @@ Live Chat on Discord:
 
 
 Battle Arena Links:
-* [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battlearena/) (BattleArena on Bukkit!)
+* [Bukkit Page](http://dev.bukkit.org/projects/battlearena/) (BattleArena on Bukkit!)
 * [Spigot Page](http://spigotmc.org/resources/battlearena.2164/) (BattleArena on Spigot!)
 
 Battle Tracker Links:
-* [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battletracker/) (BattleTracker on Bukkit!)
+* [Bukkit Page](http://dev.bukkit.org/projects/battletracker/) (BattleTracker on Bukkit!)
 * [Spigot Page](http://spigotmc.org/resources/battletracker.2165/) (BattleTracker on Spigot!)
 
 Other Links:
 * [BattleDocs](http://docs.battleplugins.org) (BattlePlugins Documentation)
-* [Ci Server](http://ci.battleplugins.org/job/BattlePlugins/job/BattleArena/) (Jenkins Build Server)
-* [Battle Plugin Donations] (Donation link, coming soon)
+* [CI Server](http://ci.battleplugins.org/job/BattlePlugins/job/BattleArena/) (Jenkins Build Server)
+* [BattlePlugin Donations] (Donation link, coming soon)
 * [JavaDocs](http://rainbowcraft.sytes.net/javadocs/battlearena/apidocs/)
 
 Stats
 ------------
-![Plugin Stats](https://bstats.org/signatures/bukkit/BattleArena.svg "Plugin Stats")
+[![Plugin Stats](https://bstats.org/signatures/bukkit/BattleArena.svg "Plugin Stats")](https://bstats.org/plugin/bukkit/BattleArena)
 
 [![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/0)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/0)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/1)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/1)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/2)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/2)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/3)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/3)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/4)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/4)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/5)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/5)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/6)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/6)[![](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/images/7)](https://sourcerer.io/fame/clovisd/BattlePlugins/BattleArena/links/7)
