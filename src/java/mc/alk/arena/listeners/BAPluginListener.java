@@ -345,6 +345,11 @@ public class BAPluginListener implements Listener {
         if (Bukkit.getPluginManager().getPlugin("AntiLootSteal") != null) {
             Defaults.PLUGIN_ANTILOOT = true;
         }
+
+        if (ArenaRegenController.hasRegenPlugin(RegenPlugin.ROLLBACK_CORE)) {
+            ArenaRegenController.setDefaultRegenPlugin(RegenPlugin.ROLLBACK_CORE);
+            Log.info("[BattleArena] RollbackCore detected. Using it for pastes and schematic saving.");
+        }
     }
 
 }
