@@ -1,7 +1,7 @@
 configVersion: 2.2
 
-# For help the wiki is a good source of information
-# Wiki: # https://github.com/alkarinv/BattleArena/wiki
+# For help the docs are a good source of information
+# Wiki: # https://docs.battleplugins.org/docs/ba/
 
 # Updates will be retrieved from the latest plugin on the bukkit site
 autoUpdate: true

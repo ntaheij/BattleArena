@@ -2,9 +2,9 @@ name: ${project.name}
 main: mc.alk.arena.BattleArena
 version: ${project.version}
 api-version: 1.13
-website: http://dev.bukkit.org/bukkit-plugins/battlearena2/
-description: Arena system for BattleCraft
-authors: [alkarin, Europia79]
+website: https://dev.bukkit.org/projects/battlearena
+description: A modular minigame framework, API, and fully featured PvP and PvE arena combat system with limitless customization!
+authors: [alkarin, BattlePlugins]
 softdepend: [BattleTracker, Essentials, Herochat, Heroes, IcePvPControl, Factions, GroupManager, mcMMO, MultiInv, Multiworld, Multiverse-Core, Multiverse-Inventories, PvPToggle, PvPTime, PvPTimer, SimpleClans, TagAPI, Towny, WorldEdit, WorldGuard, VanishNoPackes, Vault]
 commands:
     arenaScoreboard:

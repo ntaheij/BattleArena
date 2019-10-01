@@ -296,7 +296,7 @@ public class YamlFileUpdater {
     private static Version to2Point31(Version version, YamlFileUpdater yfu, File configFile, Version newVersion) throws IOException {
         FileUpdater fu = new FileUpdater(configFile, yfu.backupDir, newVersion, version);
         fu.replace("configVersion:.*", "configVersion: "+newVersion);
-        fu.replace(".*Wiki:.*", "# Wiki: # https://wiki.github.com/alkarinv/BattleArena/wiki");
+        fu.replace(".*Wiki:.*", "# Docs: # https://docs.battleplugins.org/docs/ba/");
         fu.delete(".*Updates will be retrieved.*");
         fu.replace("autoUpdate:.*",
                 "# Updates will be retrieved from the latest plugin on the bukkit site. Valid Options : none, release, beta, all",

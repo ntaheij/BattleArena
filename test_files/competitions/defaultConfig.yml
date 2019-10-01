@@ -1,7 +1,7 @@
 configVersion: 2.0
 
-## for more help configuring see the wiki
-## https://github.com/alkarinv/BattleArena/wiki
+## for more help configuring see the docs
+## https://docs.battleplugins.org/docs/ba/
 ## Change this file to customize your competition
 
 <name>:
@@ -15,7 +15,7 @@ configVersion: 2.0
     nTeams: 2
     teamSize: 1+
     ### You can delete any stages/transitions that have no options
-    ### for a list of options see wiki
+    ### for a list of options see docs
     defaults: ## Global options for the entire match
         options: [woolTeams]
     preReqs: ## Prerequisites for joining
