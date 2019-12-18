@@ -36,9 +36,6 @@ public class BAPlaceholderExtension extends PlaceholderExpansion {
             return "";
 
         ArenaPlayer arenaPlayer = BattleArena.toArenaPlayer(player);
-        if (arenaPlayer == null)
-            return "";
-
         if (arenaPlayer.getCompetition() == null)
             return "";
 
@@ -61,6 +58,9 @@ public class BAPlaceholderExtension extends PlaceholderExpansion {
             case "active_game_time_left":
                 if (arenaPlayer.getCompetition() instanceof Match) {
                     Match match = (Match) competition;
+                    if (match.getMatchCountdown() == null)
+                        break;
+
                     return String.valueOf((int) (match.getMatchCountdown().getTimeRemaining() / 1000));
                 }
                 break;
