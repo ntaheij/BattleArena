@@ -59,7 +59,7 @@ public class BAPlaceholderExtension extends PlaceholderExpansion {
                 if (arenaPlayer.getCompetition() instanceof Match) {
                     Match match = (Match) competition;
                     if (match.getMatchCountdown() == null)
-                        break;
+                        return "";
 
                     return String.valueOf((int) (match.getMatchCountdown().getTimeRemaining() / 1000));
                 }
