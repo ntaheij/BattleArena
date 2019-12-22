@@ -94,7 +94,7 @@
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleBukkitLib</artifactId>
-            <version>4.5.0</version>
+            <version>4.5.2</version>
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
