@@ -51,7 +51,7 @@ public class SignUpdateListener implements Listener {
 
             String[] lines = sign.getLines();
             if (SignUtil.isJoinSign(lines)) {
-                String[] formattedLines = SignUtil.getFormattedLines(commandSign.getMatchParams(), state, arena.getName(), BattleArena.getSelf().getBASignSerializer().getJoinSignFormat(state.toLowerCase()));
+                String[] formattedLines = SignUtil.getFormattedLines(state, arena.getName(), BattleArena.getSelf().getBASignSerializer().getJoinSignFormat(state.toLowerCase()));
                 for (int i = 0; i < formattedLines.length; i++) {
                     sign.setLine(i, formattedLines[i]);
                 }
@@ -60,7 +60,7 @@ public class SignUpdateListener implements Listener {
             }
 
             if (SignUtil.isLeaveSign(lines)) {
-                String[] formattedLines = SignUtil.getFormattedLines(commandSign.getMatchParams(), state, arena.getName(), BattleArena.getSelf().getBASignSerializer().getLeaveSignFormat(state.toLowerCase()));
+                String[] formattedLines = SignUtil.getFormattedLines(state, arena.getName(), BattleArena.getSelf().getBASignSerializer().getLeaveSignFormat(state.toLowerCase()));
                 for (int i = 0; i < formattedLines.length; i++) {
                     sign.setLine(i, formattedLines[i]);
                 }
