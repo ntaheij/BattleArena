@@ -141,14 +141,14 @@ public class BASignListener implements Listener{
                 arenaName = acs.getArena().getName();
 
             if (SignUtil.isJoinSign(lines)) {
-                String[] formattedLines = SignUtil.getFormattedLines(acs.getMatchParams(), "Open", arenaName, BattleArena.getSelf().getBASignSerializer().getJoinSignFormat("open"));
+                String[] formattedLines = SignUtil.getFormattedLines("Open", arenaName, BattleArena.getSelf().getBASignSerializer().getJoinSignFormat("open"));
                 for (int i = 0; i < formattedLines.length; i++) {
                     event.setLine(i, formattedLines[i]);
                 }
             }
 
             if (SignUtil.isLeaveSign(lines)) {
-                String[] formattedLines = SignUtil.getFormattedLines(acs.getMatchParams(), "Open", arenaName, BattleArena.getSelf().getBASignSerializer().getLeaveSignFormat("open"));
+                String[] formattedLines = SignUtil.getFormattedLines("Open", arenaName, BattleArena.getSelf().getBASignSerializer().getLeaveSignFormat("open"));
                 for (int i = 0; i < formattedLines.length; i++) {
                     event.setLine(i, formattedLines[i]);
                 }

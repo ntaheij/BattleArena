@@ -11,6 +11,7 @@ import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.objects.options.JoinOptions;
 import mc.alk.arena.objects.signs.ArenaCommandSign;
 import mc.alk.arena.objects.signs.ArenaStatusSign;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -53,22 +54,21 @@ public class SignUtil {
     }
 
     // TODO: Find a way to "hide" some of these numbers (or lines) if an arena is not specified
-    public static String[] getFormattedLines(MatchParams mp, String state, String arenaName, String[] lines) {
+    public static String[] getFormattedLines(String state, String arenaName, String[] lines) {
         String[] formattedLines = new String[lines.length];
         Arena arena = BattleArena.getArena(arenaName);
+        if (arena != null) {
+            MatchParams mp = arena.getParams();
+            for (int i = 0; i < formattedLines.length; i++) {
+                String line = lines[i];
+                String signPrefix = "&0[" + ChatColor.RED + mp.getName() + "&0]";
+                if (mp.getSignDisplayName() != null && !mp.getSignDisplayName().isEmpty())
+                    signPrefix = mp.getSignDisplayName();
 
-        for (int i = 0; i < formattedLines.length; i++) {
-            String line = lines[i];
-            String signPrefix = "&0[" + ChatColor.RED + mp.getName() + "&0]";
-            if (mp.getSignDisplayName() != null && !mp.getSignDisplayName().isEmpty())
-                signPrefix = mp.getSignDisplayName();
-
-            line = line.replace("{signprefix}", signPrefix);
-            line = line.replace("{minplayers}", String.valueOf(mp.getMinPlayers()));
-            line = line.replace("{maxplayers}", String.valueOf(mp.getMaxPlayers()));
-            line = line.replace("{state}", state);
-
-            if (arena != null) {
+                line = line.replace("{signprefix}", signPrefix);
+                line = line.replace("{minplayers}", String.valueOf(mp.getMinPlayers()));
+                line = line.replace("{maxplayers}", String.valueOf(mp.getMaxPlayers()));
+                line = line.replace("{state}", state);
                 line = line.replace("{arena}", arena.getName());
                 line = line.replace("{queuedplayers}", String.valueOf(arena.getQueueCount()));
 
@@ -77,20 +77,24 @@ public class SignUtil {
                     players = arena.getMatch().getPlayers().size();
 
                 line = line.replace("{players}", String.valueOf(players));
-            } else {
+                formattedLines[i] = MessageUtil.colorChat(line);
+            }
+        } else {
+            for (int i = 0; i < formattedLines.length; i++) {
+                String line = lines[i];
                 line = line.replace("{arena}", "");
                 line = line.replace("{queuedplayers}", "0");
                 line = line.replace("{players}", "0");
+                formattedLines[i] = MessageUtil.colorChat(line);
             }
-            formattedLines[i] = MessageUtil.colorChat(line);
         }
 
         return formattedLines;
     }
 
     public static boolean isJoinSign(String[] lines) {
-        for (int i = 0; i < lines.length; i++) {
-            if (MessageUtil.decolorChat(lines[i]).contains("join"))
+        for (String line : lines) {
+            if (MessageUtil.decolorChat(line).contains("join"))
                 return true;
         }
 
@@ -98,8 +102,8 @@ public class SignUtil {
     }
 
     public static boolean isLeaveSign(String[] lines) {
-        for (int i = 0; i < lines.length; i++) {
-            if (MessageUtil.decolorChat(lines[i]).contains("leave"))
+        for (String line : lines) {
+            if (MessageUtil.decolorChat(line).contains("leave"))
                 return true;
         }
 
@@ -124,8 +128,7 @@ public class SignUtil {
             try {
                 options = JoinOptions.parseOptions(mp, null, split);
                 break;
-            } catch (Exception ex) {
-                continue;
+            } catch (Exception ignored) {
             }
         }
 
