@@ -1,111 +1,104 @@
 package mc.alk.arena;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import mc.alk.arena.Defaults;
-import mc.alk.arena.serializers.YamlFileUpdater;
-import mc.alk.arena.util.Log;
-import mc.alk.battlepluginupdater.FileUpdater;
-
-import org.apache.commons.lang.StringUtils;
-
+import java.lang.reflect.Field;
 import junit.framework.TestCase;
-import mc.euro.version.Version;
+import mc.alk.arena.BattleArena;
+import mc.alk.arena.Defaults;
+import mc.alk.arena.controllers.BattleArenaController;
+import mc.alk.arena.controllers.BukkitServer;
+import mc.alk.arena.controllers.ParamController;
+import mc.alk.arena.objects.ArenaPlayer;
+import mc.alk.arena.objects.MatchParams;
+import mc.alk.arena.objects.arenas.Arena;
+import mc.alk.arena.objects.arenas.ArenaType;
+import mc.alk.arena.objects.messaging.AnnouncementOptions;
+import mc.alk.arena.serializers.ArenaSerializer;
+import mc.alk.arena.serializers.BAClassesSerializer;
+import mc.alk.arena.serializers.BAConfigSerializer;
+import mc.alk.arena.serializers.MessageSerializer;
+import mc.alk.arena.util.MessageUtil;
+import mc.alk.mc.MCServer;
+import mc.alk.tests.testbukkit.TestBukkitPlayer;
+import mc.alk.tests.testbukkit.TestBukkitServer;
+import mc.alk.tests.testbukkit.TestMCBukkitServer;
+import org.bukkit.entity.Player;
+import mc.alk.arena.objects.TestPlugin;
+import mc.alk.arena.util.Helper;
 
-public class TestConfigUpdate extends TestCase {
+public class BATest extends TestCase {
+    TestPlugin plugin = null;
+    BattleArenaController bac;
+    private static final BAConfigSerializer baConfigSerializer = new BAConfigSerializer();
+    BattleArena ba = new BattleArena();
+    ArenaPlayer[] ap = new ArenaPlayer[10];
+    public static String dir = "../arena/BattleArena";
+    public static String cdir = dir + "/test_files/competitions";
 
-    public void testUpdates() {
+    @Override
+    protected void setUp() throws Exception {
+        Defaults.DEBUG_MSGS = true;
         Defaults.TESTSERVER = true;
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        plugin = new TestPlugin();
+        ArenaType.register("arena", Arena.class, plugin);
+        BukkitServer.setServer(new TestBukkitServer());
+        plugin.onEnable();
 
-        YamlFileUpdater yfu = new YamlFileUpdater(new File("test_files/backups"));
-        File configFile = new File("test_files/config.yml");
-        Version version = new Version("0");
-        try {
-            Version newVersion = new Version("2.2");
-            if (version.compareTo(newVersion) < 0) {
-                version = to2Point2(version, yfu, configFile, newVersion);
-                version = to2Point2(version, yfu, configFile, newVersion);
-                version = to2Point2(version, yfu, configFile, newVersion);
-                version = to2Point2(version, yfu, configFile, newVersion);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        /// Set test server
+        MCServer.setInstance(new TestMCBukkitServer());
+        baConfigSerializer.setConfig(new File(dir + "/test_files/config.yml"));
+        baConfigSerializer.loadDefaults();
+        MatchParams mp = ParamController.getMatchParamCopy(Defaults.DEFAULT_CONFIG_NAME);
+        assertNotNull(mp);
+        for (int i = 0; i < ap.length; i++) {
+            ap[i] = createArenaPlayer("p" + i);
         }
+
+        /// load classes
+        BAClassesSerializer classesSerializer = new BAClassesSerializer();
+        classesSerializer.setConfig(new File(dir + "/test_files/classes.yml"));
+        classesSerializer.loadAll();
+        /// Controller
+        bac = new BattleArenaController(null);
+        Field field = BattleArena.class.getDeclaredField("arenaController");
+        field.setAccessible(true);
+        field.set(null, bac);
+
+        /// Messages
+        MessageSerializer ms = new MessageSerializer("default", null);
+        ms.setConfig(new File(dir + "/default_files/messages.yml"));
+        MessageSerializer.setDefaultConfig(ms);
+        AnnouncementOptions an = new AnnouncementOptions();
+        AnnouncementOptions.setDefaultOptions(an);
+
+        mp = Helper.loadParams(dir + "/test_files/competitions/ArenaConfig.yml", plugin, "Arena");
+        assertNotNull(mp);
+
+        /// Arenas
+        ArenaSerializer as = new ArenaSerializer(plugin, new File(dir + "/test_files/arenas.yml"));
+        ArenaSerializer.setBAC(bac);
+        as.loadArenas(plugin);
     }
 
-    private static Version to2Point2(Version version, YamlFileUpdater yfu,
-            File configFile, Version newVersion) throws IOException {
-        FileUpdater fu = new FileUpdater(configFile, yfu.getBackupDir(), newVersion, version);
-        //		fu.replace("configVersion:.*", "configVersion: "+newVersion);
-
-        return fu.update();
+    public static ArenaPlayer createArenaPlayer(String name){
+        Player p1 = new TestBukkitPlayer(name);
+        return BattleArena.toArenaPlayer(p1);
     }
 
-    public void testUpdateTo2point2() {
-        //		BaseConfig bc = new BaseConfig( new File("test_files/testconfig.yml"));
-        //		updateSection(bc.getFile(), "arena");
-        //		updateSection(bc.getFile(), "skirmish");
-        //		updateSection(bc.getFile(), "battleground");
-        //		updateSection(bc.getFile(), "colliseum");
-        //		updateSection(bc.getFile(), "freeForAll");
-        //		updateSection(bc.getFile(), "deathMatch");
-        //		updateSection(bc.getFile(), "tourney");
-        //		deleteAllAfter(bc.getFile(), "### Arena");
+    public static void msg(String msg) {
+        System.out.println(MessageUtil.decolorChat(msg));
     }
 
-    private void updateSection(File file, String section) throws Exception {
-        Log.warn("BattleArena updating " + section + " to new form");
-        String colliseum = "colliseum";
-        String capcolliseum = "Colliseum";
-        File oldMessageFile = new File(section + "Messages.yml");
-        if (oldMessageFile.exists()) {
-            oldMessageFile.delete();
-        }
-
-        if (section.equals(colliseum)) {
-            section = "colosseum";
-        }
-
-        FileWriter fw = null;
-        BufferedReader br = null;
-        String capSection = StringUtils.capitalize(section);
-        try {
-            fw = new FileWriter("test_files/" + capSection + "Config.yml");
-            br = new BufferedReader(new FileReader(file));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-            return;
-        }
-        boolean inSection = false;
-        String line = null;
-        try {
-            while ((line = br.readLine()) != null) {
-                line = line.replaceAll(colliseum, "colosseum").replaceAll(capcolliseum, "Colosseum");
-                //				System.out.println(inSection +"-"+section+"  :  " + line);
-                if (line.matches(section + ":.*")) {
-                    inSection = true;
-                    fw.write(capSection + ":\n");
-                } else if (inSection && line.matches("^\\s*$")) {
-                    break;
-                } else if (inSection) {
-                    fw.write(line + "\n");
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                br.close();
-            } catch (Exception e) {
-            }
-            try {
-                fw.close();
-            } catch (Exception e) {
-            }
-        }
+    protected void delay(long millis) {
+        try {Thread.sleep(millis);}catch(Exception e){}
     }
+    protected MatchParams loadParams(String type, String configName) throws Exception {
+        return Helper.loadParams(cdir+"/"+configName, plugin, type);
+    }
+    
+    public void testPerformed() {
+        assertTrue(true);
+    }
+
 }
